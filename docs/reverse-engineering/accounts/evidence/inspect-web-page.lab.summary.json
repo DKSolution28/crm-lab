@@ -1,0 +1,336 @@
+{
+  "operation": "inspect_web_page",
+  "evidence_id": "ev_7d6af7d67311a1d6340942cedde9e714f7a86423243649a3616ee41d1ec70f08",
+  "confidence": "observed",
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "parameters": {
+    "cdp_endpoint": "http://127.0.0.1:9222",
+    "allowed_origins": [
+      "http://127.0.0.1:3000"
+    ],
+    "target_id": "8E37ACC9829A664EBDACEFDAD17C0063",
+    "observation_ms": 1500,
+    "include_accessibility_text": true,
+    "include_console_text": true,
+    "include_json_body_shapes": false,
+    "include_websocket_shapes": false,
+    "include_storage_keys": true,
+    "include_storage_fingerprints": false,
+    "include_script_sources": false
+  },
+  "target": {
+    "target_id": "8E37ACC9829A664EBDACEFDAD17C0063",
+    "type": "page",
+    "title": "CRM Lab",
+    "url": "http://127.0.0.1:3000/",
+    "origin": "http://127.0.0.1:3000",
+    "attached": false
+  },
+  "dom_total_nodes": 189,
+  "accessibility_total_nodes": 155,
+  "accessibility_unique_names": [
+    {
+      "role": "RootWebArea",
+      "name": "CRM Lab"
+    },
+    {
+      "role": "heading",
+      "name": "Notes de laboratoire"
+    },
+    {
+      "role": "StaticText",
+      "name": "CRM Lab"
+    },
+    {
+      "role": "StaticText",
+      "name": "Notes de laboratoire"
+    },
+    {
+      "role": "StaticText",
+      "name": "PostgreSQL joignable"
+    },
+    {
+      "role": "heading",
+      "name": "Nouvelle note"
+    },
+    {
+      "role": "heading",
+      "name": "Notes enregistr\u00e9es"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "CRM Lab"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Notes de laboratoire"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "PostgreSQL joignable"
+    },
+    {
+      "role": "StaticText",
+      "name": "Nouvelle note"
+    },
+    {
+      "role": "StaticText",
+      "name": "Enregistre une observation locale. Les identifiants d'une organisation Salesforce restent hors du d\u00e9p\u00f4t."
+    },
+    {
+      "role": "button",
+      "name": "Enregistrer"
+    },
+    {
+      "role": "StaticText",
+      "name": "Notes enregistr\u00e9es"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Nouvelle note"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Enregistre une observation locale. Les identifiants d'une organisation Salesforce restent hors du d\u00e9p\u00f4t."
+    },
+    {
+      "role": "StaticText",
+      "name": "Titre"
+    },
+    {
+      "role": "textbox",
+      "name": "Titre"
+    },
+    {
+      "role": "StaticText",
+      "name": "D\u00e9tail"
+    },
+    {
+      "role": "textbox",
+      "name": "D\u00e9tail"
+    },
+    {
+      "role": "StaticText",
+      "name": "Enregistrer"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Notes enregistr\u00e9es"
+    },
+    {
+      "role": "heading",
+      "name": "Note navigateur"
+    },
+    {
+      "role": "heading",
+      "name": "Observation 1791915313367"
+    },
+    {
+      "role": "heading",
+      "name": "Note API 20261013T181503Z"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Titre"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "D\u00e9tail"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Enregistrer"
+    },
+    {
+      "role": "StaticText",
+      "name": "Note navigateur"
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:26"
+    },
+    {
+      "role": "StaticText",
+      "name": "Cr\u00e9\u00e9e depuis le formulaire."
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:25"
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:24"
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:23"
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:22"
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:21"
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:20"
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:19"
+    },
+    {
+      "role": "StaticText",
+      "name": "Observation 1791915313367"
+    },
+    {
+      "role": "StaticText",
+      "name": "13 oct. 2026, 18:15"
+    },
+    {
+      "role": "StaticText",
+      "name": "Note cr\u00e9\u00e9e pendant la v\u00e9rification locale."
+    },
+    {
+      "role": "StaticText",
+      "name": "Note API 20261013T181503Z"
+    },
+    {
+      "role": "StaticText",
+      "name": "Cr\u00e9\u00e9e par la v\u00e9rification API."
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Note navigateur"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:26"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Cr\u00e9\u00e9e depuis le formulaire."
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:25"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:24"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:23"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:22"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:21"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:20"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:19"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Observation 1791915313367"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "13 oct. 2026, 18:15"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Note cr\u00e9\u00e9e pendant la v\u00e9rification locale."
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Note API 20261013T181503Z"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Cr\u00e9\u00e9e par la v\u00e9rification API."
+    }
+  ],
+  "completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "json_body_shapes",
+      "script_sources",
+      "scripts",
+      "websocket_shapes"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "script_sources",
+        "reason": "not_approved",
+        "count": 18
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 1
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "storage": {
+    "values_redacted": true,
+    "local_storage_keys": [],
+    "session_storage_keys": []
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "Browser host platform and architecture were not observed."
+  ]
+}

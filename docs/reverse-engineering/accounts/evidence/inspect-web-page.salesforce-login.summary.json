@@ -1,0 +1,199 @@
+{
+  "operation": "inspect_web_page",
+  "evidence_id": "ev_6e00c6d2f23d74727301bf27cc2284bd41b5c952b90428d268e9da4052d285bf",
+  "confidence": "observed",
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "parameters": {
+    "cdp_endpoint": "http://127.0.0.1:9223",
+    "allowed_origins": [
+      "https://login.salesforce.com"
+    ],
+    "target_id": "598690B9CD437B35A8D64DAC39FC3ED9",
+    "observation_ms": 2000,
+    "include_accessibility_text": true,
+    "include_console_text": false,
+    "include_json_body_shapes": false,
+    "include_websocket_shapes": false,
+    "include_storage_keys": false,
+    "include_storage_fingerprints": false,
+    "include_script_sources": false
+  },
+  "target": {
+    "target_id": "598690B9CD437B35A8D64DAC39FC3ED9",
+    "type": "page",
+    "title": "Login | Salesforce",
+    "url": "https://login.salesforce.com/",
+    "origin": "https://login.salesforce.com",
+    "attached": false
+  },
+  "dom_total_nodes": 212,
+  "accessibility_unique_names": [
+    {
+      "role": "RootWebArea",
+      "name": "Login | Salesforce"
+    },
+    {
+      "role": "StaticText",
+      "name": "Login"
+    },
+    {
+      "role": "StaticText",
+      "name": "\u00a9 2026 Salesforce, Inc. All rights reserved. | "
+    },
+    {
+      "role": "link",
+      "name": "Privacy"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Login"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "\u00a9 2026 Salesforce, Inc. All rights reserved. | "
+    },
+    {
+      "role": "StaticText",
+      "name": "Privacy"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Privacy"
+    },
+    {
+      "role": "StaticText",
+      "name": "Not a customer?"
+    },
+    {
+      "role": "link",
+      "name": "Try for Free"
+    },
+    {
+      "role": "image",
+      "name": "Salesforce login"
+    },
+    {
+      "role": "StaticText",
+      "name": "Salesforce login"
+    },
+    {
+      "role": "StaticText",
+      "name": "or"
+    },
+    {
+      "role": "link",
+      "name": "Log In with Email"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Not a customer?"
+    },
+    {
+      "role": "StaticText",
+      "name": "Try for Free"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Salesforce "
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "login"
+    },
+    {
+      "role": "heading",
+      "name": "Salesforce login"
+    },
+    {
+      "role": "button",
+      "name": "Log In"
+    },
+    {
+      "role": "link",
+      "name": "Forgot Your Password?"
+    },
+    {
+      "role": "link",
+      "name": "Use Custom Domain"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "or"
+    },
+    {
+      "role": "StaticText",
+      "name": "Log In with Email"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Try for Free"
+    },
+    {
+      "role": "StaticText",
+      "name": "Log In"
+    },
+    {
+      "role": "checkbox",
+      "name": "Remember me"
+    },
+    {
+      "role": "StaticText",
+      "name": "Forgot Your Password?"
+    },
+    {
+      "role": "StaticText",
+      "name": "Use Custom Domain"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Log In with Email"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Salesforce login"
+    },
+    {
+      "role": "StaticText",
+      "name": "Username"
+    },
+    {
+      "role": "textbox",
+      "name": "Username"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Log In"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Forgot Your Password?"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Use Custom Domain"
+    },
+    {
+      "role": "InlineTextBox",
+      "name": "Username"
+    }
+  ],
+  "authenticated": false,
+  "login_wall": true,
+  "storage": {
+    "values_redacted": true,
+    "local_storage_keys": [],
+    "session_storage_keys": []
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "Browser host platform and architecture were not observed."
+  ]
+}

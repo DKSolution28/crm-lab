@@ -1,0 +1,61 @@
+{
+  "evidence_id": "ev_877f44b876fc7036303659d6ee2ade57f68416faf8fe1c35bbe9793635959ad2",
+  "subject": null,
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.browser-target-list",
+  "operation": "list_browser_targets",
+  "parameters": {
+    "cdp_endpoint": "http://127.0.0.1:9223",
+    "allowed_origins": [
+      "https://login.salesforce.com"
+    ]
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "browser": {
+      "product": "Chrome/156.0.8078.4",
+      "protocol_version": "1.3",
+      "revision": "537.36 (@f842f52ef39fd97b449eb27cff414bf05a98ddce)",
+      "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "js_version": "15.6.75"
+    },
+    "targets": [
+      {
+        "target_id": "598690B9CD437B35A8D64DAC39FC3ED9",
+        "type": "page",
+        "title": "Login | Salesforce",
+        "url": "https://login.salesforce.com/",
+        "origin": "https://login.salesforce.com",
+        "attached": false
+      }
+    ],
+    "excluded": {
+      "disallowed_origin": 0,
+      "unsupported_url": 1,
+      "non_page": 5
+    },
+    "limitations": [
+      "Only page targets whose current URL matches an explicitly requested exact origin are listed."
+    ]
+  },
+  "confidence": "observed",
+  "authority": "external-service",
+  "environment": {
+    "id": "Chrome/156.0.8078.4@537.36 (@f842f52ef39fd97b449eb27cff414bf05a98ddce)",
+    "platform": "unknown",
+    "architecture": "unknown",
+    "isolation": "none"
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Only page targets whose current URL matches an explicitly requested exact origin are listed.",
+    "Browser host platform and architecture were not observed."
+  ],
+  "locations": [],
+  "evidence_links": []
+}

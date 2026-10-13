@@ -1,0 +1,12 @@
+{
+  "run": "bc-fc05a8f4-0c4d-44ec-9341-03d2c1942cab",
+  "observed_mcp_namespaces": [
+    "cursor",
+    "cursor-cloud",
+    "cursor-subscriptions"
+  ],
+  "rea_namespace_present": false,
+  "list_browser_targets_callable_as_mcp": false,
+  "inspect_web_page_callable_as_mcp": false,
+  "events_mcp_auth_error": false
+}

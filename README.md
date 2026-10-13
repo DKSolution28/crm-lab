@@ -40,3 +40,11 @@ npx rea-agents@6.4.0 doctor --json
 ```
 
 `doctor` est en lecture seule. Un moteur natif absent (Hopper, Ghidra, IDA) n'empêche pas l'exécution de la CLI.
+
+## Reverse engineering Accounts
+
+La préparation Phase 2 (REA, MCP, CDP, session Salesforce) est dans
+`docs/reverse-engineering/accounts/`. La CLI REA et Chromium CDP sont
+validés. Le serveur MCP REA n'est pas encore enregistré pour les Cloud
+Agents ; l'accès authentifié à une Developer Org reste une étape
+opérateur.

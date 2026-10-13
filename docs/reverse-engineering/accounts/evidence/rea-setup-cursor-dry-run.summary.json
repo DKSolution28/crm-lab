@@ -1,0 +1,37 @@
+{
+  "status": "planned",
+  "plannedActions": [
+    {
+      "id": "configure_client:cursor",
+      "kind": "configure_client",
+      "label": "Cursor",
+      "target": "/home/ubuntu/.cursor/mcp.json",
+      "detail": "Add the REA MCP registration for Cursor; preserve unrelated configuration. Command: \"npx\" \"-y\" \"rea-agents@6.4.0\" \"mcp\". No additional provider environment variables. Existing server environment overrides are retained.",
+      "external": false,
+      "operation": "create"
+    },
+    {
+      "id": "install_skill",
+      "kind": "install_skill",
+      "label": "REA reverse-engineering skill",
+      "target": "/home/ubuntu/.agents/skills/reverse-engineer-anything",
+      "detail": "Install or update the bundled REA reverse-engineering skill and on-demand references.",
+      "external": false,
+      "operation": "install"
+    }
+  ],
+  "clientStates": [
+    {
+      "client": {
+        "name": "cursor",
+        "displayName": "Cursor",
+        "configPath": "/home/ubuntu/.cursor/mcp.json",
+        "markerPath": "/home/ubuntu/.cursor",
+        "format": "json"
+      },
+      "detected": true,
+      "configured": false,
+      "status": "needs_configuration"
+    }
+  ]
+}

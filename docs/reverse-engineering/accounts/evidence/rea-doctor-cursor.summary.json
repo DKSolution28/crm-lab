@@ -1,0 +1,65 @@
+{
+  "healthy": false,
+  "environment_healthy": false,
+  "scope": {
+    "mode": "explicit",
+    "clients": [
+      "cursor"
+    ],
+    "providers": [],
+    "skill": false,
+    "target": null
+  },
+  "scope_checks": [
+    {
+      "name": "node",
+      "ok": true,
+      "classification": "healthy",
+      "detail": "24.21.0"
+    },
+    {
+      "name": "registration:cursor",
+      "ok": false,
+      "classification": "config_drift",
+      "detail": "/home/ubuntu/.cursor/mcp.json",
+      "remediation": "Run rea setup to refresh this registration, then restart the client."
+    }
+  ],
+  "identity": {
+    "cli_package_version": "6.4.0",
+    "catalog_counts": {
+      "cli_commands": 127,
+      "mcp_tools": 170,
+      "mcp_prompts": 6
+    },
+    "listed_browser_tools": [
+      "inspect_web_page",
+      "list_browser_targets"
+    ],
+    "live_server": {
+      "state": "unknown",
+      "remediation": "Call binary_session in the active client to inspect the running server identity."
+    },
+    "skill": {
+      "installed_version": null,
+      "installed_tool_count": null,
+      "state": "missing",
+      "remediation": "Run rea setup to update the installed REA skill."
+    },
+    "registrations": [
+      {
+        "client": "cursor",
+        "config_path": "/home/ubuntu/.cursor/mcp.json",
+        "command": [],
+        "state": "missing",
+        "remediation": "Run rea setup to refresh this registration, then restart the client."
+      }
+    ],
+    "installations": {
+      "paths": [
+        "/workspace/node_modules/.bin/rea"
+      ],
+      "state": "single"
+    }
+  }
+}
