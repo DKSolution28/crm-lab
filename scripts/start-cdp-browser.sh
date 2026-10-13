@@ -103,6 +103,25 @@ cdp_ready() {
   curl -sf "http://127.0.0.1:${CRM_LAB_CDP_PORT}/json/version" >/dev/null 2>&1
 }
 
+wait_for_display() {
+  local i=0
+  while [[ ! -S /tmp/.X11-unix/X1 && ! -S /tmp/.X11-unix/X0 ]]; do
+    i=$((i + 1))
+    if [[ "${i}" -gt 45 ]]; then
+      log "X11 socket not found after 45s; Chrome may fail until desktop-init is ready"
+      export DISPLAY="${DISPLAY:-:1}"
+      return 0
+    fi
+    sleep 1
+  done
+  if [[ -S /tmp/.X11-unix/X1 ]]; then
+    export DISPLAY=:1
+  elif [[ -S /tmp/.X11-unix/X0 ]]; then
+    export DISPLAY=:0
+  fi
+  log "Using DISPLAY=${DISPLAY}"
+}
+
 start_cdp_browser() {
   if cdp_ready; then
     log "CDP already reachable on :${CRM_LAB_CDP_PORT}"
@@ -139,5 +158,6 @@ ensure_postgres_running
 ensure_local_database
 sync_prisma_schema
 start_next_dev
+wait_for_display
 start_cdp_browser
 log "Start complete"
