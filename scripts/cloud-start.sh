@@ -24,7 +24,7 @@ bash scripts/start-cdp-browser.sh
 
 echo "==> Next.js dev server"
 DEV_URL="http://localhost:3000"
-if curl -fsS -o /dev/null "$DEV_URL/api/health"; then
+if curl -fs -o /dev/null "$DEV_URL/api/health"; then
   echo "dev server already running at $DEV_URL"
 elif tmux has-session -t next-dev 2>/dev/null; then
   echo "tmux session next-dev exists; waiting for it"

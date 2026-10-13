@@ -27,7 +27,8 @@ fi
 rm -f "$PROFILE_DIR/SingletonLock" "$PROFILE_DIR/SingletonSocket" "$PROFILE_DIR/SingletonCookie"
 mkdir -p "$PROFILE_DIR"
 
-nohup "$CHROMIUM" \
+# setsid: keep the browser alive after the launching (start/tmux) session exits.
+setsid nohup "$CHROMIUM" \
   --headless=new \
   --no-sandbox \
   --disable-gpu \

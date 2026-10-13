@@ -22,8 +22,10 @@ RESULTS=()
 FAILED=0
 
 record() { # status name detail
-  RESULTS+=("| $2 | $1 | $3 |")
-  printf '[%s] %s: %s\n' "$1" "$2" "$3"
+  local detail
+  detail="$(printf '%s' "$3" | tr '\n|' ' /' | tr -s ' ' | cut -c1-300)"
+  RESULTS+=("| $2 | $1 | $detail |")
+  printf '[%s] %s: %s\n' "$1" "$2" "$detail"
   [ "$1" = "FAIL" ] && FAILED=1
   return 0
 }
@@ -132,7 +134,7 @@ else
   setsid npx --no-install next dev --port "${APP_URL##*:}" > "$OUT/5-next-dev.log" 2>&1 &
   DEV_PID=$!
   for _ in $(seq 1 120); do
-    curl -fsS -o /dev/null "$APP_URL/api/health" 2>/dev/null && break
+    [ "$(curl -s -o /dev/null -w '%{http_code}' "$APP_URL/api/health")" != "000" ] && break
     sleep 1
   done
 fi
