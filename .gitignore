@@ -22,7 +22,3 @@
 *.log
 *.tsbuildinfo
 .DS_Store
-
-# Next.js may generate agent guidance during development; environment guidance
-# stays in the versioned README and scripts instead.
-/AGENTS.md
