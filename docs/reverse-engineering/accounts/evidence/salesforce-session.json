@@ -1,0 +1,48 @@
+{
+  "observed_at": "2026-10-13T21:11:00Z",
+  "channel": "local-stdio-mcp-probe",
+  "cloud_agent_tool_catalog": false,
+  "authenticated": false,
+  "accounts_module_reached": false,
+  "session": {
+    "cdp_endpoint": "http://127.0.0.1:9333",
+    "user_data_dir": "/tmp/crm-lab-salesforce-cdp",
+    "separate_from_lab_profile": "/tmp/crm-lab-cdp",
+    "browser_product": "Chrome/156.0.8078.4",
+    "protocol_version": "1.3",
+    "headless": true
+  },
+  "list_browser_targets": {
+    "page_count": 1,
+    "title": "Login | Salesforce",
+    "origin": "https://login.salesforce.com",
+    "path": "/",
+    "query_key_count": 0
+  },
+  "inspect_web_page": {
+    "evidence_id": "ev_17400df7ec030b042b348cf94fe24da8a32c4f35aa3ffdacff15dc371e6bd94b",
+    "predicate_type": "rea.web-page-inspection",
+    "confidence": "observed",
+    "dom_total_nodes": 212,
+    "completeness": "policy_filtered",
+    "controls_observed": [
+      "Username textbox",
+      "Log In button",
+      "Remember me checkbox",
+      "Use Custom Domain link",
+      "Log In with Email link",
+      "Forgot Your Password? link"
+    ],
+    "named_textbox_count": 1,
+    "storage_values_redacted": true,
+    "local_storage_key_count": 0,
+    "limitations": [
+      "Attach starts at inspection time; earlier network activity is unavailable.",
+      "Cookies, authorization headers, storage values and raw bodies are not retained.",
+      "Password control was not a named textbox in this accessibility snapshot.",
+      "No identity-provider redirect was observed because the form was not submitted.",
+      "MFA was not displayed on this first login screen."
+    ]
+  },
+  "human_step": "An authorized person must sign in through a headed browser using this same profile, including My Domain SSO or MFA when the org presents them. Do not store credentials in the repository."
+}

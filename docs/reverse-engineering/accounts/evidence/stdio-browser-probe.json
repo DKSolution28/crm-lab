@@ -1,0 +1,58 @@
+{
+  "observed_at": "2026-10-13T21:10:29Z",
+  "channel": "local-stdio-mcp-probe",
+  "cloud_agent_tool_catalog": false,
+  "server": {
+    "command": "/workspace/node_modules/.bin/rea",
+    "args": ["mcp"],
+    "package_version": "6.4.0"
+  },
+  "cdp_endpoint": "http://127.0.0.1:9222",
+  "browser": {
+    "product": "Chrome/156.0.8078.4",
+    "protocol_version": "1.3",
+    "user_data_dir": "/tmp/crm-lab-cdp"
+  },
+  "list_browser_targets": {
+    "arguments": {
+      "cdp_endpoint": "http://127.0.0.1:9222",
+      "allowed_origins": ["http://127.0.0.1:8765"]
+    },
+    "evidence_id": "ev_aa9baca9be5e461c19451eb901ebfa723376fb01295bc8d6fc403d815b5d9efe",
+    "predicate_type": "rea.browser-target-list",
+    "confidence": "observed",
+    "targets": [
+      {
+        "type": "page",
+        "title": "CRM Lab REA test page",
+        "url": "http://127.0.0.1:8765/",
+        "origin": "http://127.0.0.1:8765"
+      }
+    ],
+    "excluded": {
+      "disallowed_origin": 0,
+      "unsupported_url": 1,
+      "non_page": 3
+    }
+  },
+  "inspect_web_page": {
+    "arguments": {
+      "cdp_endpoint": "http://127.0.0.1:9222",
+      "allowed_origins": ["http://127.0.0.1:8765"],
+      "observation_ms": 500,
+      "include_accessibility_text": true,
+      "include_script_sources": false,
+      "include_storage_keys": false
+    },
+    "evidence_id": "ev_04185fa3446ac33ae416022b6173b1cb757a8f48421fc8bfb975e117f6285c39",
+    "predicate_type": "rea.web-page-inspection",
+    "confidence": "observed",
+    "title": "CRM Lab REA test page",
+    "url": "http://127.0.0.1:8765/",
+    "dom_total_nodes": 22,
+    "accessibility_names": ["CRM Lab browser probe", "local-test-page"],
+    "completeness": "policy_filtered"
+  },
+  "schema_note": "The MCP tools require cdp_endpoint and target_id. A call using the CLI key endpoint was rejected as an unrecognized key.",
+  "retention": "Evidence IDs belong to the exited stdio process and cannot be reloaded from this file."
+}
