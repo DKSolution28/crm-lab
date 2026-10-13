@@ -1,0 +1,33 @@
+{
+  "server": {
+    "name": "rea",
+    "version": "6.4.0"
+  },
+  "tool_count": 170,
+  "browser_tools": {
+    "list_browser_targets": true,
+    "inspect_web_page": true,
+    "capture_web_screenshot": true,
+    "observe_web_session": true
+  },
+  "list_browser_targets": {
+    "ok": true,
+    "evidence_id": "ev_08950ef5d14e349c4dec95eca3f64adc47fa5c596e79709224b132444bea7d79",
+    "targets": [
+      {
+        "target_id": "87F77A3F051F4D4E14189F42C62591ED",
+        "url": "http://127.0.0.1:3000/"
+      }
+    ]
+  },
+  "inspect_web_page": {
+    "ok": true,
+    "evidence_id": "ev_cbe2f9e78838f786d5a5213c011270b01c23ba0ae14672ac9987982b9a07ff56",
+    "title": "CRM Lab",
+    "url": "http://127.0.0.1:3000/",
+    "dom_nodes": 189,
+    "accessibility_nodes": 155,
+    "scripts": 18,
+    "completeness": "policy_filtered"
+  }
+}

@@ -40,3 +40,13 @@ npx rea-agents@6.4.0 doctor --json
 ```
 
 `doctor` est en lecture seule. Un moteur natif absent (Hopper, Ghidra, IDA) n'empêche pas l'exécution de la CLI.
+
+## REA en MCP
+
+`npm run rea:mcp-check` lance le serveur MCP REA (`npx -y rea-agents@6.4.0 mcp`) avec un vrai client MCP, liste les outils puis appelle `list_browser_targets` et `inspect_web_page` sur le navigateur CDP du port 9222 (la page `http://127.0.0.1:3000/` doit y être ouverte).
+
+`.cursor/mcp.json` enregistre REA pour Cursor IDE. Les agents cloud n'utilisent pas ce fichier : le même serveur doit être déclaré dans le tableau de bord Cursor (Cloud Agents → MCP, ou Plugins & MCPs pour l'équipe). Voir `docs/reverse-engineering/accounts/00-rapport-preparation.md`.
+
+## Session Salesforce
+
+`bash scripts/start-salesforce-browser.sh` ouvre un second Chromium, visible sur le bureau de la VM, avec son propre profil et DevTools sur le port 9223. Il sert uniquement à une Salesforce Developer Org autorisée ; la connexion (SSO, MFA) est faite par une personne, jamais par un script. Procédure et règles : `docs/reverse-engineering/accounts/02-session-navigateur-salesforce.md`.
