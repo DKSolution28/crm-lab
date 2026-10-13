@@ -37,6 +37,9 @@ yarn-error.log*
 .env*
 !.env.example
 
+# raw reverse-engineering captures may hold session data
+docs/reverse-engineering/**/raw/
+
 # vercel
 .vercel
 
