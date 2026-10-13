@@ -1,0 +1,53 @@
+{
+  "name": "crm-lab",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test:e2e": "playwright test",
+    "pw:install": "playwright install --with-deps chromium",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "rea:capabilities": "rea-agents capabilities",
+    "rea:doctor": "rea-agents doctor --json",
+    "env:install": "bash scripts/cloud/install.sh",
+    "env:start": "bash scripts/cloud/start.sh",
+    "env:verify": "bash scripts/cloud/verify.sh"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "dotenv": "^18.0.7",
+    "next": "16.4.0",
+    "pg": "^8.23.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^24.19.2",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "playwright": "1.64.0",
+    "prisma": "7.10.0",
+    "rea-agents": "6.4.0",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  },
+  "description": "Reverse engineering fonctionnel autorisé d'une application Salesforce de démonstration",
+  "engines": {
+    "node": "^24.11.0",
+    "npm": ">=10"
+  }
+}

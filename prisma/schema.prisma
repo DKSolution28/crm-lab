@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Reverse engineering fonctionnel d'une application Salesforce de démonstration.
+// Le périmètre d'analyse doit être couvert par une autorisation documentée
+// (voir CaptureSession.authorizationRef) : aucune donnée réelle ni secret ici.
+
+enum SessionStatus {
+  PLANNED
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum ObjectKind {
+  STANDARD
+  CUSTOM
+}
+
+enum ArtifactKind {
+  SCREENSHOT
+  DOM_SNAPSHOT
+  HAR
+  TRACE
+  REPORT
+  OTHER
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  sessions CaptureSession[]
+  objects  DataObject[]
+  rules    BusinessRule[]
+}
+
+model CaptureSession {
+  id               String        @id @default(cuid())
+  projectId        String
+  label            String
+  status           SessionStatus @default(PLANNED)
+  targetBaseUrl    String
+  authorizationRef String
+  scopeNotes       String?
+  startedAt        DateTime?
+  finishedAt       DateTime?
+  createdAt        DateTime      @default(now())
+
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  screens   Screen[]
+  artifacts Artifact[]
+
+  @@index([projectId])
+}
+
+model Screen {
+  id         String   @id @default(cuid())
+  sessionId  String
+  route      String
+  title      String?
+  metadata   Json?
+  capturedAt DateTime @default(now())
+
+  session   CaptureSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  artifacts Artifact[]
+  rules     BusinessRule[]
+
+  @@unique([sessionId, route])
+}
+
+model DataObject {
+  id        String     @id @default(cuid())
+  projectId String
+  apiName   String
+  label     String?
+  kind      ObjectKind @default(STANDARD)
+  createdAt DateTime   @default(now())
+
+  project  Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  fields   DataField[]
+  outgoing Relationship[] @relation("RelationshipSource")
+  incoming Relationship[] @relation("RelationshipTarget")
+
+  @@unique([projectId, apiName])
+}
+
+model DataField {
+  id       String  @id @default(cuid())
+  objectId String
+  apiName  String
+  label    String?
+  dataType String
+  required Boolean @default(false)
+  picklist Json?
+
+  object DataObject @relation(fields: [objectId], references: [id], onDelete: Cascade)
+
+  @@unique([objectId, apiName])
+}
+
+model Relationship {
+  id       String @id @default(cuid())
+  sourceId String
+  targetId String
+  name     String
+  kind     String
+
+  source DataObject @relation("RelationshipSource", fields: [sourceId], references: [id], onDelete: Cascade)
+  target DataObject @relation("RelationshipTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceId, targetId, name])
+}
+
+model BusinessRule {
+  id          String   @id @default(cuid())
+  projectId   String
+  screenId    String?
+  title       String
+  description String
+  evidence    Json?
+  createdAt   DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  screen  Screen? @relation(fields: [screenId], references: [id], onDelete: SetNull)
+
+  @@index([projectId])
+}
+
+model Artifact {
+  id        String       @id @default(cuid())
+  sessionId String
+  screenId  String?
+  kind      ArtifactKind
+  path      String
+  sha256    String?
+  createdAt DateTime     @default(now())
+
+  session CaptureSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  screen  Screen?        @relation(fields: [screenId], references: [id], onDelete: SetNull)
+
+  @@index([sessionId])
+}
