@@ -1,0 +1,63 @@
+// Prisma schema for crm-lab.
+// The data model mirrors the core Salesforce demo objects that the lab
+// re-implements functionally: Account, Contact, Opportunity.
+// Connection settings live in prisma.config.ts (DATABASE_URL).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OpportunityStage {
+  PROSPECTING
+  QUALIFICATION
+  PROPOSAL
+  NEGOTIATION
+  CLOSED_WON
+  CLOSED_LOST
+}
+
+model Account {
+  id            String        @id @default(cuid())
+  name          String
+  industry      String?
+  website       String?
+  phone         String?
+  billingCity   String?
+  contacts      Contact[]
+  opportunities Opportunity[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([name])
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String?  @unique
+  title     String?
+  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  accountId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Opportunity {
+  id        String           @id @default(cuid())
+  name      String
+  stage     OpportunityStage @default(PROSPECTING)
+  amount    Decimal?         @db.Decimal(14, 2)
+  closeDate DateTime?
+  account   Account          @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  accountId String
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([accountId, stage])
+}

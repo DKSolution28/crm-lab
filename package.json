@@ -1,0 +1,51 @@
+{
+  "name": "crm-lab",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
+    "test:e2e": "playwright test",
+    "rea": "rea-agents",
+    "rea:doctor": "rea-agents doctor --json",
+    "rea:capabilities": "rea-agents capabilities",
+    "cloud:install": "bash scripts/cloud/install.sh",
+    "cloud:start": "bash scripts/cloud/start.sh",
+    "cloud:verify": "bash scripts/cloud/verify.sh"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^18.0.7",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "playwright": "^1.64.0",
+    "prisma": "^7.10.0",
+    "rea-agents": "6.4.0",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": "^22.19.0 || ^24.11.0 || >=26.0.0",
+    "npm": ">=10"
+  }
+}
