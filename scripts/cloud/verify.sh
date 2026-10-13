@@ -51,7 +51,7 @@ DETAIL='jq:[.[]|"\(.label) \(.version): lancement + JS + capture OK"]|join(" ; "
 run_check playwright-chromium-installed bash -c 'node -e "const {chromium}=require(\"playwright\");const p=chromium.executablePath();require(\"fs\").accessSync(p,require(\"fs\").constants.X_OK);console.log(p)"'
 
 # 3. CLI REA
-run_check rea-capabilities bash -c 'npx --no-install rea-agents capabilities | head -n3 && npx --no-install rea-agents capabilities | grep -q "^capabilities\["'
+run_check rea-capabilities bash -c 'npx --no-install rea-agents capabilities >"$0/rea-capabilities.out" && grep -q "^capabilities\[" "$0/rea-capabilities.out" && echo "$(grep -c "^  - operation:" "$0/rea-capabilities.out") opérations ($(grep -c "^    available: true" "$0/rea-capabilities.out") disponibles)"' "$OUT"
 # `doctor` sort en code 1 tant que les moteurs d'analyse optionnels (Hopper, Ghidra, IDA)
 # et l'enregistrement MCP ne sont pas configurés : ce n'est pas une panne d'installation.
 # On exige un JSON valide + Node OK, et on liste les contrôles en échec sans les masquer.
