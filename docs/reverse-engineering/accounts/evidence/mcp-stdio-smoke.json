@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "server": {
+    "name": "rea",
+    "version": "6.4.0"
+  },
+  "toolCount": 170,
+  "targets": [
+    {
+      "type": "page",
+      "title": "CRM Lab",
+      "origin": "http://127.0.0.1:3000"
+    }
+  ],
+  "inspect": {
+    "operation": "inspect_web_page",
+    "confidence": "observed",
+    "title": "CRM Lab",
+    "origin": "http://127.0.0.1:3000",
+    "domNodes": 189,
+    "completeness": "policy_filtered"
+  }
+}

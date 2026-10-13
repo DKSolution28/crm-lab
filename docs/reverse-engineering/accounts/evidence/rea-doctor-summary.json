@@ -1,0 +1,41 @@
+{
+  "healthy": false,
+  "checks": [
+    {
+      "name": "node",
+      "ok": true,
+      "classification": "healthy"
+    },
+    {
+      "name": "host",
+      "ok": true,
+      "classification": "healthy"
+    },
+    {
+      "name": "hopper",
+      "ok": false,
+      "classification": "missing_analysis_engine"
+    },
+    {
+      "name": "ghidra",
+      "ok": false,
+      "classification": "missing_analysis_engine"
+    },
+    {
+      "name": "ida-registration",
+      "ok": false,
+      "classification": "missing_analysis_engine"
+    },
+    {
+      "name": "skill:identity",
+      "ok": false,
+      "classification": "config_drift"
+    },
+    {
+      "name": "registration:cursor",
+      "ok": false,
+      "classification": "config_drift"
+    }
+  ],
+  "cli_package_version": "6.4.0"
+}

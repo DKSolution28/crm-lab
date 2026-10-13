@@ -1,0 +1,29 @@
+{
+  "evidence_id": "ev_1ba1ae730eece5773244791a5714e40ed40499ca26b3fec8239ab511390d33d2",
+  "operation": "inspect_web_page",
+  "confidence": "observed",
+  "target": {
+    "target_id": "1BD9CE39959032B023B8938B980FA037",
+    "type": "page",
+    "title": "CRM Lab",
+    "url": "http://127.0.0.1:3000/",
+    "origin": "http://127.0.0.1:3000",
+    "attached": false
+  },
+  "capture_window": {
+    "started_at": "2026-10-13T21:08:10.015Z",
+    "ended_at": "2026-10-13T21:08:11.094Z",
+    "observation_ms": 800
+  },
+  "completeness_status": "policy_filtered",
+  "dom_total_nodes": 189,
+  "frames": [
+    {
+      "frame_id": "1BD9CE39959032B023B8938B980FA037",
+      "parent_frame_id": null,
+      "url": "http://127.0.0.1:3000/",
+      "origin": "http://127.0.0.1:3000"
+    }
+  ],
+  "network_request_count": 1
+}
