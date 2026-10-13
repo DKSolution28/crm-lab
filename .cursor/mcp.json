@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "rea": {
+      "command": "/workspace/node_modules/.bin/rea",
+      "args": ["mcp"]
+    }
+  }
+}
