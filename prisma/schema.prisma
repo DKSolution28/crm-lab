@@ -1,0 +1,150 @@
+// Data model for the functional reconstruction of a demo Salesforce CRM.
+// Objects mirror standard Salesforce sObjects (Account, Contact, Lead,
+// Opportunity, Case). `salesforceId` keeps the 15/18-char source record id
+// observed during authorized analysis so reconstructed records stay traceable.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum LeadStatus {
+  OPEN
+  WORKING
+  QUALIFIED
+  UNQUALIFIED
+}
+
+enum OpportunityStage {
+  PROSPECTING
+  QUALIFICATION
+  NEEDS_ANALYSIS
+  PROPOSAL
+  NEGOTIATION
+  CLOSED_WON
+  CLOSED_LOST
+}
+
+enum CaseStatus {
+  NEW
+  WORKING
+  ESCALATED
+  CLOSED
+}
+
+enum CasePriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id            String        @id @default(cuid())
+  salesforceId  String?       @unique
+  email         String        @unique
+  name          String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  accounts      Account[]
+  leads         Lead[]
+  opportunities Opportunity[]
+  cases         Case[]
+}
+
+model Account {
+  id            String        @id @default(cuid())
+  salesforceId  String?       @unique
+  name          String
+  industry      String?
+  website       String?
+  phone         String?
+  billingCity   String?
+  billingCountry String?
+  ownerId       String?
+  owner         User?         @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  contacts      Contact[]
+  opportunities Opportunity[]
+  cases         Case[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([name])
+}
+
+model Contact {
+  id           String   @id @default(cuid())
+  salesforceId String?  @unique
+  firstName    String?
+  lastName     String
+  email        String?
+  phone        String?
+  title        String?
+  accountId    String?
+  account      Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  cases        Case[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([accountId])
+  @@index([email])
+}
+
+model Lead {
+  id           String     @id @default(cuid())
+  salesforceId String?    @unique
+  firstName    String?
+  lastName     String
+  company      String
+  email        String?
+  status       LeadStatus @default(OPEN)
+  source       String?
+  ownerId      String?
+  owner        User?      @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([status])
+}
+
+model Opportunity {
+  id           String           @id @default(cuid())
+  salesforceId String?          @unique
+  name         String
+  stage        OpportunityStage @default(PROSPECTING)
+  amount       Decimal?         @db.Decimal(14, 2)
+  closeDate    DateTime?        @db.Date
+  probability  Int?
+  accountId    String
+  account      Account          @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  ownerId      String?
+  owner        User?            @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([accountId])
+  @@index([stage])
+}
+
+model Case {
+  id           String       @id @default(cuid())
+  salesforceId String?      @unique
+  caseNumber   String       @unique
+  subject      String
+  description  String?
+  status       CaseStatus   @default(NEW)
+  priority     CasePriority @default(MEDIUM)
+  accountId    String?
+  account      Account?     @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  contactId    String?
+  contact      Contact?     @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  ownerId      String?
+  owner        User?        @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([status])
+}
