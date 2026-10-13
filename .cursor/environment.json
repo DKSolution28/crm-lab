@@ -1,0 +1,10 @@
+{
+  "name": "crm-lab",
+  "user": "ubuntu",
+  "install": "bash scripts/cloud/install.sh",
+  "start": "bash scripts/cloud/start.sh",
+  "ports": [
+    { "name": "next-dev", "port": 3000 },
+    { "name": "chromium-cdp", "port": 9222 }
+  ]
+}
