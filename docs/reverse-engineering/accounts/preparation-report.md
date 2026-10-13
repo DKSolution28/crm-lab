@@ -22,6 +22,7 @@ contrôlés séparément.
 | Chromium / CDP | Réussi | `http://127.0.0.1:9222/json/version` répond avec Chrome 156 et CDP 1.3. |
 | `list_browser_targets` | Réussi via MCP stdio | Cible `CRM Lab`, URL `http://127.0.0.1:3000/`, origine limitée explicitement à `http://127.0.0.1:3000`. |
 | `inspect_web_page` | Réussi via MCP stdio | Evidence `rea.web-page-inspection`, sans erreur, valeurs de stockage occultées et capture limitée à l'origine de test. |
+| Session distincte | Réussi sans authentification | Le lanceur ouvre Chrome 156 / CDP 1.3 sur `127.0.0.1:9223` avec un profil séparé. REA liste la page publique `Login \| Salesforce` avec l'origine exacte `https://login.salesforce.com`. |
 | Accès Salesforce | Non testé | Aucune URL de My Domain ni session autorisée n'est disponible. Aucune tentative de connexion ou de contournement n'a été faite. |
 
 Les moteurs natifs Hopper, Ghidra et IDA absents expliquent l'état global
