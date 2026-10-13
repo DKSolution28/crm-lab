@@ -1,0 +1,19 @@
+{
+  "captured_by": "rea list-browser-targets http://127.0.0.1:9223",
+  "browser": {
+    "product": "Chrome/156.0.8078.4"
+  },
+  "targets": [
+    {
+      "type": "page",
+      "title": "Login | Salesforce",
+      "url": "https://login.salesforce.com/",
+      "origin": "https://login.salesforce.com"
+    }
+  ],
+  "excluded": {
+    "disallowed_origin": 0,
+    "unsupported_url": 0,
+    "non_page": 6
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "command": "npx -y rea-agents@6.4.0 --mcp",
+  "endpoint": "http://127.0.0.1:9222",
+  "server": {
+    "name": "rea",
+    "version": "6.4.0"
+  },
+  "protocolVersion": "2025-11-25",
+  "toolCount": 170,
+  "browserToolsPresent": {
+    "list_browser_targets": true,
+    "inspect_web_page": true
+  },
+  "inputSchemas": {
+    "list_browser_targets": [
+      "cdp_endpoint",
+      "allowed_origins"
+    ],
+    "inspect_web_page": [
+      "cdp_endpoint",
+      "allowed_origins",
+      "target_id",
+      "observation_ms",
+      "include_accessibility_text",
+      "include_console_text",
+      "include_json_body_shapes",
+      "include_websocket_shapes",
+      "include_storage_keys",
+      "include_storage_fingerprints",
+      "include_script_sources"
+    ]
+  },
+  "listBrowserTargets": {
+    "isError": false,
+    "targets": [
+      {
+        "target_id": "AD65C4962B030EED0623D16FF2A2E969",
+        "title": "CRM Lab",
+        "origin": "http://127.0.0.1:3000"
+      }
+    ]
+  },
+  "inspectWebPage": {
+    "isError": false,
+    "operation": "inspect_web_page",
+    "title": "CRM Lab",
+    "origin": "http://127.0.0.1:3000",
+    "domNodes": 189,
+    "completeness": "policy_filtered",
+    "sections": [
+      "browser",
+      "target",
+      "capture_window",
+      "completeness",
+      "frames",
+      "dom",
+      "accessibility",
+      "scripts",
+      "resources",
+      "network",
+      "console",
+      "workers",
+      "metadata",
+      "storage",
+      "limitations"
+    ]
+  },
+  "ok": true
+}

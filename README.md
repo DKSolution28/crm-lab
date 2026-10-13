@@ -40,3 +40,13 @@ npx rea-agents@6.4.0 doctor --json
 ```
 
 `doctor` est en lecture seule. Un moteur natif absent (Hopper, Ghidra, IDA) n'empêche pas l'exécution de la CLI.
+
+## REA MCP et session Salesforce
+
+`npm run rea:mcp-smoke` démarre le serveur MCP REA en stdio, puis appelle `list_browser_targets` et `inspect_web_page` sur `127.0.0.1:9222`.
+
+`.cursor/mcp.json` enregistre REA pour Cursor Desktop. Les Cloud Agents ne lisent pas ce fichier. Ajoutez le même serveur stdio (`npx -y rea-agents@6.4.0 --mcp`) dans le menu MCP de cursor.com/agents ou dans Dashboard → Plugins & MCPs, puis démarrez un nouvel agent.
+
+`npm run salesforce:browser` ouvre un second Chromium, affiché sur le bureau VM, avec son propre profil et CDP sur `127.0.0.1:9223`. La connexion à l'org (MFA, SSO) se fait à la main. URL de connexion : secret `SALESFORCE_LOGIN_URL`.
+
+Rapport et plan : `docs/reverse-engineering/accounts/`.
