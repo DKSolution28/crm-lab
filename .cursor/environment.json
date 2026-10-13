@@ -1,0 +1,6 @@
+{
+  "name": "crm-lab",
+  "user": "ubuntu",
+  "install": "bash scripts/cloud/install.sh",
+  "start": "bash scripts/cloud/start.sh"
+}
