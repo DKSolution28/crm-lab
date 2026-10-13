@@ -33,7 +33,12 @@ Ne pas confondre :
 | Serveur MCP exécutable dans la VM (`rea mcp`) | OK | Prouvé par `rea mcp doctor` et `scripts/check-rea-mcp.mjs`. |
 | Enregistrement MCP côté client | **Manquant pour les agents cloud** | Ce qui donne à l'agent des *outils* `rea.*` dans sa conversation. |
 
-Configuration manquante, précisément : d'après la documentation Cursor (« Cloud Agent → Capabilities → MCP tools »), les agents cloud utilisent les serveurs MCP **configurés dans le tableau de bord** — menu MCP de `cursor.com/agents` pour un serveur personnel, ou Dashboard → Plugins & MCPs pour un serveur d'équipe — puis **activés pour le run**. Les fichiers `~/.cursor/mcp.json` (ce que `rea setup --client cursor` écrirait dans la VM) et `.cursor/mcp.json` du dépôt servent l'IDE, pas le runtime des agents cloud. `rea doctor` continuera donc de signaler `registration:cursor: missing` dans la VM : ce contrôle vise l'IDE et n'est pas un indicateur de l'état cloud.
+Configuration manquante, précisément : d'après la documentation Cursor (« Cloud Agent → Capabilities → MCP tools », « Cloud Agents », aide « MCP integrations »), la seule source documentée de serveurs MCP pour les agents cloud est le **tableau de bord** — menu MCP de `cursor.com/agents` pour un serveur personnel, ou Dashboard → Plugins & MCPs pour un serveur d'équipe — où le serveur est ajouté puis **activé**. Les fichiers `~/.cursor/mcp.json` (ce que `rea setup --client cursor` écrirait dans la VM) et `.cursor/mcp.json` du dépôt ne sont documentés que pour l'IDE ; la documentation ne les cite jamais comme source pour les agents cloud (elle ne contient pas non plus de phrase explicite « ignorés »), et ce run confirme qu'aucun outil REA n'apparaît sans déclaration tableau de bord. `rea doctor` continuera donc de signaler `registration:cursor: missing` dans la VM : ce contrôle vise l'IDE et n'est pas un indicateur de l'état cloud.
+
+Deux politiques peuvent encore bloquer le serveur après déclaration ; à vérifier si les outils `rea.*` n'apparaissent toujours pas :
+
+- `environment.json` de l'environnement Cloud Agents : `disableAllMcpServers` doit être absent ou `false`, et si `mcpServerAllowlist` est renseigné, il doit contenir une entrée dont le motif `command` accepte `npx -y rea-agents@6.4.0 mcp`. L'environnement actuel est personnel et son `environment.json` n'est pas lisible depuis la VM (restriction propriétaire) : contrôle à faire dans le tableau de bord.
+- Équipe (le cas échéant) : Team Settings → MCP Configuration (allowlist de commandes/URL). L'allowlist approuve une configuration mais ne l'installe pas.
 
 Configuration à saisir dans le tableau de bord (transport stdio, exécuté dans la VM, sans variable d'environnement ni secret) :
 
@@ -49,7 +54,7 @@ Configuration à saisir dans le tableau de bord (transport stdio, exécuté dans
 }
 ```
 
-Prérequis vérifiés pour ce transport : `npx` disponible dans l'image (`/usr/local/bin/npx`, Node 24.21.0), paquet déjà présent dans `node_modules` à la version exacte (pas de téléchargement au démarrage), `rea mcp` démarre en moins de 3 s. Ne pas renseigner `cwd` (refusé pour les serveurs stdio cloud). Après ajout, un **nouveau run** d'agent cloud est nécessaire ; la validation consiste à constater l'espace de noms `rea` dans le catalogue d'outils et à appeler `list_browser_targets` avec `{"cdp_endpoint":"http://127.0.0.1:9222"}`.
+Prérequis vérifiés pour ce transport : `npx` disponible dans l'image (`/usr/local/bin/npx`, Node 24.21.0), paquet déjà présent dans `node_modules` à la version exacte (pas de téléchargement au démarrage), `rea mcp` démarre en moins de 3 s. Ne pas renseigner `cwd` (refusé pour les serveurs stdio cloud). Transport stdio choisi car REA doit joindre le CDP loopback de la VM ; la documentation recommande HTTP quand c'est possible, ce qui ne s'applique pas ici. Après ajout, lancer un **nouveau run** d'agent cloud (la documentation ne précise pas si un run en cours recharge les serveurs MCP ; elle l'exclut pour les secrets, on applique la même règle) ; la validation consiste à constater l'espace de noms `rea` dans le catalogue d'outils et à appeler `list_browser_targets` avec `{"cdp_endpoint":"http://127.0.0.1:9222"}`. En cas d'échec d'authentification MCP, un événement `mcp_auth_error` apparaît dans les événements du run ; ce run n'en contient aucun, ce qui confirme une absence de déclaration plutôt qu'un échec de démarrage.
 
 Le même JSON est versionné dans `.cursor/mcp.json` pour les sessions Cursor IDE ouvertes sur ce dépôt ; cela ne remplace pas l'enregistrement tableau de bord.
 
@@ -81,7 +86,7 @@ Interventions nécessaires (détail dans `02-session-navigateur-salesforce.md`) 
 
 ## 4. Étapes suivantes (dans l'ordre)
 
-1. **Propriétaire du tableau de bord Cursor** : ajouter le serveur MCP `rea` (JSON ci-dessus) dans Cloud Agents → MCP (ou Plugins & MCPs pour l'équipe), l'activer, lancer un nouveau run.
+1. **Propriétaire du tableau de bord Cursor** : ajouter le serveur MCP `rea` (JSON ci-dessus) dans Cloud Agents → MCP (ou Plugins & MCPs pour l'équipe), l'activer, vérifier qu'aucune politique `disableAllMcpServers` / `mcpServerAllowlist` de l'environnement ne l'exclut, lancer un nouveau run.
 2. **Agent (nouveau run)** : confirmer la présence des outils `rea.*`, exécuter `list_browser_targets` sur `9222` via MCP (et non via CLI) ; consigner la preuve dans `evidence/`.
 3. **Responsable du projet** : désigner la Developer Org autorisée ; choisir la voie d'authentification (connexion humaine via bureau distant, ou secret `SFDX_AUTH_URL` + Salesforce CLI).
 4. **Titulaire du compte** : `bash scripts/start-salesforce-browser.sh`, prendre le contrôle du bureau distant, se connecter (MFA/SSO), rendre la main.
