@@ -14,8 +14,10 @@ Laboratoire local Next.js pour préparer un reverse engineering fonctionnel auto
 
 ```bash
 bash scripts/cloud-agent-install.sh
-bash scripts/cloud-agent-start.sh
+bash scripts/start-cdp-browser.sh
 ```
+
+`scripts/start-cdp-browser.sh` ouvre Chromium en mode headless avec DevTools sur le port 9222, puis exécute `scripts/cloud-agent-start.sh`.
 
 L'application écoute sur le port 3000. `scripts/cloud-agent-start.sh` crée le rôle PostgreSQL `ubuntu` et la base `crm_lab`, autorise l'authentification `trust` uniquement sur l'interface loopback, copie `.env.example` vers `.env` si besoin, puis applique les migrations.
 
