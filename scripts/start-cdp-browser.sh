@@ -67,7 +67,7 @@ sync_prisma_schema() {
   cd "${ROOT}"
   export DATABASE_URL="${CRM_LAB_DATABASE_URL}"
   log "Applying Prisma schema"
-  npx prisma db push --skip-generate
+  npx prisma db push
 }
 
 start_next_dev() {

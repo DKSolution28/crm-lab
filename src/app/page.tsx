@@ -2,8 +2,6 @@ import { getHealth } from "@/lib/health";
 import { prisma } from "@/lib/prisma";
 import { NoteForm } from "./note-form";
 
-export const dynamic = "force-dynamic";
-
 export default async function Home() {
   const health = await getHealth();
   const notes = health.databaseReachable

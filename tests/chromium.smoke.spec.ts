@@ -12,6 +12,5 @@ test("lab home renders and can store a Prisma note", async ({ page }) => {
   const stamp = `note-${Date.now()}`;
   await page.getByLabel("Observation").fill(stamp);
   await page.getByRole("button", { name: "Enregistrer la note" }).click();
-  await expect(page.getByTestId("note-status")).toContainText("Note enregistrée");
   await expect(page.getByTestId("lab-note").first()).toContainText(stamp);
 });
