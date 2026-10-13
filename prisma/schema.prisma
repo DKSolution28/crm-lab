@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Capture {
+  id          String           @id @default(cuid())
+  label       String
+  sourceUrl   String?
+  capturedAt DateTime         @default(now())
+  entities    EntityMetadata[]
+
+  @@map("captures")
+}
+
+model EntityMetadata {
+  id        String          @id @default(cuid())
+  apiName   String
+  label     String
+  captureId String
+  capture   Capture         @relation(fields: [captureId], references: [id], onDelete: Cascade)
+  fields    FieldMetadata[]
+
+  @@unique([captureId, apiName])
+  @@map("entity_metadata")
+}
+
+model FieldMetadata {
+  id         String         @id @default(cuid())
+  apiName    String
+  label      String
+  dataType   String
+  required   Boolean        @default(false)
+  entityId   String
+  entity     EntityMetadata @relation(fields: [entityId], references: [id], onDelete: Cascade)
+
+  @@unique([entityId, apiName])
+  @@map("field_metadata")
+}
