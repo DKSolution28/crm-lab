@@ -1,0 +1,86 @@
+// Standard Prisma schema for PostgreSQL
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Salesforce Reverse Engineering Data Model
+// Objects extracted and reverse-engineered from demonstration Salesforce instance
+
+model Account {
+  id              String      @id @default(cuid())
+  salesforceId    String?     @unique @map("salesforce_id")
+  name            String
+  accountNumber   String?     @map("account_number")
+  type            String?
+  industry        String?
+  annualRevenue   Decimal?    @map("annual_revenue")
+  phone           String?
+  website         String?
+  billingStreet   String?     @map("billing_street")
+  billingCity     String?     @map("billing_city")
+  billingState    String?     @map("billing_state")
+  billingPostalCode String?   @map("billing_postal_code")
+  billingCountry  String?     @map("billing_country")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  contacts        Contact[]
+  opportunities   Opportunity[]
+
+  @@map("accounts")
+}
+
+model Contact {
+  id              String      @id @default(cuid())
+  salesforceId    String?     @unique @map("salesforce_id")
+  accountId       String?     @map("account_id")
+  firstName       String?     @map("first_name")
+  lastName        String      @map("last_name")
+  email           String?
+  phone           String?
+  title           String?
+  department      String?
+  leadSource      String?     @map("lead_source")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  account         Account?    @relation(fields: [accountId], references: [id], onDelete: SetNull)
+
+  @@map("contacts")
+}
+
+model Opportunity {
+  id              String      @id @default(cuid())
+  salesforceId    String?     @unique @map("salesforce_id")
+  accountId       String?     @map("account_id")
+  name            String
+  stageName       String      @map("stage_name")
+  amount          Decimal?
+  closeDate       DateTime    @map("close_date")
+  probability     Float?
+  type            String?
+  leadSource      String?     @map("lead_source")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  account         Account?    @relation(fields: [accountId], references: [id], onDelete: SetNull)
+
+  @@map("opportunities")
+}
+
+model ReverseEngineeringLog {
+  id              String      @id @default(cuid())
+  targetObject    String      @map("target_object")
+  action          String
+  status          String
+  extractedFields Json?       @map("extracted_fields")
+  metadata        Json?
+  recordedAt      DateTime    @default(now()) @map("recorded_at")
+
+  @@map("reverse_engineering_logs")
+}

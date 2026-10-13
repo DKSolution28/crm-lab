@@ -1,0 +1,5 @@
+{
+  "name": "salesforce-crm-reverse-engineering-lab",
+  "install": "bash scripts/setup-env.sh",
+  "start": "exec npm run dev -- --port 3000"
+}

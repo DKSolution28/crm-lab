@@ -1,0 +1,67 @@
+// use prisma-8
+
+model Account {
+  id              String      @id @default(cuid(2))
+  salesforceId    String?     @unique
+  name            String
+  accountNumber   String?
+  type            String?
+  industry        String?
+  annualRevenue   Decimal?
+  phone           String?
+  website         String?
+  billingStreet   String?
+  billingCity     String?
+  billingState    String?
+  billingPostalCode String?
+  billingCountry  String?
+  createdAt       TimestamptzString @default(now())
+  updatedAt       temporal.updatedAtString()
+
+  contacts        Contact[]
+  opportunities   Opportunity[]
+}
+
+model Contact {
+  id              String      @id @default(cuid(2))
+  salesforceId    String?     @unique
+  accountId       String?
+  firstName       String?
+  lastName        String
+  email           String?
+  phone           String?
+  title           String?
+  department      String?
+  leadSource      String?
+  createdAt       TimestamptzString @default(now())
+  updatedAt       temporal.updatedAtString()
+
+  account         Account?    @relation(fields: [accountId], references: [id])
+}
+
+model Opportunity {
+  id              String      @id @default(cuid(2))
+  salesforceId    String?     @unique
+  accountId       String?
+  name            String
+  stageName       String
+  amount          Decimal?
+  closeDate       TimestamptzString
+  probability     Float?
+  type            String?
+  leadSource      String?
+  createdAt       TimestamptzString @default(now())
+  updatedAt       temporal.updatedAtString()
+
+  account         Account?    @relation(fields: [accountId], references: [id])
+}
+
+model ReverseEngineeringLog {
+  id              String      @id @default(cuid(2))
+  targetObject    String
+  action          String
+  status          String
+  extractedFields Json?
+  metadata        Json?
+  recordedAt      TimestamptzString @default(now())
+}
