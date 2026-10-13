@@ -1,0 +1,12 @@
+{
+  "name": "crm-lab Salesforce demo RE",
+  "user": "ubuntu",
+  "install": "bash scripts/cloud-install.sh",
+  "start": "bash scripts/start-cdp-browser.sh",
+  "chromeExecutablePath": "/usr/local/bin/google-chrome",
+  "ports": [
+    { "name": "Next.js", "port": 3000 },
+    { "name": "Chrome CDP", "port": 9222 },
+    { "name": "PostgreSQL", "port": 5432 }
+  ]
+}

@@ -1,0 +1,26 @@
+// Lab schema for authorized Salesforce demo reverse-engineering notes.
+// No production credentials belong in this file.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model LabNote {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model ObservedSurface {
+  id        String   @id @default(cuid())
+  name      String
+  origin    String
+  notes     String?
+  createdAt DateTime @default(now())
+}
