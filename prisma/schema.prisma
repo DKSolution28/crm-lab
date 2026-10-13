@@ -1,0 +1,38 @@
+// Schema Prisma initial — architecture PostgreSQL du labo de reverse
+// engineering (application Salesforce de demonstration, usage autorise).
+//
+// Demarrage en local : voir docker-compose.yml
+//   docker compose up -d db
+//   cp .env.example .env   # puis renseigner DATABASE_URL (aucun secret reel commis)
+//   npx prisma migrate dev
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Exemple minimal : cibles d'analyse autorisees (instances de demo).
+model Target {
+  id        String   @id @default(cuid())
+  name      String
+  baseUrl   String
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions AnalysisSession[]
+}
+
+// Sessions d'analyse menees par les agents (traces reproductibles).
+model AnalysisSession {
+  id        String   @id @default(cuid())
+  targetId  String
+  target    Target   @relation(fields: [targetId], references: [id], onDelete: Cascade)
+  status    String   @default("draft")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,37 @@
+{
+  "name": "salesforce-re-lab",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "setup": "./scripts/setup.sh",
+    "verify": "./scripts/verify.sh",
+    "test:e2e": "playwright test",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "db:up": "docker compose up -d db"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.10.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "playwright": "^1.64.0",
+    "prisma": "^8.0.0-rc.22",
+    "rea-agents": "^6.4.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
