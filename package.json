@@ -25,18 +25,18 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.0",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "24.10.0",
     "@types/pg": "8.23.1",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "@playwright/test": "1.64.0",
-    "eslint": "10.0.0",
+    "eslint": "9.39.5",
     "eslint-config-next": "16.4.0",
     "playwright": "1.64.0",
     "prisma": "7.10.0",
     "rea-agents": "6.4.0",
     "tailwindcss": "4.3.3",
-    "typescript": "7.0.2"
+    "typescript": "6.0.3"
   }
 }
