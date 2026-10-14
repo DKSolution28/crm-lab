@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { LeadDto } from "@/lib/leads/service";
 
 const formatDateTime = (iso: string | null) =>
@@ -63,9 +64,42 @@ export function LeadDetails({ lead }: { lead: LeadDto }) {
           </h2>
           <dl className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Row label="Converted at" value={formatDateTime(lead.conversion.convertedAt)} />
-            <Row label="Account Id" value={lead.conversion.accountId ?? ""} />
-            <Row label="Contact Id" value={lead.conversion.contactId ?? ""} />
-            <Row label="Opportunity Id" value={lead.conversion.opportunityId ?? ""} />
+            <div className="min-w-0">
+              <dt className="text-xs text-slate-500">Account</dt>
+              <dd className="truncate text-sm text-slate-900">
+                {lead.conversion.accountId ? (
+                  <Link href={`/accounts/${lead.conversion.accountId}`} data-testid="converted-account" className="text-blue-700 hover:underline">
+                    View account
+                  </Link>
+                ) : (
+                  <span className="text-slate-300">—</span>
+                )}
+              </dd>
+            </div>
+            <div className="min-w-0">
+              <dt className="text-xs text-slate-500">Contact</dt>
+              <dd className="truncate text-sm text-slate-900">
+                {lead.conversion.contactId ? (
+                  <Link href={`/contacts/${lead.conversion.contactId}`} data-testid="converted-contact" className="text-blue-700 hover:underline">
+                    View contact
+                  </Link>
+                ) : (
+                  <span className="text-slate-300">—</span>
+                )}
+              </dd>
+            </div>
+            <div className="min-w-0">
+              <dt className="text-xs text-slate-500">Opportunity</dt>
+              <dd className="truncate text-sm text-slate-900">
+                {lead.conversion.opportunityId ? (
+                  <Link href={`/opportunities/${lead.conversion.opportunityId}`} data-testid="converted-opportunity" className="text-blue-700 hover:underline">
+                    View opportunity
+                  </Link>
+                ) : (
+                  <span className="text-slate-300">—</span>
+                )}
+              </dd>
+            </div>
           </dl>
         </section>
       ) : null}

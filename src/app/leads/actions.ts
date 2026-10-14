@@ -7,6 +7,7 @@ import { AuthorizationError } from "@/lib/auth/policies";
 import { NotFoundError } from "@/lib/accounts/service";
 import { ConflictError } from "@/lib/errors";
 import { leadDisplayName } from "@/lib/leads/format";
+import { convertInputFromFormData, convertLead } from "@/lib/leads/convert";
 import { createLead, updateLead } from "@/lib/leads/service";
 import { ValidationError, leadInputFromFormData, type FieldErrors } from "@/lib/leads/validation";
 
@@ -63,4 +64,19 @@ export async function updateLeadAction(id: string, _previous: LeadFormState, for
   revalidatePath(`/leads/${id}`);
   const name = leadDisplayName(updated);
   redirect(`/leads/${updated.id}?toast=${encodeURIComponent(`success:Lead "${name}" was saved.`)}`);
+}
+
+export async function convertLeadAction(id: string, _previous: LeadFormState, formData: FormData): Promise<LeadFormState> {
+  const user = await getCurrentUser();
+  try {
+    await convertLead(id, convertInputFromFormData(formData), user);
+  } catch (error) {
+    return toFormState(error, formData);
+  }
+  revalidatePath("/leads");
+  revalidatePath(`/leads/${id}`);
+  revalidatePath("/accounts");
+  revalidatePath("/contacts");
+  revalidatePath("/opportunities");
+  redirect(`/leads/${id}`);
 }
