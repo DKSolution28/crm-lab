@@ -196,8 +196,10 @@ test.describe("List views API", () => {
     const columns = await request.patch(`/api/list-views/${viewId}`, { headers: asStandard, data: { columns: ["type", "billingCity"] } });
     expect((await columns.json()).columns).toEqual(["name", "type", "billingCity"]);
 
-    const badColumn = await request.patch(`/api/list-views/${viewId}`, { headers: asStandard, data: { columns: ["nope"] } });
+    const badColumn = await request.patch(`/api/list-views/${viewId}`, { headers: asStandard, data: { label: "Should not persist", columns: ["nope"] } });
     expect(badColumn.status()).toBe(400);
+    const afterRejectedPatch = await (await request.get(`/api/list-views/${viewId}`, { headers: asStandard })).json();
+    expect(afterRejectedPatch.label).toBe(`${E2E_PREFIX}Partners renamed ${stamp}`);
 
     const sorted = await request.patch(`/api/list-views/${viewId}`, { headers: asStandard, data: { sortField: "billingCity", sortDirection: "desc" } });
     const sortedBody = await sorted.json();
