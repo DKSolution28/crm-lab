@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { connection } from "next/server";
 import { createNote } from "@/app/actions";
 import { prisma } from "@/lib/prisma";
@@ -38,6 +39,12 @@ export default async function Home() {
               Notes de laboratoire
             </h1>
           </div>
+          <Link
+            href="/accounts"
+            className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm font-medium text-blue-700 hover:bg-zinc-50 dark:border-zinc-700"
+          >
+            Ouvrir le module Accounts
+          </Link>
           <p
             className={`rounded-full px-3 py-1 text-sm font-medium ${
               database === "up"
