@@ -19,7 +19,7 @@ Les agents de la première vague écrivent uniquement les fichiers indiqués. Il
 | MVP-C-LEADS | PASSED | Backend et frontend | CRUD Leads, sans conversion | MVP-SCHEMA |
 | MVP-C-CONVERT | IN_PROGRESS | Backend | `convertLead` atomique, 201 puis 409 | MVP-B-CONTACTS |
 | MVP-E-ACT | IN_PROGRESS | Backend et frontend | tâches et historique | fiches Account, Contact, Opportunity |
-| MVP-F-DASH | IN_PROGRESS | Backend et frontend | dashboard lu en base | schéma et modules persistés |
+| MVP-F-DASH | PASSED | Backend et frontend | dashboard lu en base | schéma et modules persistés |
 | MVP-G-AUTH | TODO | Backend + auditeur | sessions vérifiées, ou maintien de l'étiquette démonstration locale | MVP-SEC-IDENTITY |
 | MVP-VERIFY | TODO | Vérificateur indépendant | verdict PASS / FAIL / BLOCKED | parcours E2E exécutés |
 
