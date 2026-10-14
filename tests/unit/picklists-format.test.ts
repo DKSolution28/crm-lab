@@ -110,6 +110,7 @@ describe("formatting", () => {
   it("formats currency, picklists, booleans and addresses", () => {
     assert.equal(formatCurrency("1250000"), "$1,250,000");
     assert.equal(formatCurrency(null), "");
+    assert.equal(formatCurrency("9007199254740993"), "$9,007,199,254,740,993");
     const a = account();
     assert.equal(formatFieldValue(a, "annualRevenue"), "$1,250,000");
     assert.equal(formatFieldValue(a, "isBuyer"), "Yes");
@@ -147,11 +148,16 @@ describe("service helpers", () => {
     assert.deepEqual(
       columns.map((c) => [c.label, c.items.length, c.summary]),
       [
-        ["Customer", 2, 100],
-        ["Partner", 1, 50],
-        ["(None)", 1, 7],
+        ["Customer", 2, "100"],
+        ["Partner", 1, "50"],
+        ["(None)", 1, "7"],
       ],
     );
+    const big = groupForKanban([
+      account({ id: "big1", annualRevenue: "9007199254740993" }),
+      account({ id: "big2", annualRevenue: "9" }),
+    ], "type", "annualRevenue");
+    assert.equal(big[0].summary, "9007199254741002");
     const byOwner = groupForKanban(items, "ownerAlias", null);
     assert.equal(byOwner.length, 1);
     assert.equal(byOwner[0].summary, null);

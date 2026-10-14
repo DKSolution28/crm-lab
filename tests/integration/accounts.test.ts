@@ -1,11 +1,13 @@
-// Tests d'intégration Prisma : exécutés contre la base PostgreSQL locale
-// (DATABASE_URL). Les enregistrements créés portent le préfixe « [test] » et
-// sont supprimés à la fin.
+// Tests d'intégration Prisma : TEST_DATABASE_URL est obligatoire (voir
+// tests/preload-test-database.ts). Les enregistrements créés portent le
+// préfixe « [test] » et sont supprimés à la fin, uniquement sur cette base.
 import assert from "node:assert/strict";
 import { after, before, describe, it } from "node:test";
 import { prisma } from "../../src/lib/prisma";
+import { assertCleanupPrefix, assertConnectedTestDatabase, assertTestDatabaseUrl, databaseNameOf } from "../test-database";
 import type { CurrentUser } from "../../src/lib/auth/current-user";
 import { AuthorizationError } from "../../src/lib/auth/policies";
+import { FilterError } from "../../src/lib/accounts/filters";
 import { ListViewError, createView, deleteView, ensureSystemViews, findView, listVisibleViews, pinView, resolveDefaultView, setViewFilters, setViewVisibility } from "../../src/lib/accounts/list-views";
 import { createAccount, getAccountWithRelated, globalSearch, listAccounts, lookupAccounts, recordView, updateAccount } from "../../src/lib/accounts/service";
 import { ValidationError } from "../../src/lib/accounts/validation";
@@ -13,12 +15,18 @@ import { ValidationError } from "../../src/lib/accounts/validation";
 const PREFIX = "[test] ";
 const stamp = Date.now();
 
+const readCurrentDatabase = async () => {
+  const rows = await prisma.$queryRaw<Array<{ name: string }>>`SELECT current_database() AS name`;
+  return rows[0]?.name ?? "";
+};
+
 let admin: CurrentUser;
 let standard: CurrentUser;
 
 const asUser = (user: { id: string; alias: string; firstName: string; lastName: string; role: "ADMIN" | "STANDARD"; pinnedAccountViewId: string | null }): CurrentUser => user;
 
 before(async () => {
+  await assertConnectedTestDatabase(readCurrentDatabase);
   await ensureSystemViews();
   admin = asUser(
     await prisma.user.upsert({
@@ -37,13 +45,21 @@ before(async () => {
 });
 
 after(async () => {
-  await prisma.account.deleteMany({ where: { name: { startsWith: PREFIX } } });
-  await prisma.listView.deleteMany({ where: { label: { startsWith: PREFIX } } });
+  await assertConnectedTestDatabase(readCurrentDatabase);
+  const prefix = assertCleanupPrefix(PREFIX);
+  await prisma.account.deleteMany({ where: { name: { startsWith: prefix } } });
+  await prisma.listView.deleteMany({ where: { label: { startsWith: prefix } } });
   await prisma.user.deleteMany({ where: { id: { in: [admin.id, standard.id] } } });
   await prisma.$disconnect();
 });
 
 describe("system list views", () => {
+  it("is connected to the disposable database named by TEST_DATABASE_URL", async () => {
+    const actual = await readCurrentDatabase();
+    assert.equal(actual, databaseNameOf(assertTestDatabaseUrl()));
+    assert.notEqual(actual, "crm_lab");
+  });
+
   it("exposes Recently Viewed, All Accounts, My Accounts and New This Week", async () => {
     const views = await listVisibleViews(standard);
     const names = views.filter((v) => v.isSystem).map((v) => v.developerName).sort();
@@ -155,6 +171,13 @@ describe("account lifecycle", () => {
     assert.equal(byAdmin.ownerId, standard.id, "editing does not change the owner");
   });
 
+  it("keeps exact high-precision revenue across create and update", async () => {
+    const precise = await createAccount({ name: `${PREFIX}Exact Revenue ${stamp}`, annualRevenue: "9007199254740993" }, standard);
+    assert.equal(precise.annualRevenue, "9007199254740993");
+    const updated = await updateAccount(precise.id, { name: precise.name, annualRevenue: "999999999999999999" }, standard);
+    assert.equal(updated.annualRevenue, "999999999999999999");
+  });
+
   it("only lets an administrator reassign the owner", async () => {
     await assert.rejects(updateAccount(createdId, { name: `${PREFIX}Alpha Ridge ${stamp}`, ownerId: admin.id }, standard), ValidationError);
     const reassigned = await updateAccount(createdId, { name: `${PREFIX}Alpha Ridge ${stamp}`, ownerId: admin.id }, admin);
@@ -217,6 +240,29 @@ describe("personal list views with filters", () => {
     assert.ok(result.items.every((item) => item.name.startsWith(PREFIX) && (item.type === "Partner" || item.billingCountryCode === "US")));
 
     await assert.rejects(setViewFilters(view.id, [{ field: "name", operator: "equals", value: "x" }], "1 AND 2", standard), /filter 2 does not exist/);
+  });
+
+  it("matches annual revenue by the exact decimal and refuses filters that cannot be queried", async () => {
+    const exact = "9007199254740993";
+    const neighbor = "9007199254740992";
+    const target = await createAccount({ name: `${PREFIX}Revenue Exact ${stamp}`, annualRevenue: exact }, standard);
+    const other = await createAccount({ name: `${PREFIX}Revenue Neighbor ${stamp}`, annualRevenue: neighbor }, standard);
+    const view = await createView({ label: `${PREFIX}Exact revenue ${stamp}` }, standard);
+
+    const saved = await setViewFilters(view.id, [{ field: "annualRevenue", operator: "equals", value: exact }], null, standard);
+    const matched = (await listAccounts(saved, standard)).items.map((item) => item.id);
+    assert.deepEqual(matched, [target.id]);
+    assert.ok(!matched.includes(other.id));
+
+    const neighborView = await setViewFilters(view.id, [{ field: "annualRevenue", operator: "equals", value: neighbor }], null, standard);
+    assert.deepEqual((await listAccounts(neighborView, standard)).items.map((item) => item.id), [other.id]);
+
+    await assert.rejects(
+      setViewFilters(view.id, [{ field: "numberOfEmployees", operator: "greater_than", value: "2147483648" }], null, standard),
+      FilterError,
+    );
+    const persisted = await prisma.listView.findUniqueOrThrow({ where: { id: view.id } });
+    assert.deepEqual(persisted.filters, [{ field: "annualRevenue", operator: "equals", value: neighbor }]);
   });
 
   it("hides private views from other users and shares them with Sharing Settings", async () => {

@@ -189,15 +189,23 @@ const resolveParent = async (parentId: string | null, selfId: string | null, err
   }
   // Conçu : empêche un cycle dans la hiérarchie.
   let cursor = parent.parentId;
-  let depth = 0;
-  while (cursor && depth < 50) {
-    if (cursor === selfId) {
+  const visited = new Set([parent.id]);
+  while (cursor) {
+    if (cursor === selfId || visited.has(cursor)) {
       errors.parentId = "This parent would create a loop in the account hierarchy.";
       return null;
     }
+    if (visited.size >= 500) {
+      errors.parentId = "The account hierarchy is too deep to validate.";
+      return null;
+    }
+    visited.add(cursor);
     const next = await prisma.account.findUnique({ where: { id: cursor }, select: { parentId: true } });
-    cursor = next?.parentId ?? null;
-    depth += 1;
+    if (!next) {
+      errors.parentId = "An ancestor account was not found.";
+      return null;
+    }
+    cursor = next.parentId;
   }
   return parent.id;
 };
@@ -230,10 +238,21 @@ export const createAccount = async (input: AccountInput, user: CurrentUser): Pro
 };
 
 export const updateAccount = async (id: string, input: AccountInput, user: CurrentUser): Promise<AccountDto> => {
-  const existing = await prisma.account.findUnique({ where: { id }, select: { id: true, ownerId: true } });
+  const existing = await prisma.account.findUnique({
+    where: { id },
+    select: { id: true, ownerId: true, type: true, industry: true, accountSource: true, rating: true, ownership: true },
+  });
   if (!existing) throw new NotFoundError("Account not found");
   if (!canEditAccount(user, existing)) throw new AuthorizationError("You can only edit accounts you own.");
-  const { data, errors } = validateAccountInput(input);
+  const { data, errors } = validateAccountInput(input, {
+    historicalPicklists: {
+      type: existing.type,
+      industry: existing.industry,
+      accountSource: existing.accountSource,
+      rating: existing.rating,
+      ownership: existing.ownership,
+    },
+  });
   const parentId = await resolveParent(data.parentId, id, errors);
   const ownerId = data.ownerId ? await resolveOwner(data.ownerId, user, errors) : existing.ownerId;
   if (Object.keys(errors).length > 0) throw new ValidationError(errors);
@@ -300,17 +319,21 @@ export const kanbanGroupValue = (account: AccountDto, field: KanbanGroupField): 
   }
 };
 
-export type KanbanColumn = { key: string; label: string; items: AccountDto[]; summary: number | null };
+export type KanbanColumn = { key: string; label: string; items: AccountDto[]; summary: string | number | null };
 
 export const groupForKanban = (items: AccountDto[], groupBy: KanbanGroupField, summarizeBy: KanbanSummaryField | null): KanbanColumn[] => {
   const columns = new Map<string, KanbanColumn>();
   for (const account of items) {
     const { key, label } = kanbanGroupValue(account, groupBy);
-    const column = columns.get(key) ?? { key, label: label || "(None)", items: [], summary: summarizeBy ? 0 : null };
+    const column: KanbanColumn = columns.get(key) ?? {
+      key, label: label || "(None)", items: [],
+      summary: summarizeBy === "annualRevenue" ? "0" : summarizeBy ? 0 : null,
+    };
     column.items.push(account);
-    if (summarizeBy) {
-      const raw = summarizeBy === "annualRevenue" ? account.annualRevenue : account.numberOfEmployees;
-      column.summary = (column.summary ?? 0) + (raw === null || raw === undefined ? 0 : Number(raw));
+    if (summarizeBy === "annualRevenue") {
+      column.summary = (BigInt(column.summary ?? "0") + BigInt(account.annualRevenue ?? "0")).toString();
+    } else if (summarizeBy === "numberOfEmployees") {
+      column.summary = Number(column.summary ?? 0) + (account.numberOfEmployees ?? 0);
     }
     columns.set(key, column);
   }

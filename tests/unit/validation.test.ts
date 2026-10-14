@@ -27,13 +27,27 @@ describe("validateAccountInput", () => {
 
   it("parses whole numbers for Annual Revenue and Employees", () => {
     const ok = validateAccountInput({ name: "A", annualRevenue: "1,250,000", numberOfEmployees: 42 });
-    assert.equal(ok.data.annualRevenue, 1250000);
+    assert.equal(ok.data.annualRevenue, "1250000");
     assert.equal(ok.data.numberOfEmployees, 42);
     const bad = validateAccountInput({ name: "A", annualRevenue: "12.5", numberOfEmployees: "-3" });
     assert.match(bad.errors.annualRevenue, /whole number/);
     assert.match(bad.errors.numberOfEmployees, /whole number/);
     const tooLong = validateAccountInput({ name: "A", numberOfEmployees: "123456789" });
     assert.match(tooLong.errors.numberOfEmployees, /cannot exceed 8 digits/);
+  });
+
+  it("preserves 18-digit revenue exactly and rejects unsafe numeric JSON", () => {
+    const valid = validateAccountInput({ name: "A", annualRevenue: "9007199254740993" });
+    assert.equal(valid.data.annualRevenue, "9007199254740993");
+    assert.deepEqual(valid.errors, {});
+    const unsafe = validateAccountInput(accountInputFromJson({ name: "A", annualRevenue: 9007199254740993 }));
+    assert.match(unsafe.errors.annualRevenue, /exact decimal string/);
+  });
+
+  it("preserves an unchanged inactive historical picklist but rejects selecting it for new records", () => {
+    const input = { name: "Historical", industry: "Advertising" };
+    assert.match(validateAccountInput(input).errors.industry, /inactive/);
+    assert.deepEqual(validateAccountInput(input, { historicalPicklists: { industry: "Advertising" } }).errors, {});
   });
 
   it("resolves country and state labels from codes and enforces the dependency", () => {

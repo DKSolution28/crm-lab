@@ -25,6 +25,13 @@ describe("normalizeFilters", () => {
     assert.throws(() => normalizeFilters([{ field: "billingCountryCode", operator: "equals", value: "ZZ" }]), FilterError);
     assert.throws(() => normalizeFilters("not an array"), FilterError);
   });
+
+  it("rejects unsafe numeric JSON and non-integers before they can be stored", () => {
+    assert.throws(() => normalizeFilters([{ field: "annualRevenue", operator: "equals", value: 9007199254740993 }]), /exact decimal strings/);
+    assert.throws(() => normalizeFilters([{ field: "annualRevenue", operator: "equals", value: "12.5" }]), /whole number/);
+    assert.throws(() => normalizeFilters([{ field: "annualRevenue", operator: "equals", value: "" }]), /whole number is required/);
+    assert.throws(() => normalizeFilters([{ field: "numberOfEmployees", operator: "greater_than", value: "2147483648" }]), /outside the integer range/);
+  });
 });
 
 describe("operatorsForField", () => {
@@ -96,7 +103,9 @@ describe("filtersToWhere", () => {
   });
 
   it("builds numeric, boolean, relation and date-range conditions", () => {
-    assert.deepEqual(filtersToWhere([{ field: "annualRevenue", operator: "greater_than", value: "1,000,000" }]), { AND: [{ annualRevenue: { gt: 1000000 } }] });
+    assert.deepEqual(filtersToWhere([{ field: "annualRevenue", operator: "greater_than", value: "1,000,000" }]), { AND: [{ annualRevenue: { gt: "1000000" } }] });
+    assert.deepEqual(filtersToWhere([{ field: "annualRevenue", operator: "equals", value: "9007199254740993" }]), { AND: [{ annualRevenue: { equals: "9007199254740993" } }] });
+    assert.deepEqual(filtersToWhere([{ field: "numberOfEmployees", operator: "equals", value: "35" }]), { AND: [{ numberOfEmployees: { equals: 35 } }] });
     assert.deepEqual(filtersToWhere([{ field: "isBuyer", operator: "equals", value: "true" }]), { AND: [{ isBuyer: { equals: true } }] });
     assert.deepEqual(filtersToWhere([{ field: "ownerAlias", operator: "equals", value: "demoadm" }]), { AND: [{ owner: { is: { alias: { equals: "demoadm", mode: "insensitive" } } } }] });
     const created = filtersToWhere([{ field: "createdAt", operator: "equals", value: "2026-10-14" }]);

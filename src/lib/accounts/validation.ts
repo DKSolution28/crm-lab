@@ -50,7 +50,7 @@ export type ValidatedAccount = {
   accountNumber: string | null;
   site: string | null;
   accountSource: string | null;
-  annualRevenue: number | null;
+  annualRevenue: string | null;
   type: string | null;
   industry: string | null;
   ownership: string | null;
@@ -129,18 +129,38 @@ const MAX_LENGTHS: Record<string, number> = {
   shippingPostalCode: 20,
 };
 
-const picklist = (name: PicklistName, value: unknown, errors: FieldErrors, key: string, label: string): string | null => {
+const picklist = (name: PicklistName, value: unknown, errors: FieldErrors, key: string, label: string, allowedHistorical?: string | null): string | null => {
   const text = str(value);
   if (!text) return null;
   if (!isPicklistValue(name, text)) {
     errors[key] = `"${text}" is not a valid ${label} value.`;
     return null;
   }
-  if (!isActivePicklistValue(name, text)) {
+  if (!isActivePicklistValue(name, text) && text !== allowedHistorical) {
     errors[key] = `"${text}" is an inactive ${label} value.`;
     return null;
   }
   return text;
+};
+
+/** Keep Decimal(18,0) exact: JS numbers above MAX_SAFE_INTEGER are rejected. */
+const decimalInteger = (value: unknown, errors: FieldErrors, key: string, label: string, digits: number): string | null => {
+  if (value === undefined || value === null || value === "") return null;
+  if (typeof value === "number" && !Number.isSafeInteger(value)) {
+    errors[key] = `${label} must be supplied as an exact decimal string.`;
+    return null;
+  }
+  const raw = String(value).trim().replace(/[\s,]/g, "");
+  if (!/^\d+$/.test(raw)) {
+    errors[key] = `${label} must be a whole number.`;
+    return null;
+  }
+  const canonical = raw.replace(/^0+(?=\d)/, "");
+  if (canonical.length > digits) {
+    errors[key] = `${label} cannot exceed ${digits} digits.`;
+    return null;
+  }
+  return canonical;
 };
 
 const integer = (value: unknown, errors: FieldErrors, key: string, label: string, digits: number): number | null => {
@@ -192,7 +212,10 @@ const address = (
   };
 };
 
-export const validateAccountInput = (input: AccountInput): { data: ValidatedAccount; errors: FieldErrors } => {
+export const validateAccountInput = (
+  input: AccountInput,
+  options: { historicalPicklists?: Partial<Record<PicklistName, string | null>> } = {},
+): { data: ValidatedAccount; errors: FieldErrors } => {
   const errors: FieldErrors = {};
   const name = str(input.name);
   if (!name) errors.name = REQUIRED_MESSAGE;
@@ -201,12 +224,12 @@ export const validateAccountInput = (input: AccountInput): { data: ValidatedAcco
     name: name ?? "",
     accountNumber: str(input.accountNumber),
     site: str(input.site),
-    accountSource: picklist("accountSource", input.accountSource, errors, "accountSource", "Account Source"),
-    annualRevenue: integer(input.annualRevenue, errors, "annualRevenue", "Annual Revenue", 18),
-    type: picklist("type", input.type, errors, "type", "Type"),
-    industry: picklist("industry", input.industry, errors, "industry", "Industry"),
-    ownership: picklist("ownership", input.ownership, errors, "ownership", "Ownership"),
-    rating: picklist("rating", input.rating, errors, "rating", "Rating"),
+    accountSource: picklist("accountSource", input.accountSource, errors, "accountSource", "Account Source", options.historicalPicklists?.accountSource),
+    annualRevenue: decimalInteger(input.annualRevenue, errors, "annualRevenue", "Annual Revenue", 18),
+    type: picklist("type", input.type, errors, "type", "Type", options.historicalPicklists?.type),
+    industry: picklist("industry", input.industry, errors, "industry", "Industry", options.historicalPicklists?.industry),
+    ownership: picklist("ownership", input.ownership, errors, "ownership", "Ownership", options.historicalPicklists?.ownership),
+    rating: picklist("rating", input.rating, errors, "rating", "Rating", options.historicalPicklists?.rating),
     description: str(input.description),
     website: str(input.website),
     tickerSymbol: str(input.tickerSymbol),
@@ -314,7 +337,7 @@ export const accountInputFromJson = (body: unknown): AccountInput => {
   for (const key of Object.keys(record)) {
     const value = record[key];
     if (value === undefined) continue;
-    input[key] = value === null ? null : typeof value === "boolean" ? value : String(value);
+    input[key] = value === null ? null : typeof value === "boolean" || (typeof value === "number" && (key === "annualRevenue" || key === "numberOfEmployees")) ? value : String(value);
   }
   return { name: "", ...input } as AccountInput;
 };
