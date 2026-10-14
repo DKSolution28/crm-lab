@@ -1,27 +1,43 @@
 import { PrismaClient } from "@prisma/client";
+import { assertCleanupPrefix, assertConnectedTestDatabase, assertTestDatabaseUrl } from "../../tests/test-database";
 
 export const E2E_PREFIX = "[e2e] ";
 
-const url = process.env.DATABASE_URL ?? "postgresql://ubuntu@127.0.0.1:5432/crm_lab";
-
 let client: PrismaClient | null = null;
 
-const prisma = () => {
-  client ??= new PrismaClient({ datasourceUrl: url });
+const currentDatabase = async (db: PrismaClient) => {
+  const rows = await db.$queryRaw<Array<{ name: string }>>`SELECT current_database() AS name`;
+  return rows[0]?.name ?? "";
+};
+
+/** Client Prisma branché exclusivement sur TEST_DATABASE_URL. */
+export const testDatabase = async () => {
+  if (!client) {
+    const created = new PrismaClient({ datasourceUrl: assertTestDatabaseUrl() });
+    try {
+      await assertConnectedTestDatabase(() => currentDatabase(created));
+    } catch (error) {
+      await created.$disconnect();
+      throw error;
+    }
+    client = created;
+  }
   return client;
 };
 
-/** Supprime les enregistrements créés par les tests E2E (préfixe « [e2e] » ou préfixe propre à la spec). */
+/** Supprime les enregistrements créés par les tests E2E. Refuse crm_lab et toute autre base. */
 export const cleanupE2eRecords = async (prefix: string = E2E_PREFIX) => {
-  const db = prisma();
-  await db.account.deleteMany({ where: { name: { startsWith: prefix } } });
-  await db.listView.deleteMany({ where: { label: { startsWith: prefix } } });
+  const scoped = assertCleanupPrefix(prefix);
+  const db = await testDatabase();
+  await assertConnectedTestDatabase(() => currentDatabase(db));
+  await db.account.deleteMany({ where: { name: { startsWith: scoped } } });
+  await db.listView.deleteMany({ where: { label: { startsWith: scoped } } });
   await db.$disconnect();
   client = null;
 };
 
 export const seededUsers = async () => {
-  const db = prisma();
+  const db = await testDatabase();
   const users = await db.user.findMany({ where: { alias: { in: ["demoadm", "demostd"] } }, select: { id: true, alias: true, role: true } });
   await db.$disconnect();
   client = null;

@@ -1,9 +1,10 @@
-// Tests d'intégration Prisma : exécutés contre la base PostgreSQL locale
-// (DATABASE_URL). Les enregistrements créés portent le préfixe « [test] » et
-// sont supprimés à la fin.
+// Tests d'intégration Prisma : TEST_DATABASE_URL est obligatoire (voir
+// tests/preload-test-database.ts). Les enregistrements créés portent le
+// préfixe « [test] » et sont supprimés à la fin, uniquement sur cette base.
 import assert from "node:assert/strict";
 import { after, before, describe, it } from "node:test";
 import { prisma } from "../../src/lib/prisma";
+import { assertCleanupPrefix, assertConnectedTestDatabase, assertTestDatabaseUrl, databaseNameOf } from "../test-database";
 import type { CurrentUser } from "../../src/lib/auth/current-user";
 import { AuthorizationError } from "../../src/lib/auth/policies";
 import { FilterError } from "../../src/lib/accounts/filters";
@@ -14,12 +15,18 @@ import { ValidationError } from "../../src/lib/accounts/validation";
 const PREFIX = "[test] ";
 const stamp = Date.now();
 
+const readCurrentDatabase = async () => {
+  const rows = await prisma.$queryRaw<Array<{ name: string }>>`SELECT current_database() AS name`;
+  return rows[0]?.name ?? "";
+};
+
 let admin: CurrentUser;
 let standard: CurrentUser;
 
 const asUser = (user: { id: string; alias: string; firstName: string; lastName: string; role: "ADMIN" | "STANDARD"; pinnedAccountViewId: string | null }): CurrentUser => user;
 
 before(async () => {
+  await assertConnectedTestDatabase(readCurrentDatabase);
   await ensureSystemViews();
   admin = asUser(
     await prisma.user.upsert({
@@ -38,13 +45,21 @@ before(async () => {
 });
 
 after(async () => {
-  await prisma.account.deleteMany({ where: { name: { startsWith: PREFIX } } });
-  await prisma.listView.deleteMany({ where: { label: { startsWith: PREFIX } } });
+  await assertConnectedTestDatabase(readCurrentDatabase);
+  const prefix = assertCleanupPrefix(PREFIX);
+  await prisma.account.deleteMany({ where: { name: { startsWith: prefix } } });
+  await prisma.listView.deleteMany({ where: { label: { startsWith: prefix } } });
   await prisma.user.deleteMany({ where: { id: { in: [admin.id, standard.id] } } });
   await prisma.$disconnect();
 });
 
 describe("system list views", () => {
+  it("is connected to the disposable database named by TEST_DATABASE_URL", async () => {
+    const actual = await readCurrentDatabase();
+    assert.equal(actual, databaseNameOf(assertTestDatabaseUrl()));
+    assert.notEqual(actual, "crm_lab");
+  });
+
   it("exposes Recently Viewed, All Accounts, My Accounts and New This Week", async () => {
     const views = await listVisibleViews(standard);
     const names = views.filter((v) => v.isSystem).map((v) => v.developerName).sort();
