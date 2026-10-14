@@ -16,7 +16,12 @@
     "rea:capabilities": "rea-agents capabilities",
     "rea:doctor": "rea-agents doctor --json",
     "rea:mcp-check": "node scripts/check-rea-mcp.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "db:seed": "tsx --env-file=.env prisma/seed.ts",
+    "test:unit": "node --import tsx --test tests/unit/*.test.ts",
+    "test:integration": "node --import tsx --env-file=.env --test tests/integration/*.test.ts",
+    "test:api": "playwright test e2e/api.spec.ts",
+    "test": "npm run test:unit && npm run test:integration && npm run test:e2e"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",
@@ -37,6 +42,13 @@
     "prisma": "6.19.3",
     "rea-agents": "6.4.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  },
+  "prisma": {
+    "seed": "tsx --env-file=.env prisma/seed.ts"
   }
 }

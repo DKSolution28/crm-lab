@@ -13,3 +13,277 @@ model LabNote {
   detail    String
   createdAt DateTime @default(now())
 }
+
+// ---------------------------------------------------------------------------
+// Users (conçu : CRM Lab n'a pas d'authentification réelle ; les utilisateurs
+// de démonstration portent le propriétaire des comptes et les autorisations).
+// ---------------------------------------------------------------------------
+
+enum UserRole {
+  ADMIN
+  STANDARD
+}
+
+model User {
+  id        String   @id @default(cuid())
+  alias     String   @unique
+  firstName String
+  lastName  String
+  role      UserRole @default(STANDARD)
+  createdAt DateTime @default(now())
+
+  pinnedAccountView   ListView? @relation("PinnedAccountView", fields: [pinnedAccountViewId], references: [id], onDelete: SetNull)
+  pinnedAccountViewId String?
+
+  ownedAccounts      Account[]        @relation("AccountOwner")
+  createdAccounts    Account[]        @relation("AccountCreatedBy")
+  modifiedAccounts   Account[]        @relation("AccountLastModifiedBy")
+  listViews          ListView[]       @relation("ListViewOwner")
+  recentlyViewed     RecentlyViewed[]
+  ownedContacts      Contact[]
+  ownedOpportunities Opportunity[]
+}
+
+// ---------------------------------------------------------------------------
+// Account : 27 champs observés dans Object Manager (spec-accounts.md §1).
+// ---------------------------------------------------------------------------
+
+enum AccountType {
+  Analyst
+  Competitor
+  Customer
+  Integrator
+  Investor
+  Partner
+  Press
+  Prospect
+  Reseller
+  Other
+}
+
+enum Industry {
+  Agriculture
+  Apparel
+  Banking
+  Biotechnology
+  Chemicals
+  Communications
+  Construction
+  Consulting
+  Education
+  Electronics
+  Energy
+  Engineering
+  Entertainment
+  Environmental
+  Finance
+  FoodBeverage
+  Government
+  Healthcare
+  Hospitality
+  Insurance
+  Machinery
+  Manufacturing
+  Media
+  NotForProfit
+  Other
+  Recreation
+  Retail
+  Shipping
+  Technology
+  Telecommunications
+  Transportation
+  Utilities
+  // Valeurs inactives observées : conservées pour les données historiques,
+  // non proposées à la saisie.
+  AerospaceDefense
+  BusinessServices
+  Advertising
+}
+
+enum AccountSource {
+  Advertisement
+  EmployeeReferral
+  ExternalReferral
+  Partner
+  PublicRelations
+  SeminarInternal
+  SeminarPartner
+  TradeShow
+  Web
+  WordOfMouth
+  Other
+}
+
+enum Rating {
+  Hot
+  Warm
+  Cold
+}
+
+enum Ownership {
+  Public
+  Private
+  Subsidiary
+  Other
+}
+
+model Account {
+  id String @id @default(cuid())
+
+  // About
+  name              String
+  accountNumber     String?        @db.VarChar(40)
+  site              String?        @db.VarChar(80)
+  accountSource     AccountSource?
+  annualRevenue     Decimal?       @db.Decimal(18, 0)
+  type              AccountType?
+  industry          Industry?
+  ownership         Ownership?
+  rating            Rating?
+  description       String?        @db.VarChar(32000)
+  website           String?        @db.VarChar(255)
+  tickerSymbol      String?        @db.VarChar(20)
+  sic               String?        @db.VarChar(20)
+  sicDesc           String?        @db.VarChar(80)
+  jigsaw            String?        @db.VarChar(20)
+  tier              String?        @db.VarChar(2)
+  numberOfEmployees Int?
+  isBuyer           Boolean        @default(false)
+  isCustomerPortal  Boolean        @default(false)
+
+  // Get in Touch
+  phone String?
+  fax   String?
+
+  billingStreet      String?
+  billingCity        String?
+  billingState       String?
+  billingStateCode   String?
+  billingPostalCode  String?
+  billingCountry     String?
+  billingCountryCode String?
+
+  shippingStreet      String?
+  shippingCity        String?
+  shippingState       String?
+  shippingStateCode   String?
+  shippingPostalCode  String?
+  shippingCountry     String?
+  shippingCountryCode String?
+
+  // Hiérarchie
+  parent   Account?  @relation("AccountHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  parentId String?
+  children Account[] @relation("AccountHierarchy")
+
+  // Système
+  owner            User      @relation("AccountOwner", fields: [ownerId], references: [id])
+  ownerId          String
+  createdBy        User      @relation("AccountCreatedBy", fields: [createdById], references: [id])
+  createdById      String
+  lastModifiedBy   User      @relation("AccountLastModifiedBy", fields: [lastModifiedById], references: [id])
+  lastModifiedById String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  lastActivityDate DateTime?
+
+  contacts       Contact[]
+  opportunities  Opportunity[]
+  recentlyViewed RecentlyViewed[]
+
+  @@index([name])
+  @@index([ownerId])
+  @@index([parentId])
+  @@index([createdAt])
+}
+
+// ---------------------------------------------------------------------------
+// Vues de liste (observé : All Accounts, My Accounts, New This Week,
+// Recently Viewed ; gestion New / Clone / Rename / Sharing / Fields / Delete).
+// ---------------------------------------------------------------------------
+
+enum ListViewVisibility {
+  PRIVATE
+  EVERYONE
+}
+
+enum ListViewScope {
+  ALL
+  MINE
+  RECENT
+  NEW_THIS_WEEK
+}
+
+model ListView {
+  id            String             @id @default(cuid())
+  objectType    String             @default("Account")
+  developerName String?            @unique
+  label         String
+  visibility    ListViewVisibility @default(PRIVATE)
+  scope         ListViewScope      @default(ALL)
+  columns       String[]
+  sortField     String?
+  sortDirection String?            @default("asc")
+  filters       Json               @default("[]")
+  filterLogic   String?
+  isSystem      Boolean            @default(false)
+  owner         User?              @relation("ListViewOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId       String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  pinnedBy User[] @relation("PinnedAccountView")
+
+  @@index([objectType, ownerId])
+}
+
+model RecentlyViewed {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  account   Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  accountId String
+  viewedAt  DateTime @default(now())
+
+  @@unique([userId, accountId])
+  @@index([userId, viewedAt])
+}
+
+// ---------------------------------------------------------------------------
+// Relations préparatoires (listes associées observées dans le layout :
+// Contacts, Opportunities). Modèles minimaux, sans interface dédiée.
+// ---------------------------------------------------------------------------
+
+model Contact {
+  id        String   @id @default(cuid())
+  firstName String?
+  lastName  String
+  email     String?
+  phone     String?
+  title     String?
+  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  accountId String?
+  owner     User     @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([accountId])
+}
+
+model Opportunity {
+  id        String   @id @default(cuid())
+  name      String
+  stageName String
+  amount    Decimal? @db.Decimal(18, 2)
+  closeDate DateTime
+  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  accountId String?
+  owner     User     @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([accountId])
+}
