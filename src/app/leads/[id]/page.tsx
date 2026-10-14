@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { RelatedTasks } from "@/components/activities/related-tasks";
+import { ConvertPanel } from "@/components/leads/convert-panel";
 import { LeadDetails } from "@/components/leads/lead-details";
 import { buttonClasses } from "@/components/ui/modal";
 import { ToastFromQuery } from "@/components/ui/toast";
@@ -11,6 +12,7 @@ import { canEditRecord } from "@/lib/auth/policies";
 import { leadDisplayName } from "@/lib/leads/format";
 import { getLead } from "@/lib/leads/service";
 import { recordRecentView } from "@/lib/recent/service";
+import { convertLeadAction } from "../actions";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +34,7 @@ export default async function LeadRecordPage({ params, searchParams }: { params:
   const toast = parseToast(query.toast);
   const name = leadDisplayName(lead);
   const editable = canEditRecord(user, lead) && lead.conversion === null;
+  const convertible = editable && lead.qualified && (lead.status === "New" || lead.status === "Working");
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4 bg-slate-50 p-4">
@@ -53,6 +56,7 @@ export default async function LeadRecordPage({ params, searchParams }: { params:
             <Link href="/leads" className={buttonClasses.neutral}>
               Back to list
             </Link>
+            {convertible ? <ConvertPanel action={convertLeadAction.bind(null, lead.id)} company={lead.company} /> : null}
             {editable ? (
               <Link href={`/leads/${lead.id}/edit`} className={buttonClasses.neutral}>
                 Edit

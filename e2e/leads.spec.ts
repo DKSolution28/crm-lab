@@ -50,8 +50,7 @@ test.describe("Leads module", () => {
     await expect(page.getByTestId("lead-name")).toHaveText(leadName);
     await expect(page.getByTestId("lead-status")).toHaveText("Working");
     await expect(page.getByTestId("lead-qualified")).toHaveText("Yes");
-    await expect(page.getByRole("button", { name: /convert/i })).toHaveCount(0);
-    await expect(page.getByRole("link", { name: /convert/i })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Convert", exact: true })).toBeVisible();
 
     await page.goto("/leads");
     await page.getByPlaceholder("Search this list...").fill(`Paper Lantern ${stamp}`);
