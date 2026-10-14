@@ -13,10 +13,10 @@ Les agents de la première vague écrivent uniquement les fichiers indiqués. Il
 | MVP-QA-ACCEPT | PASSED | QA | `docs/mvp/acceptance-tests.md`, `docs/mvp/test-gaps.md` | — |
 | MVP-SEC-IDENTITY | PASSED | Auditeur sécurité | `docs/mvp/security-identity.md` | — |
 | MVP-CI | TODO | QA + backend | `.github/workflows/` workflow PR, Postgres jetable | contrats d'architecture |
-| MVP-SCHEMA | IN_PROGRESS | Backend, propriétaire du schéma | `prisma/migrations/20261014200000_mvp_crm_modules/` et les fichiers du §2.3 de `docs/mvp/architecture.md` | MVP-ARCH |
-| MVP-B-CONTACTS | TODO | Backend et frontend | module Contacts | MVP-SCHEMA, MVP-QA-ACCEPT |
-| MVP-C-LEADS | TODO | Backend puis frontend | module Leads et conversion | MVP-SCHEMA, Contacts stables |
-| MVP-D-OPP | TODO | Backend et frontend | module Opportunities et Kanban | MVP-SCHEMA |
+| MVP-SCHEMA | PASSED | Backend, propriétaire du schéma | `prisma/migrations/20261014200000_mvp_crm_modules/` | MVP-ARCH |
+| MVP-B-CONTACTS | IN_PROGRESS | Backend et frontend | module Contacts, sans conversion | MVP-SCHEMA |
+| MVP-D-OPP | IN_PROGRESS | Backend et frontend | module Opportunities et Kanban | MVP-SCHEMA |
+| MVP-C-LEADS | IN_PROGRESS | Backend et frontend | CRUD Leads, sans conversion | MVP-SCHEMA |
 | MVP-E-ACT | TODO | Backend et frontend | tâches et historique | MVP-SCHEMA, fiches existantes |
 | MVP-F-DASH | TODO | Backend et frontend | dashboard lu en base | Contacts, Leads, Opportunities, Activities persistés |
 | MVP-G-AUTH | TODO | Backend + auditeur | sessions vérifiées, ou maintien de l'étiquette démonstration locale | MVP-SEC-IDENTITY |

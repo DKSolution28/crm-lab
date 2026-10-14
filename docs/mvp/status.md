@@ -1,6 +1,6 @@
 # Statut MVP
 
-Cycle : contrat d'architecture intégré. Le schéma unique est en cours. Le MVP n'est pas terminé. Étiquette produit : **démonstration locale**.
+Cycle : schéma unique intégré et rejoué. Trois modules démarrent. Le MVP n'est pas terminé. Étiquette produit : **démonstration locale**.
 
 ## Déjà vérifié avant cette vague
 
@@ -21,12 +21,15 @@ Documents seulement. Aucun module métier n'est livré.
 | MVP-QA-ACCEPT | `docs/mvp/acceptance-tests.md` marque les cinq parcours **NOT RUN**. `docs/mvp/test-gaps.md` ne déclare aucune exécution | `46735ca` sur `cursor/mvp-qa-acceptance-2cf0` |
 | MVP-SEC-IDENTITY | `docs/mvp/security-identity.md`. Le repli `ensureDefaultUser`, l'en-tête prioritaire et `switchUser` correspondent à `src/lib/auth/current-user.ts` et `src/app/actions.ts`. `GET /api/accounts/lookup` ne résout pas d'utilisateur | `051843d` sur `cursor/mvp-security-identity-2cf0` |
 | MVP-ARCH | `docs/mvp/architecture.md`. `accountId` reste nullable. Une seule migration `20261014200000_mvp_crm_modules`. Conversion 201 puis 409. Montants en chaîne décimale | `5bdf392` sur `cursor/mvp-architect-contracts-2cf0` |
+| MVP-SCHEMA | Migration unique, `canEditRecord`, `ConflictError` → 409, `recordRecentView`, `createAccount(..., db)`. Rejoué par le coordinateur, pas seulement déclaré par l'auteur | `4b9163f` sur `cursor/mvp-schema-2cf0` |
 
 ## En cours
 
-| Tâche | Agent | Branche attendue | Fichiers |
-| --- | --- | --- | --- |
-| MVP-SCHEMA | [Backend](https://cursor.com/agents/bc-9e19d465-9370-5c1e-82e7-2dcee0598f4b) | `cursor/mvp-schema-2cf0` | Migration unique et fichiers du §2.3 uniquement |
+| Tâche | Branche attendue | Périmètre |
+| --- | --- | --- |
+| MVP-B-CONTACTS | `cursor/mvp-contacts-2cf0` | Contacts : domaine, API, pages, lien sur la fiche Account. Pas de schéma. |
+| MVP-D-OPP | `cursor/mvp-opportunities-2cf0` | Opportunities et Kanban. Montants en chaîne. Pas de schéma. |
+| MVP-C-LEADS | `cursor/mvp-leads-2cf0` | CRUD Leads seulement. Pas de `convertLead`. Pas de schéma. |
 
 La pull request d'intégration n'est pas ouverte : la création reste en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
 
@@ -34,7 +37,18 @@ La pull request d'intégration n'est pas ouverte : la création reste en attente
 
 ## Tests de ce cycle
 
-Non exécutés. Aucune modification de code applicatif.
+Rejoués le 2026-10-14 sur `crm_mvp_schema_verify` (`127.0.0.1`), avec `DATABASE_URL` pointant vers `crm_lab` pour les tests afin de vérifier que la garde l'ignore.
+
+| Commande | Résultat |
+| --- | --- |
+| `prisma migrate deploy` sur base vide | 3 migrations appliquées, dont `20261014200000_mvp_crm_modules` |
+| `npm run test:unit` | 37 pass, 0 fail |
+| `npm run test:integration` | 18 pass, 0 fail |
+| `npm run test:e2e` | 24 pass, 0 fail |
+| `npm run lint` | exit 0 |
+| `npm run typecheck` | exit 0 |
+
+`crm_lab` avant et après : 12 comptes, `max(Account.updatedAt)` = `2026-10-14 12:49:22.245`, aucune table `Lead` ni `Task`.
 
 ## Bugs ouverts
 
@@ -47,7 +61,7 @@ Le défaut HIGH est connu, hérité du mode démonstration. Il bloque uniquement
 
 ## Prochaine tâche
 
-Attendre la migration `20261014200000_mvp_crm_modules` sur cette branche, avec les tests Accounts encore verts sur une base jetable. Ensuite, au plus trois workstreams : Contacts, Opportunities, Leads. Pas de conversion, d'activités ni de dashboard avant les services dont ils dépendent.
+Intégrer Contacts, Opportunities et le CRUD Leads après relecture et tests. La conversion de lead attend `createContact`. Les activités et le dashboard restent en attente.
 
 ## Liens
 
