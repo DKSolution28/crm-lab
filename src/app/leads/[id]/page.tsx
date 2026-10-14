@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { RelatedTasks } from "@/components/activities/related-tasks";
 import { LeadDetails } from "@/components/leads/lead-details";
 import { buttonClasses } from "@/components/ui/modal";
 import { ToastFromQuery } from "@/components/ui/toast";
@@ -69,6 +70,7 @@ export default async function LeadRecordPage({ params, searchParams }: { params:
       <div className="rounded-lg border border-slate-200 bg-white p-4">
         <LeadDetails lead={lead} />
       </div>
+      <RelatedTasks parentType="Lead" parentId={lead.id} />
     </div>
   );
 }

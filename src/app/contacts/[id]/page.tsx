@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { RelatedTasks } from "@/components/activities/related-tasks";
 import { buttonClasses } from "@/components/ui/modal";
 import { ToastFromQuery } from "@/components/ui/toast";
 import { parseToast } from "@/components/ui/toast-query";
@@ -172,6 +173,7 @@ export default async function ContactRecordPage({ params, searchParams }: { para
           )}
         </section>
       </div>
+      <RelatedTasks parentType="Contact" parentId={contact.id} />
     </div>
   );
 }

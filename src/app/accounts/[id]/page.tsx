@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { RelatedTasks } from "@/components/activities/related-tasks";
 import { AccountDetails } from "@/components/accounts/account-details";
 import { buttonClasses } from "@/components/ui/modal";
 import { ToastFromQuery } from "@/components/ui/toast";
@@ -202,6 +203,8 @@ export default async function AccountRecordPage({ params, searchParams }: { para
                   </table>
                 )}
               </section>
+
+              <RelatedTasks parentType="Account" parentId={account.id} />
 
               <section id="related-children" aria-labelledby="related-children-title">
                 <h3 id="related-children-title" className="mb-2 text-sm font-semibold text-slate-800">
