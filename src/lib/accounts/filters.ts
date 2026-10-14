@@ -33,6 +33,38 @@ export class FilterError extends Error {
 }
 
 const OPERATOR_SET = new Set<string>(FILTER_OPERATORS.map((o) => o.value));
+const INT32_MIN = -2147483648;
+const INT32_MAX = 2147483647;
+
+/** Whole numbers only. Currency stays a decimal string so values above MAX_SAFE_INTEGER are not rounded. */
+const parseExactInteger = (value: string, field: FieldDefinition): number | string => {
+  const compact = value.replace(/[\s,]/g, "");
+  if (compact === "") throw new FilterError(`A whole number is required for ${field.label}`);
+  if (!/^-?\d+$/.test(compact)) throw new FilterError(`"${value}" is not a whole number for ${field.label}`);
+  const negative = compact.startsWith("-");
+  const digits = compact.slice(negative ? 1 : 0).replace(/^0+(?=\d)/, "");
+  const canonical = negative && digits !== "0" ? `-${digits}` : digits;
+  if (field.kind === "currency") {
+    const width = canonical.startsWith("-") ? canonical.length - 1 : canonical.length;
+    if (width > 18) throw new FilterError(`${field.label} cannot exceed 18 digits`);
+    return canonical;
+  }
+  const n = Number(canonical);
+  if (!Number.isSafeInteger(n) || n > INT32_MAX || n < INT32_MIN) {
+    throw new FilterError(`"${value}" is outside the integer range for ${field.label}`);
+  }
+  return n;
+};
+
+const stringifyFilterValue = (raw: unknown, index: number): string => {
+  if (typeof raw === "number") {
+    if (!Number.isSafeInteger(raw)) {
+      throw new FilterError(`filter ${index + 1}: numeric values that are not safe integers must be exact decimal strings`);
+    }
+    return String(raw);
+  }
+  return String(raw).trim();
+};
 
 /** Opérateurs proposés selon le type de champ (déduit pour les types non texte). */
 export const operatorsForField = (field: FieldDefinition): FilterOperator[] => {
@@ -69,11 +101,20 @@ export const normalizeFilters = (input: unknown): ListFilter[] => {
     }
     let normalizedValue: string | string[];
     if (Array.isArray(value)) {
-      normalizedValue = value.map((v) => String(v).trim()).filter(Boolean);
+      normalizedValue = value.map((v) => stringifyFilterValue(v, index)).filter(Boolean);
     } else if (value === undefined || value === null) {
       normalizedValue = "";
     } else {
-      normalizedValue = String(value).trim();
+      normalizedValue = stringifyFilterValue(value, index);
+    }
+    if (definition.kind === "currency" || definition.kind === "number") {
+      const candidate = Array.isArray(normalizedValue) ? (normalizedValue[0] ?? "") : normalizedValue;
+      try {
+        parseExactInteger(candidate, definition);
+      } catch (error) {
+        const message = error instanceof FilterError ? error.message : "invalid number";
+        throw new FilterError(`filter ${index + 1}: ${message}`);
+      }
     }
     if (definition.kind === "picklist" && definition.picklist) {
       const values = Array.isArray(normalizedValue) ? normalizedValue : normalizedValue ? [normalizedValue] : [];
@@ -168,11 +209,7 @@ const setPath = (path: string, condition: unknown): Prisma.AccountWhereInput => 
   return result as Prisma.AccountWhereInput;
 };
 
-const parseNumber = (value: string, field: FieldDefinition) => {
-  const n = Number(value.replace(/[\s,]/g, ""));
-  if (!Number.isFinite(n)) throw new FilterError(`"${value}" is not a number for ${field.label}`);
-  return n;
-};
+const parseNumber = (value: string, field: FieldDefinition) => parseExactInteger(value, field);
 
 const parseDate = (value: string, field: FieldDefinition) => {
   const d = new Date(value);

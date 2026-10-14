@@ -1,16 +1,6 @@
 import { NextResponse } from "next/server";
 import { getRequestUser } from "@/lib/auth/current-user";
-import {
-  cloneView,
-  deleteView,
-  findView,
-  renameView,
-  setViewColumns,
-  setViewFilters,
-  setViewSort,
-  setViewVisibility,
-  updateView,
-} from "@/lib/accounts/list-views";
+import { cloneView, deleteView, findView, updateView } from "@/lib/accounts/list-views";
 import { errorResponse, readJson } from "@/lib/http";
 
 type Context = { params: Promise<{ id: string }> };

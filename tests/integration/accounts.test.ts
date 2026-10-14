@@ -6,6 +6,7 @@ import { after, before, describe, it } from "node:test";
 import { prisma } from "../../src/lib/prisma";
 import type { CurrentUser } from "../../src/lib/auth/current-user";
 import { AuthorizationError } from "../../src/lib/auth/policies";
+import { FilterError } from "../../src/lib/accounts/filters";
 import { ListViewError, createView, deleteView, ensureSystemViews, findView, listVisibleViews, pinView, resolveDefaultView, setViewFilters, setViewVisibility } from "../../src/lib/accounts/list-views";
 import { createAccount, getAccountWithRelated, globalSearch, listAccounts, lookupAccounts, recordView, updateAccount } from "../../src/lib/accounts/service";
 import { ValidationError } from "../../src/lib/accounts/validation";
@@ -224,6 +225,29 @@ describe("personal list views with filters", () => {
     assert.ok(result.items.every((item) => item.name.startsWith(PREFIX) && (item.type === "Partner" || item.billingCountryCode === "US")));
 
     await assert.rejects(setViewFilters(view.id, [{ field: "name", operator: "equals", value: "x" }], "1 AND 2", standard), /filter 2 does not exist/);
+  });
+
+  it("matches annual revenue by the exact decimal and refuses filters that cannot be queried", async () => {
+    const exact = "9007199254740993";
+    const neighbor = "9007199254740992";
+    const target = await createAccount({ name: `${PREFIX}Revenue Exact ${stamp}`, annualRevenue: exact }, standard);
+    const other = await createAccount({ name: `${PREFIX}Revenue Neighbor ${stamp}`, annualRevenue: neighbor }, standard);
+    const view = await createView({ label: `${PREFIX}Exact revenue ${stamp}` }, standard);
+
+    const saved = await setViewFilters(view.id, [{ field: "annualRevenue", operator: "equals", value: exact }], null, standard);
+    const matched = (await listAccounts(saved, standard)).items.map((item) => item.id);
+    assert.deepEqual(matched, [target.id]);
+    assert.ok(!matched.includes(other.id));
+
+    const neighborView = await setViewFilters(view.id, [{ field: "annualRevenue", operator: "equals", value: neighbor }], null, standard);
+    assert.deepEqual((await listAccounts(neighborView, standard)).items.map((item) => item.id), [other.id]);
+
+    await assert.rejects(
+      setViewFilters(view.id, [{ field: "numberOfEmployees", operator: "greater_than", value: "2147483648" }], null, standard),
+      FilterError,
+    );
+    const persisted = await prisma.listView.findUniqueOrThrow({ where: { id: view.id } });
+    assert.deepEqual(persisted.filters, [{ field: "annualRevenue", operator: "equals", value: neighbor }]);
   });
 
   it("hides private views from other users and shares them with Sharing Settings", async () => {
