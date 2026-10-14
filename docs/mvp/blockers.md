@@ -10,7 +10,7 @@ Un agent cloud n'a pas le navigateur Salesforce du coordinateur. Il ne tente pas
 
 ### B4 — Account Name sur New Contact
 
-INT-5 marque Account Name `required: true`, avec un astérisque. Les textes plus anciens du dépôt et le module B disent que l'association est optionnelle. Save n'a pas été utilisé. Décision de travail, déjà écrite dans les exigences : `accountId` reste nullable, le lookup est affiché, aucune règle de sauvegarde n'est imposée tant qu'une observation de Save ne tranche pas. L'architecte doit reprendre cette décision dans le contrat.
+INT-5 marque Account Name `required: true`, avec un astérisque. Les textes plus anciens du dépôt et le module B disent que l'association est optionnelle. Save n'a pas été utilisé. Le contrat `docs/mvp/architecture.md` garde `accountId` nullable et n'impose pas de règle de sauvegarde. Le marqueur `required: true` d'INT-5 reste une inconnue de Save, pas une validation MVP.
 
 ### B2 — Identité de démonstration
 
