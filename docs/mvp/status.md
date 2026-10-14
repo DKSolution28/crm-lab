@@ -19,12 +19,12 @@ Rien. Les documents de coordination (exigences, backlog, ce statut, blocages, co
 
 | Tâche | Agent | Branche attendue | Fichiers |
 | --- | --- | --- | --- |
-| MVP-ARCH | Architecte | `cursor/mvp-architect-contracts-2cf0` | `docs/mvp/architecture.md` |
-| MVP-REA-CONTACTS | Analyste REA | `cursor/mvp-rea-contacts-2cf0` | `docs/reverse-engineering/contacts/` |
-| MVP-QA-ACCEPT | QA | `cursor/mvp-qa-acceptance-2cf0` | `docs/mvp/acceptance-tests.md`, `docs/mvp/test-gaps.md` |
-| MVP-SEC-IDENTITY | Auditeur | `cursor/mvp-security-identity-2cf0` | `docs/mvp/security-identity.md` |
+| MVP-ARCH | [Architecte](https://cursor.com/agents/bc-14bae628-a85f-5426-a3f6-8b00c67b0c43) | `cursor/mvp-architect-contracts-2cf0` | `docs/mvp/architecture.md` |
+| MVP-REA-CONTACTS | [Analyste REA](https://cursor.com/agents/bc-1e06116d-93f8-5a58-885a-2e45593bbf26) | `cursor/mvp-rea-contacts-2cf0` | `docs/reverse-engineering/contacts/` |
+| MVP-QA-ACCEPT | [QA](https://cursor.com/agents/bc-30774f81-583c-5481-9723-9fdebeb82325) | `cursor/mvp-qa-acceptance-2cf0` | `docs/mvp/acceptance-tests.md`, `docs/mvp/test-gaps.md` |
+| MVP-SEC-IDENTITY | [Auditeur](https://cursor.com/agents/bc-5c636719-b2f2-5737-931c-d41d3e3dab8c) | `cursor/mvp-security-identity-2cf0` | `docs/mvp/security-identity.md` |
 
-Les identifiants d'agents et les SHA seront ajoutés quand les branches existeront. Aucun de ces travaux n'est `PASSED`.
+Aucun de ces travaux n'est `PASSED`. La pull request d'intégration n'a pas été créée : la demande est en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
 
 ## Tests de ce cycle
 
