@@ -1,6 +1,6 @@
 # Statut MVP
 
-Cycle : vague 1 lancée. Le MVP n'est pas terminé. Étiquette produit : **démonstration locale**.
+Cycle : vague 1, trois livrables documentaires intégrés. Le MVP n'est pas terminé. Étiquette produit : **démonstration locale**.
 
 ## Déjà vérifié avant cette vague
 
@@ -13,18 +13,21 @@ Cycle : vague 1 lancée. Le MVP n'est pas terminé. Étiquette produit : **démo
 
 ## Terminé et vérifié dans ce cycle
 
-Rien. Les documents de coordination (exigences, backlog, ce statut, blocages, couverture, agents réutilisables) sont posés. Ils ne constituent pas une fonctionnalité métier.
+Documents seulement. Aucun module métier n'est livré.
+
+| Tâche | Preuve relue | Commit d'origine |
+| --- | --- | --- |
+| MVP-REA-CONTACTS | `docs/reverse-engineering/contacts/`. Last Name `required: true` et `invalid: true`, Account Name `required: true` dans `docs/reverse-engineering/accounts/evidence/2026-10-14-INT-5.json`. Aucune écriture Salesforce | `f11d5cd` sur `cursor/mvp-rea-contacts-2cf0` |
+| MVP-QA-ACCEPT | `docs/mvp/acceptance-tests.md` marque les cinq parcours **NOT RUN**. `docs/mvp/test-gaps.md` ne déclare aucune exécution | `46735ca` sur `cursor/mvp-qa-acceptance-2cf0` |
+| MVP-SEC-IDENTITY | `docs/mvp/security-identity.md`. Le repli `ensureDefaultUser`, l'en-tête prioritaire et `switchUser` correspondent à `src/lib/auth/current-user.ts` et `src/app/actions.ts`. `GET /api/accounts/lookup` ne résout pas d'utilisateur | `051843d` sur `cursor/mvp-security-identity-2cf0` |
 
 ## En cours
 
 | Tâche | Agent | Branche attendue | Fichiers |
 | --- | --- | --- | --- |
 | MVP-ARCH | [Architecte](https://cursor.com/agents/bc-14bae628-a85f-5426-a3f6-8b00c67b0c43) | `cursor/mvp-architect-contracts-2cf0` | `docs/mvp/architecture.md` |
-| MVP-REA-CONTACTS | [Analyste REA](https://cursor.com/agents/bc-1e06116d-93f8-5a58-885a-2e45593bbf26) | `cursor/mvp-rea-contacts-2cf0` | `docs/reverse-engineering/contacts/` |
-| MVP-QA-ACCEPT | [QA](https://cursor.com/agents/bc-30774f81-583c-5481-9723-9fdebeb82325) | `cursor/mvp-qa-acceptance-2cf0` | `docs/mvp/acceptance-tests.md`, `docs/mvp/test-gaps.md` |
-| MVP-SEC-IDENTITY | [Auditeur](https://cursor.com/agents/bc-5c636719-b2f2-5737-931c-d41d3e3dab8c) | `cursor/mvp-security-identity-2cf0` | `docs/mvp/security-identity.md` |
 
-Aucun de ces travaux n'est `PASSED`. La pull request d'intégration n'a pas été créée : la demande est en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
+La branche d'architecture n'est pas encore sur origin. La pull request d'intégration n'est pas ouverte : la création reste en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
 
 ## Tests de ce cycle
 
@@ -41,7 +44,7 @@ Le défaut HIGH est connu, hérité du mode démonstration. Il bloque uniquement
 
 ## Prochaine tâche
 
-Intégrer les quatre livrables de la vague 1 sur `cursor/mvp-integration-2cf0`, puis ouvrir le schéma unique (MVP-SCHEMA) avant tout code Contacts, Leads, Opportunities ou Activities.
+Intégrer `docs/mvp/architecture.md` dès qu'il est poussé. Le contrat doit reprendre la spec Contacts, en particulier le conflit Account Name (§ 3.3) : le marqueur d'accessibilité est requis, l'association reste optionnelle tant que Save n'a pas été observé. Ensuite seulement, une migration unique (MVP-SCHEMA). Pas de code Contacts, Leads, Opportunities ou Activities avant ce contrat.
 
 ## Liens
 

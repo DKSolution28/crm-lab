@@ -6,7 +6,7 @@ Légende : `NON` pas implémenté, `PARTIEL` modèle ou UI préparatoire seuleme
 
 | Parcours | État | Preuve |
 | --- | --- | --- |
-| 1. Account et Contact | PARTIEL | Account complet sur la branche Accounts. Contact : modèle minimal et lignes seed, pas d'UI ni d'API dédiée |
+| 1. Account et Contact | PARTIEL | Account complet sur la branche Accounts. Spec Contacts OBSERVED intégrée (INT-5). Modèle minimal et seed seulement : pas d'UI ni d'API. Parcours 1 NOT RUN |
 | 2. Lead et conversion | NON | Pas de modèle Lead |
 | 3. Opportunity, pipeline, dashboard | PARTIEL | Modèle Opportunity minimal et seed. Pas de Kanban, pas de dashboard |
 | 4. Activité et historique | NON | Pas de modèle Activity. RecentlyViewed ne couvre que Account |

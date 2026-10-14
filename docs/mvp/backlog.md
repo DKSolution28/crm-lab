@@ -8,10 +8,10 @@ Les agents de la première vague écrivent uniquement les fichiers indiqués. Il
 
 | Id | Statut | Agent | Livrable exclusif | Dépend de |
 | --- | --- | --- | --- | --- |
-| MVP-ARCH | IN_PROGRESS | Architecte | `docs/mvp/architecture.md` | — |
-| MVP-REA-CONTACTS | IN_PROGRESS | Analyste REA | `docs/reverse-engineering/contacts/` | — |
-| MVP-QA-ACCEPT | IN_PROGRESS | QA | `docs/mvp/acceptance-tests.md`, `docs/mvp/test-gaps.md` | — |
-| MVP-SEC-IDENTITY | IN_PROGRESS | Auditeur sécurité | `docs/mvp/security-identity.md` | — |
+| MVP-ARCH | IN_PROGRESS | Architecte | `docs/mvp/architecture.md` | spec Contacts intégrée |
+| MVP-REA-CONTACTS | PASSED | Analyste REA | `docs/reverse-engineering/contacts/` | — |
+| MVP-QA-ACCEPT | PASSED | QA | `docs/mvp/acceptance-tests.md`, `docs/mvp/test-gaps.md` | — |
+| MVP-SEC-IDENTITY | PASSED | Auditeur sécurité | `docs/mvp/security-identity.md` | — |
 | MVP-CI | TODO | QA + backend | `.github/workflows/` workflow PR, Postgres jetable | contrats d'architecture |
 | MVP-SCHEMA | TODO | Architecte puis backend | migration unique Contacts enrichi, Lead, Opportunity, Activity, RecentlyViewed généralisé | MVP-ARCH, MVP-REA-CONTACTS, MVP-SEC-IDENTITY |
 | MVP-B-CONTACTS | TODO | Backend et frontend | module Contacts | MVP-SCHEMA, MVP-QA-ACCEPT |
