@@ -9,6 +9,7 @@ import {
   setViewFilters,
   setViewSort,
   setViewVisibility,
+  updateView,
 } from "@/lib/accounts/list-views";
 import { errorResponse, readJson } from "@/lib/http";
 
@@ -32,16 +33,10 @@ export async function PATCH(request: Request, { params }: Context) {
     const user = await getRequestUser(request);
     const { id } = await params;
     const body = (await readJson(request)) as Record<string, unknown>;
-    let view = await findView(id, user);
+    const view = await findView(id, user);
     if (!view) return NextResponse.json({ error: "List view not found" }, { status: 404 });
-    if (body.label !== undefined) view = await renameView(view.id, body.label, user);
-    if (body.visibility !== undefined) view = await setViewVisibility(view.id, body.visibility, user);
-    if (body.columns !== undefined) view = await setViewColumns(view.id, body.columns, user);
-    if (body.filters !== undefined || body.filterLogic !== undefined) {
-      view = await setViewFilters(view.id, body.filters ?? view.filters, body.filterLogic ?? view.filterLogic, user);
-    }
-    if (body.sortField !== undefined) view = await setViewSort(view.id, body.sortField, body.sortDirection, user);
-    return NextResponse.json(view);
+    const updated = await updateView(view.id, body, user);
+    return NextResponse.json(updated);
   } catch (error) {
     return errorResponse(error);
   }
