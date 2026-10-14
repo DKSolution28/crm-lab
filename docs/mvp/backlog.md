@@ -14,12 +14,12 @@ Les agents de la première vague écrivent uniquement les fichiers indiqués. Il
 | MVP-SEC-IDENTITY | PASSED | Auditeur sécurité | `docs/mvp/security-identity.md` | — |
 | MVP-CI | TODO | QA + backend | `.github/workflows/` workflow PR, Postgres jetable | contrats d'architecture |
 | MVP-SCHEMA | PASSED | Backend, propriétaire du schéma | `prisma/migrations/20261014200000_mvp_crm_modules/` | MVP-ARCH |
-| MVP-B-CONTACTS | IN_PROGRESS | Backend et frontend | module Contacts, sans conversion | MVP-SCHEMA |
-| MVP-D-OPP | IN_PROGRESS | Backend et frontend | module Opportunities et Kanban | MVP-SCHEMA |
+| MVP-B-CONTACTS | PASSED | Backend et frontend | module Contacts | MVP-SCHEMA |
+| MVP-D-OPP | PASSED | Backend et frontend | module Opportunities et Kanban | MVP-SCHEMA |
 | MVP-C-LEADS | PASSED | Backend et frontend | CRUD Leads, sans conversion | MVP-SCHEMA |
-| MVP-C-CONVERT | TODO | Backend | `convertLead` atomique, 201 puis 409 | `createContact` sur la branche d'intégration |
-| MVP-E-ACT | TODO | Backend et frontend | tâches et historique | MVP-SCHEMA, fiches existantes |
-| MVP-F-DASH | TODO | Backend et frontend | dashboard lu en base | Contacts, Leads, Opportunities, Activities persistés |
+| MVP-C-CONVERT | IN_PROGRESS | Backend | `convertLead` atomique, 201 puis 409 | MVP-B-CONTACTS |
+| MVP-E-ACT | IN_PROGRESS | Backend et frontend | tâches et historique | fiches Account, Contact, Opportunity |
+| MVP-F-DASH | IN_PROGRESS | Backend et frontend | dashboard lu en base | schéma et modules persistés |
 | MVP-G-AUTH | TODO | Backend + auditeur | sessions vérifiées, ou maintien de l'étiquette démonstration locale | MVP-SEC-IDENTITY |
 | MVP-VERIFY | TODO | Vérificateur indépendant | verdict PASS / FAIL / BLOCKED | parcours E2E exécutés |
 
