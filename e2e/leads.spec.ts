@@ -17,8 +17,8 @@ test.describe("Leads module", () => {
   test("creates a fictional lead, qualifies it, and finds it in search", async ({ page }) => {
     await page.goto("/");
     const nav = page.getByRole("navigation", { name: "Main navigation" });
-    await expect(nav.locator("[aria-disabled='true']", { hasText: "Contacts" })).toBeVisible();
-    await expect(nav.locator("[aria-disabled='true']", { hasText: "Opportunities" })).toBeVisible();
+    await expect(nav.getByRole("link", { name: "Contacts" })).toBeVisible();
+    await expect(nav.getByRole("link", { name: "Opportunities" })).toBeVisible();
     await nav.getByRole("link", { name: "Leads" }).click();
     await expect(page.getByRole("heading", { name: "Leads", exact: true })).toBeVisible();
     await expect(page.getByRole("link", { name: "All leads" })).toBeVisible();

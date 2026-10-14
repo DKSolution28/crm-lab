@@ -16,6 +16,13 @@ export const dynamic = "force-dynamic";
 type Params = Promise<{ id: string }>;
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
+/** Whole-number amounts use the account currency formatter. Scaled decimals stay the stored string. */
+const relatedOpportunityAmount = (amount: string | null) => {
+  if (amount === null || amount === "") return "";
+  if (/^-?\d+$/.test(amount)) return formatCurrency(amount);
+  return amount;
+};
+
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { id } = await params;
   const account = await getAccountWithRelated(id);
@@ -181,9 +188,13 @@ export default async function AccountRecordPage({ params, searchParams }: { para
                     <tbody>
                       {account.opportunities.map((opportunity) => (
                         <tr key={opportunity.id} className="border-t border-slate-100">
-                          <td className="py-1">{opportunity.name}</td>
+                          <td className="py-1">
+                            <Link href={`/opportunities/${opportunity.id}`} className="text-blue-700 hover:underline">
+                              {opportunity.name}
+                            </Link>
+                          </td>
                           <td className="py-1 text-slate-700">{opportunity.stageName}</td>
-                          <td className="py-1 text-slate-700">{formatCurrency(opportunity.amount)}</td>
+                          <td className="py-1 text-slate-700">{relatedOpportunityAmount(opportunity.amount)}</td>
                           <td className="py-1 text-slate-700">{formatDate(opportunity.closeDate)}</td>
                         </tr>
                       ))}
