@@ -73,8 +73,8 @@ export const resolveDefaultView = async (user: CurrentUser): Promise<ListView> =
 export const viewFilters = (view: Pick<ListView, "filters">): ListFilter[] => {
   try {
     return normalizeFilters(view.filters ?? []);
-  } catch {
-    return [];
+  } catch (error) {
+    throw new ListViewError(`Saved list filters are invalid: ${error instanceof Error ? error.message : "unknown error"}`);
   }
 };
 
@@ -171,6 +171,37 @@ export const setViewSort = async (id: string, sortField: unknown, sortDirection:
   if (!getField(key) || !SORTABLE_FIELD_KEYS.has(key)) throw new ListViewError(`"${key}" is not sortable`);
   const direction = sortDirection === "desc" ? "desc" : "asc";
   return prisma.listView.update({ where: { id }, data: { sortField: key, sortDirection: direction } });
+};
+
+export const updateView = async (
+  id: string,
+  input: { label?: unknown; visibility?: unknown; columns?: unknown; filters?: unknown; filterLogic?: unknown; sortField?: unknown; sortDirection?: unknown },
+  user: CurrentUser,
+) => {
+  const view = await requireManageable(id, user);
+  const data: Prisma.ListViewUpdateInput = {};
+  if (input.label !== undefined) data.label = normalizeLabel(input.label);
+  if (input.visibility !== undefined) {
+    if (view.isSystem) throw new ListViewError("System views are always shared");
+    data.visibility = normalizeVisibility(input.visibility);
+  }
+  if (input.columns !== undefined) data.columns = { set: normalizeColumns(input.columns) };
+  if (input.sortField !== undefined) {
+    if (view.scope === "RECENT") throw new ListViewError("Column sort is unavailable for this list view.");
+    const key = String(input.sortField ?? "");
+    if (!getField(key) || !SORTABLE_FIELD_KEYS.has(key)) throw new ListViewError(`"${key}" is not sortable`);
+    data.sortField = key;
+    data.sortDirection = input.sortDirection === "desc" ? "desc" : "asc";
+  }
+  if (input.filters !== undefined || input.filterLogic !== undefined) {
+    if (view.scope === "RECENT") throw new ListViewError("Filters are unavailable on Recently Viewed.");
+    const normalized = normalizeFilters(input.filters ?? view.filters);
+    const logic = String(input.filterLogic === undefined ? view.filterLogic ?? "" : input.filterLogic ?? "").trim() || null;
+    if (logic) parseFilterLogic(logic, normalized.length);
+    data.filters = normalized as unknown as Prisma.InputJsonValue;
+    data.filterLogic = logic;
+  }
+  return prisma.listView.update({ where: { id }, data });
 };
 
 export const setViewFilters = async (id: string, filters: unknown, filterLogic: unknown, user: CurrentUser) => {
