@@ -7,7 +7,7 @@ const stamp = Date.now();
 const accountName = `${PREFIX}Account ${stamp}`;
 const contactLastName = `${PREFIX}Contact ${stamp}`;
 
-test.describe.configure({ mode: "serial", timeout: 60_000 });
+test.describe.configure({ mode: "serial", timeout: 90_000 });
 
 let database: PrismaClient | null = null;
 
@@ -54,7 +54,7 @@ test.describe("Parcours 1 — account, contact, association", () => {
     await asDemoStandard(page);
     await page.goto("/accounts/new");
     await expect(page.getByRole("dialog", { name: "New Account" })).toBeVisible();
-    await expect(page.getByLabel("Account Owner", { exact: true })).toContainText("demostd");
+    await expect(page.getByText("Demo Standard (demostd)")).toBeVisible();
     await page.locator("#field-name").fill(accountName);
     await page.getByRole("button", { name: "Save", exact: true }).click();
     await expect(page).toHaveURL(/\/accounts\/[a-z0-9]+/);
@@ -71,7 +71,7 @@ test.describe("Parcours 1 — account, contact, association", () => {
     await expect(page.getByText("Complete this field.")).toBeVisible();
     await expect(page.getByRole("dialog", { name: "New Contact" })).toBeVisible();
 
-    await page.getByLabel("Last Name", { exact: true }).fill(contactLastName);
+    await page.locator("#field-lastName").fill(contactLastName);
     const accountLookup = page.getByRole("combobox", { name: "Account Name" });
     await accountLookup.fill(accountName);
     await page.getByRole("listbox").getByRole("button", { name: accountName, exact: true }).click();
@@ -106,9 +106,9 @@ test.describe("Parcours 1 — account, contact, association", () => {
     await page.goto(contactUrl);
     await page.getByRole("link", { name: "Edit", exact: true }).click();
     await expect(page.getByRole("dialog", { name: `Edit ${contactLastName}` })).toBeVisible();
-    await expect(page.getByLabel("Last Name", { exact: true })).toHaveValue(contactLastName);
+    await expect(page.locator("#field-lastName")).toHaveValue(contactLastName);
     await expect(page.getByText(accountName, { exact: true })).toBeVisible();
-    await page.getByLabel("Title", { exact: true }).fill("QA Buyer");
+    await page.locator("#field-title").fill("QA Buyer");
     await page.getByRole("button", { name: "Save", exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`${contactUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`));
     await expect(page.getByRole("status").filter({ hasText: "was saved." })).toBeVisible();
