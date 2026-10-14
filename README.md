@@ -1,6 +1,40 @@
 # CRM Lab
 
-Laboratoire local Next.js pour préparer un reverse engineering fonctionnel autorisé d'une application Salesforce de démonstration. Les notes restent dans PostgreSQL sur la machine. Aucun secret Salesforce n'est versionné.
+Laboratoire local Next.js pour un reverse engineering fonctionnel autorisé d'une application Salesforce de démonstration. Les données restent dans PostgreSQL sur la machine. Aucun secret Salesforce n'est versionné.
+
+Le dépôt contient aujourd'hui :
+
+- le module **Accounts** reconstruit à partir des observations REA (liste, vues, filtres, formulaire, fiche, recherche, API) ;
+- la page de notes d'observation d'origine (`/`) ;
+- l'outillage d'exploration Salesforce en lecture seule et les preuves anonymisées (`docs/reverse-engineering/accounts/`).
+
+## Module Accounts
+
+```bash
+cp .env.example .env            # si absent
+npm run db:migrate              # applique les migrations Prisma
+npm run db:seed                 # utilisateurs et comptes fictifs ([demo])
+npm run dev -- --hostname 127.0.0.1 --port 3000
+```
+
+Puis ouvrir <http://127.0.0.1:3000/accounts>.
+
+- Utilisateurs de démonstration : `demoadm` (administrateur) et `demostd` (standard), sélectionnables dans l'en-tête (« View profile »). Il n'y a pas d'authentification réelle : le choix est porté par le cookie `crm-lab-user`, ou par l'en-tête `x-crm-lab-user` pour l'API.
+- Données : 12 comptes fictifs, 4 contacts et 3 opportunités fictifs marqués `[demo]` ; `npm run db:seed` les recrée à l'identique. Aucune donnée personnelle réelle ne doit entrer dans CRM Lab.
+- Fonctionnalités : vues Recently Viewed / All Accounts / My Accounts / New This Week et vues personnelles (New, Clone, Rename, Sharing Settings, Select Fields to Display, Delete, épinglage), recherche dans la liste, tri, filtres avec logique (`1 AND (2 OR 3)`), modes Table / Kanban / Split View, formulaire New / Edit (About, Get in Touch), fiche Details / Related, recherche globale, API REST sous `/api/accounts` et `/api/list-views`.
+- Documentation : `docs/architecture.md` (structure du code), `docs/coverage.md` (couverture par rapport aux observations, classification observé / déduit / conçu, résultats de tests), `docs/reverse-engineering/accounts/05-reconstruction-crm-lab.md` (comparaison écran par écran avec les captures Salesforce).
+
+### Tests
+
+```bash
+npm run test:unit          # règles du domaine (node --test)
+npm run test:integration   # service Prisma contre la base locale
+npm run test:api           # contrats REST (Playwright request)
+npm run test:e2e           # API + parcours navigateur (Playwright, Chromium)
+npm test                   # tout
+```
+
+Les tests d'intégration et E2E utilisent la base `crm_lab` locale ; ils créent des enregistrements préfixés `[test]` / `[e2e]` et les suppriment à la fin. Playwright démarre le serveur de développement sur `127.0.0.1:3000` s'il n'est pas déjà lancé.
 
 ## Pile
 

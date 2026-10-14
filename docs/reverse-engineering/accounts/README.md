@@ -12,7 +12,11 @@ Dossier de travail pour l'analyse fonctionnelle autorisée du module **Accounts*
 | `03-fiches-ecrans-accounts.md` | Fiches d'écran de l'exploration du 2026-10-14 (NAV, LST, FLT, FRM, INT, SET) avec index des preuves. |
 | `spec-accounts.md` | Synthèse fonctionnelle observée : modèle de données, picklists, relations, listes, filtres, formulaires, messages, exigences dérivées pour CRM Lab. |
 | `04-rapport-couverture-accounts.md` | Rapport de couverture : vérifications, fonctionnalités observées, inconnues, blocages, interventions requises. |
+| `05-reconstruction-crm-lab.md` | Phase 3 : comparaison écran par écran entre les captures REA et le module Accounts reconstruit dans CRM Lab, différences et limites. |
 | `evidence/` | Preuves non sensibles (JSON REA résumés, captures d'écran) horodatées `AAAA-MM-JJ-*`. |
+| `reconstruction/` | Captures du module Accounts de CRM Lab (données fictives du seed), en regard des preuves Salesforce. |
+
+La couverture fonctionnelle de la reconstruction (observé / déduit / conçu, résultats de tests) est dans `docs/coverage.md` ; l'architecture dans `docs/architecture.md`.
 
 ## Reproduire une observation
 
