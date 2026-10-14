@@ -25,11 +25,11 @@ Documents seulement. Aucun module métier n'est livré.
 
 ## En cours
 
-| Tâche | Branche attendue | Périmètre |
-| --- | --- | --- |
-| MVP-B-CONTACTS | `cursor/mvp-contacts-2cf0` | Contacts : domaine, API, pages, lien sur la fiche Account. Pas de schéma. |
-| MVP-D-OPP | `cursor/mvp-opportunities-2cf0` | Opportunities et Kanban. Montants en chaîne. Pas de schéma. |
-| MVP-C-LEADS | `cursor/mvp-leads-2cf0` | CRUD Leads seulement. Pas de `convertLead`. Pas de schéma. |
+| Tâche | Agent | Branche attendue | Périmètre |
+| --- | --- | --- | --- |
+| MVP-B-CONTACTS | [Contacts](https://cursor.com/agents/bc-485a4cf6-72bc-5f82-823d-c46cdec6f99b) | `cursor/mvp-contacts-2cf0` | Contacts : domaine, API, pages, lien sur la fiche Account. Pas de schéma. |
+| MVP-D-OPP | [Opportunities](https://cursor.com/agents/bc-22496455-8523-5621-a17e-1e397d4e3dec) | `cursor/mvp-opportunities-2cf0` | Opportunities et Kanban. Montants en chaîne. Pas de schéma. |
+| MVP-C-LEADS | [Leads](https://cursor.com/agents/bc-1f36d172-19e0-5eed-ac7b-1edce85b799f) | `cursor/mvp-leads-2cf0` | CRUD Leads seulement. Pas de `convertLead`. Pas de schéma. |
 
 La pull request d'intégration n'est pas ouverte : la création reste en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
 
