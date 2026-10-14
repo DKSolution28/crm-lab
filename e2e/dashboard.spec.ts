@@ -77,7 +77,24 @@ const insertTasks = async () => {
   }
 };
 
-test.beforeAll(cleanup);
+test.beforeAll(async () => {
+  await cleanup();
+  const db = new PrismaClient({ datasourceUrl: assertTestDatabaseUrl() });
+  try {
+    const readName = async () => {
+      const rows = await db.$queryRaw<Array<{ name: string }>>`SELECT current_database() AS name`;
+      return rows[0]?.name ?? "";
+    };
+    await assertConnectedTestDatabase(readName);
+    await db.user.upsert({
+      where: { alias: "demoadm" },
+      update: {},
+      create: { alias: "demoadm", firstName: "Demo", lastName: "Admin", role: "ADMIN" },
+    });
+  } finally {
+    await db.$disconnect();
+  }
+});
 test.afterAll(cleanup);
 
 test("creates an opportunity, moves its stage, and shows that amount on the dashboard", async ({ page }) => {
