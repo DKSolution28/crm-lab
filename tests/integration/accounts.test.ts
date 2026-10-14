@@ -10,6 +10,7 @@ import { AuthorizationError } from "../../src/lib/auth/policies";
 import { FilterError } from "../../src/lib/accounts/filters";
 import { ListViewError, createView, deleteView, ensureSystemViews, findView, listVisibleViews, pinView, resolveDefaultView, setViewFilters, setViewVisibility } from "../../src/lib/accounts/list-views";
 import { createAccount, getAccountWithRelated, globalSearch, listAccounts, lookupAccounts, recordView, updateAccount } from "../../src/lib/accounts/service";
+import { recordRecentView } from "../../src/lib/recent/service";
 import { ValidationError } from "../../src/lib/accounts/validation";
 
 const PREFIX = "[test] ";
@@ -47,9 +48,18 @@ before(async () => {
 after(async () => {
   await assertConnectedTestDatabase(readCurrentDatabase);
   const prefix = assertCleanupPrefix(PREFIX);
+  const userIds = [admin.id, standard.id];
+  await prisma.task.deleteMany({
+    where: { OR: [{ ownerId: { in: userIds } }, { assigneeId: { in: userIds } }, { account: { name: { startsWith: prefix } } }] },
+  });
+  await prisma.lead.deleteMany({ where: { OR: [{ ownerId: { in: userIds } }, { createdById: { in: userIds } }] } });
+  await prisma.opportunity.deleteMany({ where: { OR: [{ ownerId: { in: userIds } }, { account: { name: { startsWith: prefix } } }] } });
+  await prisma.contact.deleteMany({
+    where: { OR: [{ ownerId: { in: userIds } }, { createdById: { in: userIds } }, { account: { name: { startsWith: prefix } } }] },
+  });
   await prisma.account.deleteMany({ where: { name: { startsWith: prefix } } });
   await prisma.listView.deleteMany({ where: { label: { startsWith: prefix } } });
-  await prisma.user.deleteMany({ where: { id: { in: [admin.id, standard.id] } } });
+  await prisma.user.deleteMany({ where: { id: { in: userIds } } });
   await prisma.$disconnect();
 });
 
@@ -207,6 +217,51 @@ describe("account lifecycle", () => {
     await recordView(createdId, admin);
     const count = await prisma.recentlyViewed.count({ where: { accountId: createdId, userId: admin.id } });
     assert.equal(count, 1);
+  });
+
+  it("keeps non-account consultations out of the Account recent list", async () => {
+    const contact = await prisma.contact.create({
+      data: {
+        lastName: `${PREFIX}Viewer ${stamp}`,
+        ownerId: standard.id,
+        createdById: standard.id,
+        lastModifiedById: standard.id,
+      },
+    });
+    try {
+      await recordRecentView("Contact", contact.id, standard);
+      const recent = await listAccounts((await findView("Recent", standard))!, standard);
+      assert.ok(recent.items.some((item) => item.id === createdId));
+      assert.ok(recent.items.every((item) => item.name.length > 0));
+      assert.equal(
+        recent.total,
+        await prisma.recentlyViewed.count({
+          where: { userId: standard.id, objectType: "Account", accountId: { not: null } },
+        }),
+      );
+      assert.equal(await prisma.recentlyViewed.count({ where: { userId: standard.id, contactId: contact.id, accountId: null } }), 1);
+    } finally {
+      await prisma.contact.delete({ where: { id: contact.id } });
+    }
+  });
+
+  it("writes the account and its recent view on the caller transaction", async () => {
+    const name = `${PREFIX}Rollback ${stamp}`;
+    await assert.rejects(
+      prisma.$transaction(async (tx) => {
+        const created = await createAccount({ name }, standard, tx);
+        const inside = await tx.recentlyViewed.count({ where: { userId: standard.id, accountId: created.id } });
+        assert.equal(inside, 1);
+        throw new Error("abort createAccount transaction");
+      }),
+      (error: unknown) => {
+        assert.ok(error instanceof Error);
+        assert.equal(error.message, "abort createAccount transaction");
+        return true;
+      },
+    );
+    assert.equal(await prisma.account.count({ where: { name } }), 0);
+    assert.equal(await prisma.recentlyViewed.count({ where: { userId: standard.id, account: { name } } }), 0);
   });
 });
 

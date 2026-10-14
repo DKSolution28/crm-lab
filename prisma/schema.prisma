@@ -35,13 +35,24 @@ model User {
   pinnedAccountView   ListView? @relation("PinnedAccountView", fields: [pinnedAccountViewId], references: [id], onDelete: SetNull)
   pinnedAccountViewId String?
 
-  ownedAccounts      Account[]        @relation("AccountOwner")
-  createdAccounts    Account[]        @relation("AccountCreatedBy")
-  modifiedAccounts   Account[]        @relation("AccountLastModifiedBy")
-  listViews          ListView[]       @relation("ListViewOwner")
-  recentlyViewed     RecentlyViewed[]
-  ownedContacts      Contact[]
-  ownedOpportunities Opportunity[]
+  ownedAccounts         Account[]        @relation("AccountOwner")
+  createdAccounts       Account[]        @relation("AccountCreatedBy")
+  modifiedAccounts      Account[]        @relation("AccountLastModifiedBy")
+  listViews             ListView[]       @relation("ListViewOwner")
+  recentlyViewed        RecentlyViewed[]
+  ownedContacts         Contact[]        @relation("ContactOwner")
+  createdContacts       Contact[]        @relation("ContactCreatedBy")
+  modifiedContacts      Contact[]        @relation("ContactLastModifiedBy")
+  ownedLeads            Lead[]           @relation("LeadOwner")
+  createdLeads          Lead[]           @relation("LeadCreatedBy")
+  modifiedLeads         Lead[]           @relation("LeadLastModifiedBy")
+  ownedOpportunities    Opportunity[]    @relation("OpportunityOwner")
+  createdOpportunities  Opportunity[]    @relation("OpportunityCreatedBy")
+  modifiedOpportunities Opportunity[]    @relation("OpportunityLastModifiedBy")
+  ownedTasks            Task[]           @relation("TaskOwner")
+  assignedTasks         Task[]           @relation("TaskAssignee")
+  createdTasks          Task[]           @relation("TaskCreatedBy")
+  modifiedTasks         Task[]           @relation("TaskLastModifiedBy")
 }
 
 // ---------------------------------------------------------------------------
@@ -128,6 +139,49 @@ enum Ownership {
   Other
 }
 
+// Jeux fermés DESIGNED (docs/mvp/architecture.md §3.1). Aucune de ces
+// valeurs n'a été lue dans l'org Salesforce.
+enum Salutation {
+  Mr
+  Ms
+  Dr
+  Mx
+}
+
+enum LeadStatus {
+  New
+  Working
+  Unqualified
+  Converted
+}
+
+enum OpportunityStage {
+  Qualification
+  Proposal
+  Negotiation
+  ClosedWon
+  ClosedLost
+}
+
+enum TaskStatus {
+  NotStarted
+  InProgress
+  Completed
+}
+
+enum TaskPriority {
+  Low
+  Normal
+  High
+}
+
+enum RecentObject {
+  Account
+  Contact
+  Lead
+  Opportunity
+}
+
 model Account {
   id String @id @default(cuid())
 
@@ -188,9 +242,11 @@ model Account {
   updatedAt        DateTime  @updatedAt
   lastActivityDate DateTime?
 
-  contacts       Contact[]
-  opportunities  Opportunity[]
-  recentlyViewed RecentlyViewed[]
+  contacts           Contact[]
+  opportunities      Opportunity[]
+  recentlyViewed     RecentlyViewed[]
+  convertedFromLeads Lead[]           @relation("LeadConvertedAccount")
+  tasks              Task[]           @relation("TaskAccount")
 
   @@index([name])
   @@index([ownerId])
@@ -239,51 +295,175 @@ model ListView {
 }
 
 model RecentlyViewed {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  account   Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  accountId String
-  viewedAt  DateTime @default(now())
+  id            String       @id @default(cuid())
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  objectType    RecentObject @default(Account)
+  account       Account?     @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  accountId     String?
+  contact       Contact?     @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contactId     String?
+  lead          Lead?        @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  leadId        String?
+  opportunity   Opportunity? @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId String?
+  viewedAt      DateTime     @default(now())
 
   @@unique([userId, accountId])
+  @@unique([userId, contactId])
+  @@unique([userId, leadId])
+  @@unique([userId, opportunityId])
   @@index([userId, viewedAt])
 }
 
 // ---------------------------------------------------------------------------
-// Relations préparatoires (listes associées observées dans le layout :
-// Contacts, Opportunities). Modèles minimaux, sans interface dédiée.
+// Contacts, leads, opportunités et tâches. accountId du contact reste
+// facultatif. Voir docs/mvp/architecture.md §3.
 // ---------------------------------------------------------------------------
 
 model Contact {
-  id        String   @id @default(cuid())
-  firstName String?
-  lastName  String
-  email     String?
-  phone     String?
-  title     String?
-  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
-  accountId String?
-  owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 String      @id @default(cuid())
+  salutation         Salutation?
+  firstName          String?
+  lastName           String
+  title              String?
+  description        String?     @db.VarChar(32000)
+  phone              String?
+  email              String?
+  account            Account?    @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  accountId          String?
+  reportsTo          Contact?    @relation("ContactReportsTo", fields: [reportsToId], references: [id], onDelete: SetNull)
+  reportsToId        String?
+  directReports      Contact[]   @relation("ContactReportsTo")
+  mailingStreet      String?
+  mailingCity        String?
+  mailingPostalCode  String?
+  mailingCountryCode String?
+  mailingCountry     String?
+  mailingStateCode   String?
+  mailingState       String?
+  owner              User        @relation("ContactOwner", fields: [ownerId], references: [id])
+  ownerId            String
+  createdBy          User        @relation("ContactCreatedBy", fields: [createdById], references: [id])
+  createdById        String
+  lastModifiedBy     User        @relation("ContactLastModifiedBy", fields: [lastModifiedById], references: [id])
+  lastModifiedById   String
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  lastActivityDate   DateTime?
+
+  convertedFromLeads   Lead[]           @relation("LeadConvertedContact")
+  primaryOpportunities Opportunity[]    @relation("OpportunityPrimaryContact")
+  tasks                Task[]           @relation("TaskContact")
+  recentlyViewed       RecentlyViewed[]
 
   @@index([accountId])
+  @@index([ownerId])
+  @@index([reportsToId])
+  @@index([lastName])
+}
+
+model Lead {
+  id                     String       @id @default(cuid())
+  firstName              String?
+  lastName               String
+  company                String
+  title                  String?
+  email                  String?
+  phone                  String?
+  description            String?      @db.VarChar(32000)
+  status                 LeadStatus   @default(New)
+  qualified              Boolean      @default(false)
+  owner                  User         @relation("LeadOwner", fields: [ownerId], references: [id])
+  ownerId                String
+  createdBy              User         @relation("LeadCreatedBy", fields: [createdById], references: [id])
+  createdById            String
+  lastModifiedBy         User         @relation("LeadLastModifiedBy", fields: [lastModifiedById], references: [id])
+  lastModifiedById       String
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+  convertedAt            DateTime?
+  convertedAccount       Account?     @relation("LeadConvertedAccount", fields: [convertedAccountId], references: [id], onDelete: SetNull)
+  convertedAccountId     String?
+  convertedContact       Contact?     @relation("LeadConvertedContact", fields: [convertedContactId], references: [id], onDelete: SetNull)
+  convertedContactId     String?
+  convertedOpportunity   Opportunity? @relation("LeadConvertedOpportunity", fields: [convertedOpportunityId], references: [id], onDelete: SetNull)
+  convertedOpportunityId String?
+
+  tasks          Task[]           @relation("TaskLead")
+  recentlyViewed RecentlyViewed[]
+
+  @@index([ownerId])
+  @@index([status])
+  @@index([convertedAt])
+  @@index([convertedAccountId])
+  @@index([convertedContactId])
 }
 
 model Opportunity {
-  id        String   @id @default(cuid())
-  name      String
-  stageName String
-  amount    Decimal? @db.Decimal(18, 2)
-  closeDate DateTime
-  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
-  accountId String?
-  owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String           @id @default(cuid())
+  name             String
+  stageName        OpportunityStage
+  amount           Decimal?         @db.Decimal(18, 2)
+  closeDate        DateTime
+  probability      Int?
+  account          Account?         @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  accountId        String?
+  primaryContact   Contact?         @relation("OpportunityPrimaryContact", fields: [primaryContactId], references: [id], onDelete: SetNull)
+  primaryContactId String?
+  owner            User             @relation("OpportunityOwner", fields: [ownerId], references: [id])
+  ownerId          String
+  createdBy        User             @relation("OpportunityCreatedBy", fields: [createdById], references: [id])
+  createdById      String
+  lastModifiedBy   User             @relation("OpportunityLastModifiedBy", fields: [lastModifiedById], references: [id])
+  lastModifiedById String
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  convertedFromLeads Lead[]           @relation("LeadConvertedOpportunity")
+  tasks              Task[]           @relation("TaskOpportunity")
+  recentlyViewed     RecentlyViewed[]
 
   @@index([accountId])
+  @@index([ownerId])
+  @@index([stageName])
+  @@index([primaryContactId])
+  @@index([closeDate])
+}
+
+model Task {
+  id               String       @id @default(cuid())
+  subject          String
+  description      String?      @db.VarChar(32000)
+  status           TaskStatus   @default(NotStarted)
+  priority         TaskPriority @default(Normal)
+  dueDate          DateTime?    @db.Date
+  completedAt      DateTime?
+  assignee         User         @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  assigneeId       String
+  owner            User         @relation("TaskOwner", fields: [ownerId], references: [id])
+  ownerId          String
+  account          Account?     @relation("TaskAccount", fields: [accountId], references: [id], onDelete: Cascade)
+  accountId        String?
+  contact          Contact?     @relation("TaskContact", fields: [contactId], references: [id], onDelete: Cascade)
+  contactId        String?
+  lead             Lead?        @relation("TaskLead", fields: [leadId], references: [id], onDelete: Cascade)
+  leadId           String?
+  opportunity      Opportunity? @relation("TaskOpportunity", fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId    String?
+  createdBy        User         @relation("TaskCreatedBy", fields: [createdById], references: [id])
+  createdById      String
+  lastModifiedBy   User         @relation("TaskLastModifiedBy", fields: [lastModifiedById], references: [id])
+  lastModifiedById String
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([accountId])
+  @@index([contactId])
+  @@index([leadId])
+  @@index([opportunityId])
+  @@index([assigneeId])
+  @@index([ownerId])
+  @@index([dueDate])
+  @@index([status])
 }

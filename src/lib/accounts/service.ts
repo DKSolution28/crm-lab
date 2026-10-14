@@ -4,6 +4,7 @@ import type { ListView, Prisma } from "@prisma/client";
 import { prisma } from "../prisma";
 import type { CurrentUser } from "../auth/current-user";
 import { AuthorizationError, canEditAccount } from "../auth/policies";
+import { recordRecentView, type DbClient } from "../recent/service";
 import { KANBAN_GROUP_FIELDS, KANBAN_SUMMARY_FIELDS, PRISMA_SELECT_FOR_LIST, SORTABLE_FIELD_KEYS, getField } from "./fields";
 import { filtersToWhere } from "./filters";
 import { viewFilters } from "./list-views";
@@ -106,15 +107,22 @@ export const listAccounts = async (view: ListView, user: CurrentUser, options: L
   const where = viewWhere(view, user, options.q);
 
   if (view.scope === "RECENT") {
+    const recentWhere: Prisma.RecentlyViewedWhereInput = {
+      userId: user.id,
+      objectType: "Account",
+      accountId: { not: null },
+      account: where,
+    };
     const recent = await prisma.recentlyViewed.findMany({
-      where: { userId: user.id, account: where },
+      where: recentWhere,
       orderBy: { viewedAt: "desc" },
       skip: (page - 1) * pageSize,
       take: pageSize,
       include: { account: { include: PRISMA_SELECT_FOR_LIST } },
     });
-    const total = await prisma.recentlyViewed.count({ where: { userId: user.id, account: where } });
-    return { items: recent.map((r) => toDto(r.account)), total, page, pageSize, sortField: null, sortDirection: "asc", sortable: false };
+    const total = await prisma.recentlyViewed.count({ where: recentWhere });
+    const items = recent.flatMap((row) => (row.account ? [toDto(row.account)] : []));
+    return { items, total, page, pageSize, sortField: null, sortDirection: "asc", sortable: false };
   }
 
   const [items, total] = await Promise.all([
@@ -155,11 +163,7 @@ export const getAccountWithRelated = async (id: string) => {
 };
 
 export const recordView = async (accountId: string, user: CurrentUser) => {
-  await prisma.recentlyViewed.upsert({
-    where: { userId_accountId: { userId: user.id, accountId } },
-    update: { viewedAt: new Date() },
-    create: { userId: user.id, accountId },
-  });
+  await recordRecentView("Account", accountId, user);
 };
 
 const toPrismaData = (data: ValidatedAccount) => {
@@ -224,16 +228,17 @@ const resolveOwner = async (ownerId: string | null, user: CurrentUser, errors: R
   return owner.id;
 };
 
-export const createAccount = async (input: AccountInput, user: CurrentUser): Promise<AccountDto> => {
+export const createAccount = async (input: AccountInput, user: CurrentUser, db: DbClient = prisma): Promise<AccountDto> => {
   const { data, errors } = validateAccountInput(input);
   const parentId = await resolveParent(data.parentId, null, errors);
   const ownerId = await resolveOwner(data.ownerId, user, errors);
   if (Object.keys(errors).length > 0) throw new ValidationError(errors);
-  const account = await prisma.account.create({
+  const client = db as Prisma.TransactionClient;
+  const account = await client.account.create({
     data: { ...toPrismaData(data), parentId, ownerId, createdById: user.id, lastModifiedById: user.id },
     include: PRISMA_SELECT_FOR_LIST,
   });
-  await recordView(account.id, user);
+  await recordRecentView("Account", account.id, user, db);
   return toDto(account);
 };
 

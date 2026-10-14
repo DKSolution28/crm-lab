@@ -1,7 +1,7 @@
 // Données de démonstration synthétiques pour la base CRM Lab locale.
 // Aucune donnée réelle : sociétés, personnes et coordonnées sont fictives.
 // Exécution : npm run db:seed (idempotent, réinitialise les enregistrements de démo).
-import { PrismaClient, type Prisma } from "@prisma/client";
+import { PrismaClient, type OpportunityStage, type Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -257,9 +257,31 @@ async function main() {
   }
 
   // Réinitialise uniquement les enregistrements de démonstration.
-  await prisma.opportunity.deleteMany({ where: { account: { description: { startsWith: DEMO_TAG } } } });
-  await prisma.contact.deleteMany({ where: { account: { description: { startsWith: DEMO_TAG } } } });
-  await prisma.account.deleteMany({ where: { description: { startsWith: DEMO_TAG } } });
+  // Ordre : tâches, leads, opportunités, contacts, comptes.
+  const demoAccount = { description: { startsWith: DEMO_TAG } };
+  await prisma.task.deleteMany({
+    where: {
+      OR: [
+        { account: demoAccount },
+        { contact: { account: demoAccount } },
+        { opportunity: { account: demoAccount } },
+        { lead: { OR: [{ description: { startsWith: DEMO_TAG } }, { convertedAccount: demoAccount }] } },
+      ],
+    },
+  });
+  await prisma.lead.deleteMany({
+    where: {
+      OR: [
+        { description: { startsWith: DEMO_TAG } },
+        { convertedAccount: demoAccount },
+        { convertedContact: { account: demoAccount } },
+        { convertedOpportunity: { account: demoAccount } },
+      ],
+    },
+  });
+  await prisma.opportunity.deleteMany({ where: { account: demoAccount } });
+  await prisma.contact.deleteMany({ where: { account: demoAccount } });
+  await prisma.account.deleteMany({ where: demoAccount });
 
   const accountIds = new Map<string, string>();
   for (const seed of accounts) {
@@ -289,10 +311,16 @@ async function main() {
     const { account, ...data } = contact;
     const accountId = accountIds.get(account)!;
     const ownerId = userIds.get(accounts.find((a) => a.name === account)!.owner)!;
-    await prisma.contact.create({ data: { ...data, accountId, ownerId } });
+    await prisma.contact.create({ data: { ...data, accountId, ownerId, createdById: ownerId, lastModifiedById: ownerId } });
   }
 
-  const opportunities = [
+  const opportunities: Array<{
+    account: string;
+    name: string;
+    stageName: OpportunityStage;
+    amount: number;
+    closeInDays: number;
+  }> = [
     { account: "Northwind Traders", name: "Northwind — Renewal FY27", stageName: "Negotiation", amount: 240000, closeInDays: 30 },
     { account: "Lumen Biotech", name: "Lumen — Pilot program", stageName: "Qualification", amount: 60000, closeInDays: 75 },
     { account: "Harbor Lights Hospitality", name: "Harbor Lights — Rollout", stageName: "Proposal", amount: 180000, closeInDays: 45 },
@@ -301,7 +329,16 @@ async function main() {
     const { account, closeInDays, ...data } = opportunity;
     const accountId = accountIds.get(account)!;
     const ownerId = userIds.get(accounts.find((a) => a.name === account)!.owner)!;
-    await prisma.opportunity.create({ data: { ...data, accountId, ownerId, closeDate: new Date(Date.now() + closeInDays * 86_400_000) } });
+    await prisma.opportunity.create({
+      data: {
+        ...data,
+        accountId,
+        ownerId,
+        createdById: ownerId,
+        lastModifiedById: ownerId,
+        closeDate: new Date(Date.now() + closeInDays * 86_400_000),
+      },
+    });
   }
 
   // Quelques consultations récentes pour la vue Recently Viewed de l'administrateur.
