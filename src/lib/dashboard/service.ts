@@ -73,13 +73,19 @@ export const toDashboardSnapshot = (aggregates: DashboardAggregates): DashboardS
   if (aggregates.stages.length !== DASHBOARD_STAGES.length) {
     throw new Error("Dashboard stage aggregate must return every stage");
   }
-  const opportunitiesByStage = aggregates.stages.map((row, index) => {
-    const expected = DASHBOARD_STAGES[index];
-    if (!isDashboardStage(row.stage) || row.stage !== expected) {
-      throw new Error(`Dashboard stage row ${index} was ${row.stage}, expected ${expected}`);
+  const byStage = new Map<string, StageAggregate>();
+  for (const row of aggregates.stages) {
+    if (!isDashboardStage(row.stage) || byStage.has(row.stage)) {
+      throw new Error(`Dashboard stage aggregate returned ${row.stage}`);
     }
+    byStage.set(row.stage, row);
+  }
+  // L'ordre d'unnest n'est pas garanti. On replace les lignes SQL ; on n'en invente pas.
+  const opportunitiesByStage = DASHBOARD_STAGES.map((stage) => {
+    const row = byStage.get(stage);
+    if (!row) throw new Error(`Dashboard stage aggregate omitted ${stage}`);
     return {
-      stage: row.stage,
+      stage,
       count: readCount(row.count),
       amount: normalizeDashboardAmount(row.amount),
     };

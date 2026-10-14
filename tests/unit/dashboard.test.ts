@@ -90,13 +90,18 @@ describe("dashboard snapshot", () => {
     }
   });
 
-  it("does not invent a zero for a stage SQL omitted", () => {
+  it("restores the contract stage order and does not invent a missing stage", () => {
+    const reversed = [...aggregates().stages].reverse();
+    const ordered = toDashboardSnapshot(aggregates({ stages: reversed }));
+    assert.deepEqual(
+      ordered.opportunitiesByStage.map((row) => row.stage),
+      [...DASHBOARD_STAGES],
+    );
+    assert.equal(ordered.opportunitiesByStage[0]?.amount, "0.00");
+
     const stages = aggregates().stages.slice(0, 4);
     assert.throws(() => toDashboardSnapshot(aggregates({ stages })), /every stage/);
-    const swapped = aggregates().stages.map((row) => ({ ...row }));
-    const first = swapped[0];
-    swapped[0] = swapped[1];
-    swapped[1] = first;
-    assert.throws(() => toDashboardSnapshot(aggregates({ stages: swapped })), /expected Qualification/);
+    const unknown = aggregates().stages.map((row, index) => (index === 0 ? { ...row, stage: "Nope" } : row));
+    assert.throws(() => toDashboardSnapshot(aggregates({ stages: unknown })), /Nope/);
   });
 });

@@ -46,11 +46,16 @@ const sqlStages = async () => {
       GROUP BY "stageName"
     ) agg ON agg.stage = s.stage
   `;
-  return rows.map((row) => ({
-    stage: row.stage,
-    count: readCount(row.count),
-    amount: new Prisma.Decimal(String(row.amount)).toFixed(2),
-  }));
+  return DASHBOARD_STAGES.map((stage) => {
+    const row = rows.find((item) => item.stage === stage);
+    assert.ok(row, stage);
+    assert.equal(typeof row.amount, "string");
+    return {
+      stage,
+      count: readCount(row.count),
+      amount: new Prisma.Decimal(String(row.amount)).toFixed(2),
+    };
+  });
 };
 
 const sqlPipeline = async () => {
