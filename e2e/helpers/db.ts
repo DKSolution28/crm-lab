@@ -30,6 +30,9 @@ export const cleanupE2eRecords = async (prefix: string = E2E_PREFIX) => {
   const scoped = assertCleanupPrefix(prefix);
   const db = await testDatabase();
   await assertConnectedTestDatabase(() => currentDatabase(db));
+  await db.lead.deleteMany({
+    where: { OR: [{ lastName: { startsWith: scoped } }, { company: { startsWith: scoped } }] },
+  });
   await db.account.deleteMany({ where: { name: { startsWith: scoped } } });
   await db.listView.deleteMany({ where: { label: { startsWith: scoped } } });
   await db.$disconnect();
