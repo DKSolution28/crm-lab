@@ -9,9 +9,10 @@ const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "
 const number = new Intl.NumberFormat("en-US");
 
 export const formatCurrency = (value: string | number | null | undefined) =>
-  value === null || value === undefined || value === "" ? "" : currency.format(Number(value));
+  value === null || value === undefined || value === "" ? "" : currency.format(typeof value === "string" && /^-?\d+$/.test(value) ? BigInt(value) : Number(value));
 
-export const formatNumber = (value: number | null | undefined) => (value === null || value === undefined ? "" : number.format(value));
+export const formatNumber = (value: number | string | null | undefined) =>
+  value === null || value === undefined ? "" : number.format(typeof value === "string" && /^-?\d+$/.test(value) ? BigInt(value) : Number(value));
 
 export const formatDateTime = (iso: string | null | undefined) => (iso ? dateTime.format(new Date(iso)) : "");
 export const formatDate = (iso: string | null | undefined) => (iso ? dateOnly.format(new Date(iso)) : "");
