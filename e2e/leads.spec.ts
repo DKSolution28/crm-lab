@@ -20,7 +20,7 @@ test.describe("Leads module", () => {
     await expect(nav.locator("[aria-disabled='true']", { hasText: "Contacts" })).toBeVisible();
     await expect(nav.locator("[aria-disabled='true']", { hasText: "Opportunities" })).toBeVisible();
     await nav.getByRole("link", { name: "Leads" }).click();
-    await expect(page.getByRole("heading", { name: "Leads" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Leads", exact: true })).toBeVisible();
     await expect(page.getByRole("link", { name: "All leads" })).toBeVisible();
     await expect(page.getByRole("link", { name: "My leads" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Recently viewed" })).toBeVisible();
