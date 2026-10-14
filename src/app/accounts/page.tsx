@@ -168,7 +168,7 @@ export default async function AccountsPage({ searchParams }: { searchParams: Sea
           ) : (
             <>
               <AccountsTable items={result.items} columns={columns} cells={cells} sortField={result.sortField} sortDirection={result.sortDirection} sortable={result.sortable} pageOffset={(result.page - 1) * result.pageSize} />
-              {totalPages > 1 ? (
+              {totalPages > 1 && display === "table" ? (
                 <nav aria-label="Pagination" className="flex items-center justify-between border-t border-slate-200 px-4 py-2 text-xs text-slate-600">
                   <span>
                     Page {result.page} of {totalPages}
@@ -189,6 +189,15 @@ export default async function AccountsPage({ searchParams }: { searchParams: Sea
               ) : null}
             </>
           )}
+          {totalPages > 1 && display !== "table" ? (
+            <nav aria-label="Pagination" className="flex items-center justify-between border-t border-slate-200 px-4 py-2 text-xs">
+              <span>Page {result.page} of {totalPages}</span>
+              <div className="flex gap-3">
+                {result.page > 1 ? <Link href={{ pathname: "/accounts", query: { ...Object.fromEntries(Object.entries(params).map(([k, v]) => [k, single(v)])), page: String(result.page - 1) } }}>Previous</Link> : null}
+                {result.page < totalPages ? <Link href={{ pathname: "/accounts", query: { ...Object.fromEntries(Object.entries(params).map(([k, v]) => [k, single(v)])), page: String(result.page + 1) } }}>Next</Link> : null}
+              </div>
+            </nav>
+          ) : null}
         </main>
         {filtersOpen ? <FilterPanel key={`${view.id}-${view.updatedAt.toISOString()}`} view={viewDto} fields={filterFieldOptions()} /> : null}
       </div>
