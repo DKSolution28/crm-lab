@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { RelatedTasks } from "@/components/activities/related-tasks";
 import { AccountDetails } from "@/components/accounts/account-details";
 import { buttonClasses } from "@/components/ui/modal";
 import { ToastFromQuery } from "@/components/ui/toast";
@@ -59,7 +60,7 @@ export default async function AccountRecordPage({ params, searchParams }: { para
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4 bg-slate-50 p-4">
-      {toast ? <ToastFromQuery kind={toast.kind} message={toast.message} /> : null}
+      {toast ? <ToastFromQuery key={`${toast.kind}:${toast.message}`} kind={toast.kind} message={toast.message} /> : null}
 
       <header className="rounded-lg border border-slate-200 bg-white p-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
@@ -202,6 +203,8 @@ export default async function AccountRecordPage({ params, searchParams }: { para
                   </table>
                 )}
               </section>
+
+              <RelatedTasks parentType="Account" parentId={account.id} />
 
               <section id="related-children" aria-labelledby="related-children-title">
                 <h3 id="related-children-title" className="mb-2 text-sm font-semibold text-slate-800">
