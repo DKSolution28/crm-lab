@@ -1,0 +1,1300 @@
+{
+  "screen": "NAV-1",
+  "captured_at": "2026-10-14T11:01:20.446Z",
+  "commands": [
+    "bash scripts/sf-observe.sh NAV-1",
+    "node scripts/sf-redact-evidence.mjs NAV-1"
+  ],
+  "inspect_evidence_id": "ev_3788bca1c135e627e60fb646d9f102cf8f88f33eb751a699c41ca7b019bd17b2",
+  "screenshot_evidence_id": "ev_68909303e873ad5eef7024d0b9c6772ad46132f87545de09eadedf4e7bd2bc69",
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "confidence": "observed",
+  "target": {
+    "title": "All Accounts | Accounts | Salesforce",
+    "url": "https://<mydomain>.lightning.force.com/lightning/o/Account/list?filterName=AllAccounts",
+    "origin": "https://<mydomain>.lightning.force.com"
+  },
+  "completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "console_events",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "script_sources",
+      "scripts",
+      "websocket_shapes",
+      "workers"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "console_events",
+        "reason": "disallowed_origin",
+        "count": 9
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 21
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 18
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 77
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 5
+      },
+      {
+        "section": "script_sources",
+        "reason": "not_approved",
+        "count": 968
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 17
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 369
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "workers",
+        "reason": "out_of_target_scope",
+        "count": 1
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "dom": {
+    "total_nodes": 1891
+  },
+  "accessibility": {
+    "total_nodes": 685,
+    "text_capture": {
+      "status": "included",
+      "retained_bytes": 4338,
+      "excluded_fields": 0
+    },
+    "named_nodes": [
+      {
+        "role": "contentinfo",
+        "name": "Utility Bar"
+      },
+      {
+        "role": "link",
+        "name": "Skip to Navigation",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Skip to Main Content",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "Global Header"
+      },
+      {
+        "role": "navigation",
+        "name": "Main",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "dialog",
+        "name": "Quick Settings",
+        "states": [
+          {
+            "name": "modal",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Search",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Buy Now",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Contacts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Accounts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Sales",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Service",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Marketing",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Commerce",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Your Account",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Automation",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Lifecycle Center (DevOps Center)",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "To Do List",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Guidance Center",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "dialog"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Salesforce Help",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Notifications",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "dialog"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "View profile",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Accounts",
+        "states": [
+          {
+            "name": "level",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "Global"
+      },
+      {
+        "role": "button",
+        "name": "Agentforce",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "pressed",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Quick Settings",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "pressed",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Accounts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Accounts List",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Edit nav items",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Accounts",
+        "states": [
+          {
+            "name": "level",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "role": "status",
+        "name": "All Accounts",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Accounts All Accounts",
+        "states": [
+          {
+            "name": "level",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "New",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Import",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Add to an Actionable List",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Assign Label",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "List View Controls",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Select list display",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Select a List View: Accounts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "focused",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "searchbox",
+        "name": "Search this list...",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Refresh",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Column sort is unavailable for this object.",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Edit List",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Charts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "pressed",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Filters",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "pressed",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "This list is pinned.",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Accounts show where your contacts work",
+        "states": [
+          {
+            "name": "level",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Add an Account",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Item Number",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Account Name",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Phone",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Website",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Billing City",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Billing State/Province (text only)",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Account Owner Alias",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Action",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Sort Account Name  ",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Sort Phone  ",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Sort Website  ",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Sort Billing City  ",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Sort Billing State/Province (text only)  ",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Sort Account Owner Alias  ",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "checkbox",
+        "name": "Select All",
+        "states": [
+          {
+            "name": "checked",
+            "value": "false"
+          },
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show Account Name Column Actions",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "slider",
+        "name": "Account Name column width",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          },
+          {
+            "name": "valuemax",
+            "value": 3840
+          },
+          {
+            "name": "valuemin",
+            "value": 60
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show Phone Column Actions",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "slider",
+        "name": "Phone column width",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          },
+          {
+            "name": "valuemax",
+            "value": 3840
+          },
+          {
+            "name": "valuemin",
+            "value": 60
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show Website Column Actions",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "slider",
+        "name": "Website column width",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          },
+          {
+            "name": "valuemax",
+            "value": 3840
+          },
+          {
+            "name": "valuemin",
+            "value": 60
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show Billing City Column Actions",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "slider",
+        "name": "Billing City column width",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          },
+          {
+            "name": "valuemax",
+            "value": 3840
+          },
+          {
+            "name": "valuemin",
+            "value": 60
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show Billing State/Province (text only) Column Actions",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "slider",
+        "name": "Billing State/Province (text only) column width",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          },
+          {
+            "name": "valuemax",
+            "value": 3840
+          },
+          {
+            "name": "valuemin",
+            "value": 60
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show Account Owner Alias Column Actions",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "slider",
+        "name": "Account Owner Alias column width",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          },
+          {
+            "name": "valuemax",
+            "value": 3840
+          },
+          {
+            "name": "valuemin",
+            "value": 60
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "total": 968
+  },
+  "network": {
+    "request_count": 0,
+    "prior_activity_available": false,
+    "requests": [],
+    "websocket_connections": []
+  },
+  "storage": {
+    "local_storage_keys": [
+      "$AuraClientService.token$one:one",
+      "GlobalValueProviders__MUTEX_X",
+      "appContextId"
+    ],
+    "session_storage_keys": [
+      "one.helpPanel.orgId",
+      "tempTabsKey",
+      "appContextId"
+    ],
+    "indexed_db_names": [
+      "ErrorHistory",
+      "actions",
+      "ldsCSRFToken",
+      "ldsDurableCache",
+      "ldsLayout",
+      "ldsLayoutUserState",
+      "ldsObjectInfo",
+      "recordGVP68.0",
+      "standardTempTabPersistence"
+    ],
+    "values_redacted": true
+  },
+  "screenshot": {
+    "file": "2026-10-14-NAV-1.png",
+    "sha256": "6de0b8605f91174a9eeaf209160e5c14984593d3681d270bcb846718189c187f",
+    "bytes": 97362,
+    "viewport": {
+      "width": 1388,
+      "height": 706
+    },
+    "note": "Capture prise après masquage local des données personnelles (sf-act {\"mask\":true}); aucune donnée Salesforce modifiée."
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "Browser host platform and architecture were not observed."
+  ]
+}

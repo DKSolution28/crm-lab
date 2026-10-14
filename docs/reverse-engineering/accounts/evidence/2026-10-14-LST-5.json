@@ -1,0 +1,402 @@
+{
+  "screen": "LST-5",
+  "captured_at": "2026-10-14T11:15:25.815Z",
+  "commands": [
+    "bash scripts/sf-observe.sh LST-5",
+    "node scripts/sf-redact-evidence.mjs LST-5"
+  ],
+  "inspect_evidence_id": "ev_1fc45ca632b5fafd1fb00e88cc5da3add7449649d9be93731a75c208e712d149",
+  "screenshot_evidence_id": "ev_6e86d72dfa96c579294ab26276561f6272415b0e276d6e9537682e262321cb36",
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "confidence": "observed",
+  "target": {
+    "title": "All Accounts | Accounts | Salesforce",
+    "url": "https://<mydomain>.lightning.force.com/lightning/o/Account/list?filterName=AllAccounts",
+    "origin": "https://<mydomain>.lightning.force.com"
+  },
+  "completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "console_events",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "script_sources",
+      "scripts",
+      "websocket_shapes",
+      "workers"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "console_events",
+        "reason": "disallowed_origin",
+        "count": 7
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 21
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 28
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 23
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 6
+      },
+      {
+        "section": "script_sources",
+        "reason": "not_approved",
+        "count": 945
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 22
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 377
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "workers",
+        "reason": "out_of_target_scope",
+        "count": 1
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "dom": {
+    "total_nodes": 2260
+  },
+  "accessibility": {
+    "total_nodes": 354,
+    "text_capture": {
+      "status": "included",
+      "retained_bytes": 361,
+      "excluded_fields": 0
+    },
+    "named_nodes": [
+      {
+        "role": "dialog",
+        "name": "Kanban Settings",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "modal",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Kanban Settings",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "focused",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Cancel and close",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Summarize By",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Group By *",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Cancel",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Save",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "option",
+        "name": "-- None --",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "option",
+        "name": "Account Owner",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "option",
+        "name": "Billing Country Code",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "option",
+        "name": "Billing State/Province Code",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "option",
+        "name": "Shipping Country Code",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "option",
+        "name": "Shipping State/Province Code",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "option",
+        "name": "Type",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "total": 945
+  },
+  "network": {
+    "request_count": 0,
+    "prior_activity_available": false,
+    "requests": [],
+    "websocket_connections": []
+  },
+  "storage": {
+    "local_storage_keys": [
+      "$AuraClientService.token$one:one",
+      "GlobalValueProviders__MUTEX_X",
+      "objectHomeStateManager",
+      "appContextId"
+    ],
+    "session_storage_keys": [
+      "tempTabsKey",
+      "one.helpPanel.orgId",
+      "appContextId"
+    ],
+    "indexed_db_names": [
+      "ErrorHistory",
+      "actions",
+      "lastRecordTypeForSObject",
+      "ldsCSRFToken",
+      "ldsDurableCache",
+      "ldsLayout",
+      "ldsLayoutUserState",
+      "ldsObjectInfo",
+      "recordGVP68.0",
+      "standardTempTabPersistence"
+    ],
+    "values_redacted": true
+  },
+  "screenshot": {
+    "file": "2026-10-14-LST-5.png",
+    "sha256": "b3e579f1d3bda452c396f3415b9a51086d1c57e9e8b1996987fdad8f56cf87d5",
+    "bytes": 119165,
+    "viewport": {
+      "width": 1388,
+      "height": 706
+    },
+    "note": "Capture prise après masquage local des données personnelles (sf-act {\"mask\":true}); aucune donnée Salesforce modifiée."
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "Browser host platform and architecture were not observed."
+  ]
+}

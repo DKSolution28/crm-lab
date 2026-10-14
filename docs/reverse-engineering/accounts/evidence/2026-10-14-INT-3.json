@@ -1,0 +1,340 @@
+{
+  "screen": "INT-3",
+  "captured_at": "2026-10-14T11:22:55.373Z",
+  "commands": [
+    "bash scripts/sf-observe.sh INT-3",
+    "node scripts/sf-redact-evidence.mjs INT-3"
+  ],
+  "inspect_evidence_id": "ev_e051decafabfbfa3af3d8937687f60733f396a1f686f399608440a655cc2ba45",
+  "screenshot_evidence_id": "ev_68c5ebc14b09cafb3d39241c01783b73409a3f964d38743021744ab761a06bca",
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "confidence": "observed",
+  "target": {
+    "title": "All Accounts | Accounts | Salesforce",
+    "url": "https://<mydomain>.lightning.force.com/lightning/o/Account/list?filterName=AllAccounts",
+    "origin": "https://<mydomain>.lightning.force.com"
+  },
+  "completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "console_events",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "script_sources",
+      "scripts",
+      "websocket_shapes",
+      "workers"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "console_events",
+        "reason": "disallowed_origin",
+        "count": 9
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 24
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 19
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 73
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 5
+      },
+      {
+        "section": "script_sources",
+        "reason": "not_approved",
+        "count": 990
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 72
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 391
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "workers",
+        "reason": "out_of_target_scope",
+        "count": 1
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "dom": {
+    "total_nodes": 2714
+  },
+  "accessibility": {
+    "total_nodes": 608,
+    "text_capture": {
+      "status": "included",
+      "retained_bytes": 1799,
+      "excluded_fields": 0
+    },
+    "named_nodes": [
+      {
+        "role": "button",
+        "name": "Next",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Cancel and close",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "focused",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Import Accounts",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "role": "group",
+        "name": "Choose an import method",
+        "states": [
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Create custom fields.",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Choose How to Import accounts - Active",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Upload Your File - Inactive",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Match Fields - Inactive",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Import Started - Inactive",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "radio",
+        "name": "Import from File Upload accounts using a CSV file.",
+        "states": [
+          {
+            "name": "checked",
+            "value": "false"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "radio",
+        "name": "Import, Update, or Export Use the Data Import Wizard, an advanced import tool that supports multiple objects, including custom objects.",
+        "states": [
+          {
+            "name": "checked",
+            "value": "false"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "total": 990
+  },
+  "network": {
+    "request_count": 0,
+    "prior_activity_available": false,
+    "requests": [],
+    "websocket_connections": []
+  },
+  "storage": {
+    "local_storage_keys": [
+      "$AuraClientService.token$one:one",
+      "GlobalValueProviders__MUTEX_X",
+      "objectHomeStateManager",
+      "appContextId"
+    ],
+    "session_storage_keys": [
+      "tempTabsKey",
+      "one.helpPanel.orgId",
+      "appContextId"
+    ],
+    "indexed_db_names": [
+      "ErrorHistory",
+      "actions",
+      "lastRecordTypeForSObject",
+      "ldsCSRFToken",
+      "ldsDurableCache",
+      "ldsLayout",
+      "ldsLayoutUserState",
+      "ldsObjectInfo",
+      "recordGVP68.0",
+      "standardTempTabPersistence"
+    ],
+    "values_redacted": true
+  },
+  "screenshot": {
+    "file": "2026-10-14-INT-3.png",
+    "sha256": "a56fc282af4d032ce853f040776cad1715a9c8bd8df0db9c76e7156b9f978795",
+    "bytes": 144288,
+    "viewport": {
+      "width": 1388,
+      "height": 706
+    },
+    "note": "Capture prise après masquage local des données personnelles (sf-act {\"mask\":true}); aucune donnée Salesforce modifiée."
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "Browser host platform and architecture were not observed."
+  ]
+}
