@@ -50,3 +50,13 @@ npx rea-agents@6.4.0 doctor --json
 ## Session Salesforce
 
 `bash scripts/start-salesforce-browser.sh` ouvre un second Chromium, visible sur le bureau de la VM, avec son propre profil et DevTools sur le port 9223. Il sert uniquement à une Salesforce Developer Org autorisée ; la connexion (SSO, MFA) est faite par une personne, jamais par un script. Procédure et règles : `docs/reverse-engineering/accounts/02-session-navigateur-salesforce.md`.
+
+Une fois la session ouverte, trois scripts enchaînent l'exploration en lecture seule :
+
+| Script | Rôle |
+| --- | --- |
+| `node scripts/sf-act.mjs '<actions JSON>'` | Navigue, clique, remplit et masque les données personnelles dans la page (Playwright sur le CDP 9223). Refuse tout clic sur Save / Save & New / Delete / Change Owner / Submit / Merge / Next. |
+| `bash scripts/sf-observe.sh <Id>` | Observe l'écran courant avec REA (`list-browser-targets` → `inspect-web-page` → `capture-web-screenshot`). Sorties brutes dans `/tmp/sf-explore`. |
+| `node scripts/sf-redact-evidence.mjs <Id…>` | Génère les preuves anonymisées déposées dans `docs/reverse-engineering/accounts/evidence/`, à partir d'un fichier de règles hors dépôt (`SF_REDACTION_FILE`). |
+
+Résultats de l'exploration Accounts : `docs/reverse-engineering/accounts/spec-accounts.md` et `04-rapport-couverture-accounts.md`.
