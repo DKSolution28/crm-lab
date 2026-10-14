@@ -19,7 +19,7 @@
     "test:e2e": "playwright test",
     "db:seed": "tsx --env-file=.env prisma/seed.ts",
     "test:unit": "node --import tsx --test tests/unit/*.test.ts",
-    "test:integration": "node --import tsx --import ./tests/preload-test-database.ts --test tests/integration/*.test.ts",
+    "test:integration": "node --import tsx --import ./tests/preload-test-database.ts --test --test-concurrency=1 tests/integration/*.test.ts",
     "test:api": "playwright test e2e/api.spec.ts",
     "test": "npm run test:unit && npm run test:integration && npm run test:e2e"
   },
