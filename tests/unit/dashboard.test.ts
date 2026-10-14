@@ -42,7 +42,7 @@ describe("dashboard counts", () => {
   it("reads only safe integers", () => {
     assert.equal(readCount(0), 0);
     assert.equal(readCount(4), 4);
-    assert.equal(readCount(4n), 4);
+    assert.equal(readCount(BigInt(4)), 4);
     assert.equal(readCount("12"), 12);
     assert.throws(() => readCount(1.5), /integer/);
     assert.throws(() => readCount("1.5"), /integer/);
@@ -62,7 +62,7 @@ describe("dashboard snapshot", () => {
       aggregates({
         accounts: 3,
         contacts: "2",
-        leads: 1n,
+        leads: BigInt(1),
         stages,
         pipelineAmount: EXACT,
         overdueTasks: 1,
