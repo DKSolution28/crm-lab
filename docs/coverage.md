@@ -97,12 +97,12 @@ Statut : ✅ implémenté et testé · ◐ partiel · ✖ non implémenté.
 
 | Suite | Commande | Résultat |
 | --- | --- | --- |
-| Unitaires (Node test runner) | `npm run test:unit` | 26 tests, 26 réussis |
-| Intégration Prisma | `npm run test:integration` | 13 tests, 13 réussis |
-| API + E2E navigateur (Playwright, Chromium) | `npm run test:e2e` | 23 tests, 23 réussis (`e2e/api.spec.ts` 13, `e2e/accounts.spec.ts` 9, `e2e/lab.spec.ts` 1) |
-| Lint / types | `npm run lint`, `npm run typecheck` | 0 erreur |
+| Unitaires (Node test runner) | `npm run test:unit` | 35 tests, 35 réussis (Phase 3.2, base non requise) |
+| Intégration Prisma | `npm run test:integration` | 16 tests, 16 réussis sur `TEST_DATABASE_URL` |
+| API + E2E navigateur (Playwright, Chromium, port 3100) | `npm run test:e2e` | 24 tests, 24 réussis (`e2e/accounts.spec.ts` 9, `e2e/api.spec.ts` 13, `e2e/database-isolation.spec.ts` 1, `e2e/lab.spec.ts` 1) |
+| Lint / types / build | `npm run lint`, `npm run typecheck`, `npm run build` | 0 erreur |
 
-Les suites d'intégration et E2E s'exécutent contre la base locale `crm_lab` ; elles créent des enregistrements préfixés `[test]` / `[e2e]` et les suppriment à la fin.
+Les suites d'intégration et E2E exigent `TEST_DATABASE_URL` (base jetable sur la boucle locale). Elles refusent `crm_lab` et ne réutilisent pas le serveur du port 3000. Voir `docs/phase3-2-test-isolation.md`.
 
 ## 8. Inconnues et différences notables
 

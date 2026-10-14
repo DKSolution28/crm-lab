@@ -44,7 +44,7 @@ Before the currency-filter fix, the same database reported unit 28/28, integrati
 ## Not solved
 
 - Demonstration user identity uses an editable cookie / API header and falls back to admin. This is suitable **only** for a private local lab. Do not expose CRM Lab on a public network or use real customer data before implementing verified sessions and fail-closed access.
-- Tests still read `DATABASE_URL` and otherwise use `crm_lab`, cleaning up by record-name prefix. This validation run overrode `DATABASE_URL` with a disposable database; the suite does not create that database itself.
+- Phase 3.2 ferme l'usage implicite de `crm_lab` par les tests : `TEST_DATABASE_URL` est obligatoire, les nettoyages vérifient `current_database()`, et Playwright lance un serveur dédié sur le port 3100. Voir `docs/phase3-2-test-isolation.md`.
 - Hierarchy consistency under concurrent writers needs a transactional or database-backed invariant if deployed in multi-user production.
 - CRM Lab's Kanban and split pagination are page-oriented rather than global aggregations. The summary for a Kanban group covers only the current page; label such summaries accordingly until implementing aggregate queries.
 - Test status and Salesforce compatibility must not be inferred from successful static edits.

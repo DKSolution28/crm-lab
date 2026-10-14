@@ -26,15 +26,22 @@ Puis ouvrir <http://127.0.0.1:3000/accounts>.
 
 ### Tests
 
+Les tests qui écrivent en base exigent `TEST_DATABASE_URL`. Cette variable doit nommer une base jetable sur `127.0.0.1`, `localhost` ou `::1`. `crm_lab`, les noms de production (`prod`, `production`, `live`) et tout autre hôte sont refusés. `DATABASE_URL` est ignoré par les tests.
+
 ```bash
-npm run test:unit          # règles du domaine (node --test)
-npm run test:integration   # service Prisma contre la base locale
+createdb crm_phase32_test
+DATABASE_URL="postgresql://ubuntu@127.0.0.1:5432/crm_phase32_test" npx prisma migrate deploy
+DATABASE_URL="postgresql://ubuntu@127.0.0.1:5432/crm_phase32_test" npm run db:seed
+export TEST_DATABASE_URL="postgresql://ubuntu@127.0.0.1:5432/crm_phase32_test"
+
+npm run test:unit          # règles du domaine (node --test), sans base
+npm run test:integration   # service Prisma contre TEST_DATABASE_URL
 npm run test:api           # contrats REST (Playwright request)
-npm run test:e2e           # API + parcours navigateur (Playwright, Chromium)
+npm run test:e2e           # API + parcours navigateur
 npm test                   # tout
 ```
 
-Les tests d'intégration et E2E utilisent la base `crm_lab` locale ; ils créent des enregistrements préfixés `[test]` / `[e2e]` et les suppriment à la fin. Playwright démarre le serveur de développement sur `127.0.0.1:3000` s'il n'est pas déjà lancé.
+Playwright lance sa propre instance Next.js sur `127.0.0.1:3100` (`NEXT_DIST_DIR=.next-e2e`, `reuseExistingServer: false`). Il ne réutilise pas le serveur de développement du port 3000. Le détail est dans `docs/phase3-2-test-isolation.md`.
 
 ## Pile
 
