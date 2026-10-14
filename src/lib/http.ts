@@ -5,6 +5,7 @@ import { FilterError } from "./accounts/filters";
 import { ListViewError } from "./accounts/list-views";
 import { NotFoundError } from "./accounts/service";
 import { ValidationError } from "./accounts/validation";
+import { ConflictError } from "./errors";
 
 export const errorResponse = (error: unknown) => {
   if (error instanceof ValidationError) {
@@ -18,6 +19,12 @@ export const errorResponse = (error: unknown) => {
   }
   if (error instanceof NotFoundError) {
     return NextResponse.json({ error: error.message }, { status: 404 });
+  }
+  if (error instanceof ConflictError) {
+    return NextResponse.json(
+      error.conversion === undefined ? { error: error.message } : { error: error.message, conversion: error.conversion },
+      { status: 409 },
+    );
   }
   if (error instanceof SyntaxError) {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
