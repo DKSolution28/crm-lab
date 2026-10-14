@@ -22,14 +22,14 @@ Documents seulement. Aucun module métier n'est livré.
 | MVP-SEC-IDENTITY | `docs/mvp/security-identity.md`. Le repli `ensureDefaultUser`, l'en-tête prioritaire et `switchUser` correspondent à `src/lib/auth/current-user.ts` et `src/app/actions.ts`. `GET /api/accounts/lookup` ne résout pas d'utilisateur | `051843d` sur `cursor/mvp-security-identity-2cf0` |
 | MVP-ARCH | `docs/mvp/architecture.md`. `accountId` reste nullable. Une seule migration `20261014200000_mvp_crm_modules`. Conversion 201 puis 409. Montants en chaîne décimale | `5bdf392` sur `cursor/mvp-architect-contracts-2cf0` |
 | MVP-SCHEMA | Migration unique, `canEditRecord`, `ConflictError` → 409, `recordRecentView`, `createAccount(..., db)`. Rejoué par le coordinateur, pas seulement déclaré par l'auteur | `4b9163f` sur `cursor/mvp-schema-2cf0` |
+| MVP-C-LEADS | CRUD sans conversion. `POST /api/leads` 201. PATCH vers `Converted` refusé. Lead déjà converti : 409. Pas de route `/convert` | `225ecc0` sur `cursor/mvp-leads-2cf0` |
 
 ## En cours
 
 | Tâche | Agent | Branche attendue | Périmètre |
 | --- | --- | --- | --- |
-| MVP-B-CONTACTS | [Contacts](https://cursor.com/agents/bc-485a4cf6-72bc-5f82-823d-c46cdec6f99b) | `cursor/mvp-contacts-2cf0` | Contacts : domaine, API, pages, lien sur la fiche Account. Pas de schéma. |
-| MVP-D-OPP | [Opportunities](https://cursor.com/agents/bc-22496455-8523-5621-a17e-1e397d4e3dec) | `cursor/mvp-opportunities-2cf0` | Opportunities et Kanban. Montants en chaîne. Pas de schéma. |
-| MVP-C-LEADS | [Leads](https://cursor.com/agents/bc-1f36d172-19e0-5eed-ac7b-1edce85b799f) | `cursor/mvp-leads-2cf0` | CRUD Leads seulement. Pas de `convertLead`. Pas de schéma. |
+| MVP-B-CONTACTS | [Contacts](https://cursor.com/agents/bc-485a4cf6-72bc-5f82-823d-c46cdec6f99b) | `cursor/mvp-contacts-2cf0` | Branche poussée, pas encore relue. |
+| MVP-D-OPP | [Opportunities](https://cursor.com/agents/bc-22496455-8523-5621-a17e-1e397d4e3dec) | `cursor/mvp-opportunities-2cf0` | Branche poussée, pas encore relue. |
 
 La pull request d'intégration n'est pas ouverte : la création reste en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
 
@@ -44,7 +44,11 @@ Rejoués le 2026-10-14 sur `crm_mvp_schema_verify` (`127.0.0.1`), avec `DATABASE
 | `prisma migrate deploy` sur base vide | 3 migrations appliquées, dont `20261014200000_mvp_crm_modules` |
 | `npm run test:unit` | 37 pass, 0 fail |
 | `npm run test:integration` | 18 pass, 0 fail |
-| `npm run test:e2e` | 24 pass, 0 fail |
+| `npm run test:e2e` après le schéma | 24 pass, 0 fail |
+| `npm run test:unit` après Leads | 46 pass, 0 fail |
+| `npm run test:integration` après Leads | 25 pass, 0 fail |
+| `npm run test:e2e` après Leads | Premier passage : 3 échecs navigateur (`accounts` NAV-1, `lab`, `leads`) avec `The destination stream errored while writing data` pendant que le serveur de dev compilait. Second passage, port 3100 libre : 11 pass (`accounts`, `lab`, `leads`). API du premier passage : 14 pass |
+| `npm run lint` et `npm run typecheck` après Leads | exit 0 |
 | `npm run lint` | exit 0 |
 | `npm run typecheck` | exit 0 |
 
@@ -61,7 +65,7 @@ Le défaut HIGH est connu, hérité du mode démonstration. Il bloque uniquement
 
 ## Prochaine tâche
 
-Intégrer Contacts, Opportunities et le CRUD Leads après relecture et tests. La conversion de lead attend `createContact`. Les activités et le dashboard restent en attente.
+Relire et intégrer Contacts et Opportunities. La conversion de lead reste en attente de `createContact`. Les activités et le dashboard ne sont pas commencés.
 
 ## Liens
 
