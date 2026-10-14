@@ -149,7 +149,9 @@ export default async function AccountRecordPage({ params, searchParams }: { para
                       {account.contacts.map((contact) => (
                         <tr key={contact.id} className="border-t border-slate-100">
                           <td className="py-1">
-                            {contact.firstName} {contact.lastName}
+                            <Link href={`/contacts/${contact.id}`} className="text-blue-700 hover:underline">
+                              {[contact.firstName, contact.lastName].filter(Boolean).join(" ")}
+                            </Link>
                           </td>
                           <td className="py-1 text-slate-700">{contact.title ?? ""}</td>
                           <td className="py-1 text-slate-700">{contact.email ?? ""}</td>
