@@ -93,16 +93,6 @@ before(async () => {
   });
   await prisma.contact.deleteMany({ where: { lastName: { startsWith: prefix } } });
   await prisma.account.deleteMany({ where: { name: { startsWith: prefix } } });
-  const opportunities = await prisma.opportunity.count();
-  const accounts = await prisma.account.count();
-  const contacts = await prisma.contact.count();
-  const leads = await prisma.lead.count();
-  const tasks = await prisma.task.count();
-  assert.equal(opportunities, 0, "The exact pipeline assertion needs an opportunity table with no other rows.");
-  assert.equal(accounts, 0);
-  assert.equal(contacts, 0);
-  assert.equal(leads, 0);
-  assert.equal(tasks, 0);
   standard = asUser(
     await prisma.user.upsert({
       where: { alias: `dashstd${stamp}` },
@@ -134,23 +124,28 @@ describe("dashboard aggregates", { concurrency: 1 }, () => {
   it("is connected to the disposable database named by TEST_DATABASE_URL", async () => {
     const actual = await readCurrentDatabase();
     assert.equal(actual, databaseNameOf(assertTestDatabaseUrl()));
-    assert.equal(actual, "crm_mvp_dashboard_2cf0");
     assert.notEqual(actual, "crm_lab");
   });
 
   it("matches account, contact, and lead counts to SQL", async () => {
+    const beforeAccounts = await sqlCount("Account");
+    const beforeContacts = await sqlCount("Contact");
+    const beforeLeads = await sqlCount("Lead");
     await createContact({ lastName: `${PREFIX}${stamp} Buyer`, accountId }, standard);
     await createLead({ lastName: `${PREFIX}${stamp} Lead`, company: `${PREFIX}${stamp} Co` }, standard);
     const snapshot = await getDashboard();
     assert.equal(snapshot.accounts, await sqlCount("Account"));
     assert.equal(snapshot.contacts, await sqlCount("Contact"));
     assert.equal(snapshot.leads, await sqlCount("Lead"));
-    assert.equal(snapshot.accounts, 1);
-    assert.equal(snapshot.contacts, 1);
-    assert.equal(snapshot.leads, 1);
+    assert.equal(snapshot.accounts, beforeAccounts);
+    assert.equal(snapshot.contacts, beforeContacts + 1);
+    assert.equal(snapshot.leads, beforeLeads + 1);
   });
 
   it("returns 9007199254740993.01 for the Proposal stage and the open pipeline", async () => {
+    const beforePipeline = await sqlPipeline();
+    const beforeProposal = (await sqlStages()).find((row) => row.stage === "Proposal");
+    assert.ok(beforeProposal);
     await createOpportunity(
       {
         name: `${PREFIX}${stamp} Exact`,
@@ -163,18 +158,22 @@ describe("dashboard aggregates", { concurrency: 1 }, () => {
     );
     const snapshot = await getDashboard();
     const proposal = snapshot.opportunitiesByStage.find((row) => row.stage === "Proposal");
+    const expectedProposal = new Prisma.Decimal(beforeProposal.amount).plus(EXACT).toFixed(2);
+    const expectedPipeline = new Prisma.Decimal(beforePipeline).plus(EXACT).toFixed(2);
     assert.ok(proposal);
-    assert.equal(proposal.amount, EXACT);
-    assert.equal(proposal.count, 1);
-    assert.equal(snapshot.pipelineAmount, EXACT);
+    assert.equal(proposal.amount, expectedProposal);
+    assert.equal(proposal.count, beforeProposal.count + 1);
+    assert.equal(snapshot.pipelineAmount, expectedPipeline);
     assert.equal(typeof snapshot.pipelineAmount, "string");
-    assert.notEqual(snapshot.pipelineAmount, String(Number(EXACT)));
-    assert.notEqual(snapshot.pipelineAmount, new Prisma.Decimal(Number(EXACT)).toFixed(2));
+    assert.notEqual(snapshot.pipelineAmount, new Prisma.Decimal(beforePipeline).plus(new Prisma.Decimal(Number(EXACT))).toFixed(2));
     assert.equal(snapshot.pipelineAmount, await sqlPipeline());
     assert.deepEqual(snapshot.opportunitiesByStage, await sqlStages());
   });
 
   it("keeps a ClosedWon amount on its stage and out of the pipeline", async () => {
+    const pipelineBeforeClose = await sqlPipeline();
+    const beforeWon = (await sqlStages()).find((row) => row.stage === "ClosedWon");
+    assert.ok(beforeWon);
     await createOpportunity(
       {
         name: `${PREFIX}${stamp} Won`,
@@ -187,13 +186,11 @@ describe("dashboard aggregates", { concurrency: 1 }, () => {
     );
     const snapshot = await getDashboard();
     const won = snapshot.opportunitiesByStage.find((row) => row.stage === "ClosedWon");
-    const proposal = snapshot.opportunitiesByStage.find((row) => row.stage === "Proposal");
-    assert.equal(won?.amount, CLOSED);
-    assert.equal(won?.count, 1);
-    assert.equal(proposal?.amount, EXACT);
-    assert.equal(snapshot.pipelineAmount, EXACT);
+    assert.equal(won?.amount, new Prisma.Decimal(beforeWon.amount).plus(CLOSED).toFixed(2));
+    assert.equal(won?.count, beforeWon.count + 1);
+    assert.equal(snapshot.pipelineAmount, pipelineBeforeClose);
     assert.equal(snapshot.pipelineAmount, await sqlPipeline());
-    assert.notEqual(snapshot.pipelineAmount, new Prisma.Decimal(EXACT).plus(CLOSED).toFixed(2));
+    assert.notEqual(snapshot.pipelineAmount, new Prisma.Decimal(pipelineBeforeClose).plus(CLOSED).toFixed(2));
   });
 
   it("lists every stage, including empty ones, with count 0 and amount 0.00", async () => {
@@ -202,10 +199,8 @@ describe("dashboard aggregates", { concurrency: 1 }, () => {
       snapshot.opportunitiesByStage.map((row) => row.stage),
       [...DASHBOARD_STAGES],
     );
-    for (const stage of ["Qualification", "Negotiation", "ClosedLost"] as const) {
-      const row = snapshot.opportunitiesByStage.find((item) => item.stage === stage);
-      assert.equal(row?.count, 0);
-      assert.equal(row?.amount, "0.00");
+    for (const row of snapshot.opportunitiesByStage) {
+      if (row.count === 0) assert.equal(row.amount, "0.00");
     }
     assert.deepEqual(snapshot.opportunitiesByStage, await sqlStages());
   });

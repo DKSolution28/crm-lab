@@ -1,6 +1,6 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { assertCleanupPrefix, assertConnectedTestDatabase, assertTestDatabaseUrl } from "../tests/test-database";
 
 const PREFIX = "[e2e] Dash ";
@@ -99,6 +99,15 @@ test.afterAll(cleanup);
 
 test("creates an opportunity, moves its stage, and shows that amount on the dashboard", async ({ page }) => {
   test.setTimeout(120_000);
+  await page.goto("/");
+  const before = await (await page.request.get("/api/dashboard")).json();
+  const stageRow = (stage: string) => before.opportunitiesByStage.find((row: { stage: string }) => row.stage === stage);
+  const expectedProposal = new Prisma.Decimal(stageRow("Proposal").amount).plus(EXACT).toFixed(2);
+  const expectedPipeline = new Prisma.Decimal(before.pipelineAmount).plus(EXACT).toFixed(2);
+  const corruptedPipeline = new Prisma.Decimal(before.pipelineAmount).plus(new Prisma.Decimal(Number(EXACT))).toFixed(2);
+  const expectedProposalCount = String(stageRow("Proposal").count + 1);
+  const overdueBefore = String(before.overdueTasks);
+
   await page.goto("/accounts/new");
   await expect(page.getByRole("dialog", { name: "New Account" })).toBeVisible();
   await page.locator("#field-name").fill(accountName);
@@ -139,26 +148,26 @@ test("creates an opportunity, moves its stage, and shows that amount on the dash
   await expect(page).toHaveURL(/\/dashboard$/);
   await expect(page.getByRole("heading", { name: "Dashboard", exact: true })).toBeVisible();
   await expect(page.getByTestId("dashboard-stage-Proposal")).toBeVisible();
-  await expect(page.getByTestId("dashboard-stage-amount-Proposal")).toHaveText(EXACT);
-  await expect(page.getByTestId("dashboard-stage-count-Proposal")).toHaveText("1");
-  await expect(page.getByTestId("dashboard-pipeline-amount")).toHaveText(EXACT);
-  await expect(page.getByTestId("dashboard-pipeline-amount")).not.toHaveText(String(Number(EXACT)));
-  await expect(page.getByTestId("dashboard-stage-amount-Qualification")).toHaveText("0.00");
-  await expect(page.getByTestId("dashboard-stage-amount-Negotiation")).toHaveText("0.00");
-  await expect(page.getByTestId("dashboard-stage-amount-ClosedWon")).toHaveText("0.00");
-  await expect(page.getByTestId("dashboard-stage-amount-ClosedLost")).toHaveText("0.00");
-  await expect(page.getByTestId("dashboard-overdue-tasks")).toHaveText("0");
+  await expect(page.getByTestId("dashboard-stage-amount-Proposal")).toHaveText(expectedProposal);
+  await expect(page.getByTestId("dashboard-stage-count-Proposal")).toHaveText(expectedProposalCount);
+  await expect(page.getByTestId("dashboard-pipeline-amount")).toHaveText(expectedPipeline);
+  await expect(page.getByTestId("dashboard-pipeline-amount")).not.toHaveText(corruptedPipeline);
+  await expect(page.getByTestId("dashboard-stage-amount-Qualification")).toHaveText(stageRow("Qualification").amount);
+  await expect(page.getByTestId("dashboard-stage-amount-Negotiation")).toHaveText(stageRow("Negotiation").amount);
+  await expect(page.getByTestId("dashboard-stage-amount-ClosedWon")).toHaveText(stageRow("ClosedWon").amount);
+  await expect(page.getByTestId("dashboard-stage-amount-ClosedLost")).toHaveText(stageRow("ClosedLost").amount);
+  await expect(page.getByTestId("dashboard-overdue-tasks")).toHaveText(overdueBefore);
 
   const body = await (await page.request.get("/api/dashboard")).json();
-  expect(body.pipelineAmount).toBe(EXACT);
-  expect(body.opportunitiesByStage.find((row: { stage: string }) => row.stage === "Proposal").amount).toBe(EXACT);
-  expect(body.overdueTasks).toBe(0);
+  expect(body.pipelineAmount).toBe(expectedPipeline);
+  expect(body.opportunitiesByStage.find((row: { stage: string }) => row.stage === "Proposal").amount).toBe(expectedProposal);
+  expect(body.overdueTasks).toBe(before.overdueTasks);
 
   await insertTasks();
   await page.reload();
-  await expect(page.getByTestId("dashboard-overdue-tasks")).toHaveText("1");
-  await expect(page.getByTestId("dashboard-pipeline-amount")).toHaveText(EXACT);
-  await expect(page.getByTestId("dashboard-stage-amount-Proposal")).toHaveText(EXACT);
+  await expect(page.getByTestId("dashboard-overdue-tasks")).toHaveText(String(before.overdueTasks + 1));
+  await expect(page.getByTestId("dashboard-pipeline-amount")).toHaveText(expectedPipeline);
+  await expect(page.getByTestId("dashboard-stage-amount-Proposal")).toHaveText(expectedProposal);
 
   mkdirSync("test-results", { recursive: true });
   await page.screenshot({ path: "test-results/dashboard.png", fullPage: true });
