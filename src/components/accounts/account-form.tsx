@@ -36,7 +36,7 @@ export function AccountForm(props: AccountFormProps) {
   const serverError = (key: string) => state.fieldErrors?.[key];
   const clientError = (key: string) => (key === "name" && touched.name && !(values.name ?? "").trim() ? REQUIRED : undefined);
   const errorFor = (key: string) => clientError(key) ?? serverError(key);
-  const changed = (key: string) => props.mode === "edit" && (values[key] ?? "") !== (props.initial[key] ?? "");
+  const changed = (key: string) => (values[key] ?? "") !== (props.initial[key] ?? "");
 
   const cancel = () => {
     if (window.history.length > 1) router.back();
