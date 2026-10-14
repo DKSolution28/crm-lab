@@ -219,7 +219,7 @@ export function AccountForm(props: AccountFormProps) {
         </h3>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {field("phone", "Phone", text("phone", { type: "tel", maxLength: 40 }))}
-          {field("fax", "Fax", text("fax", { type: "tel", maxLength: 40 }))}
+          <div aria-hidden className="hidden md:block" />
           {addressGroup("billing", "Billing Address")}
           {addressGroup("shipping", "Shipping Address")}
         </div>
@@ -235,6 +235,7 @@ export function AccountForm(props: AccountFormProps) {
           {field("ownership", "Ownership", select("ownership", props.picklists.ownership))}
           {field("annualRevenue", "Annual Revenue", text("annualRevenue", { inputMode: "numeric" }))}
           {field("numberOfEmployees", "Employees", text("numberOfEmployees", { inputMode: "numeric" }))}
+          {field("fax", "Fax", text("fax", { type: "tel", maxLength: 40 }))}
           {field("accountNumber", "Account Number", text("accountNumber", { maxLength: 40 }))}
           {field("site", "Account Site", text("site", { maxLength: 80 }))}
           {field("tickerSymbol", "Ticker Symbol", text("tickerSymbol", { maxLength: 20 }))}
