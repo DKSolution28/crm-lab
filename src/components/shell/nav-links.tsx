@@ -9,6 +9,7 @@ const items = [
   { href: "/leads", label: "Leads", icon: "+", enabled: true },
   { href: "/contacts", label: "Contacts", icon: "☺", enabled: true },
   { href: "/opportunities", label: "Opportunities", icon: "◔", enabled: true },
+  { href: "/dashboard", label: "Dashboard", icon: "\u25a3", enabled: true },
 ];
 
 export function NavLinks() {
