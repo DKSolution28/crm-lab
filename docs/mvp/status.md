@@ -30,9 +30,9 @@ Documents seulement. Aucun module métier n'est livré.
 
 | Tâche | Agent | Branche attendue | Périmètre |
 | --- | --- | --- | --- |
-| MVP-C-CONVERT | à lancer depuis ce HEAD | `cursor/mvp-lead-convert-2cf0` | `convertLead` atomique, 201 puis 409. Pas de seconde migration. |
-| MVP-E-ACT | à lancer depuis ce HEAD | `cursor/mvp-activities-2cf0` | Tâches, historique sur les fiches. Pas d'entrée de navigation. |
-| MVP-F-DASH | à lancer depuis ce HEAD | `cursor/mvp-dashboard-2cf0` | Agrégats SQL, page `/dashboard`, une entrée de navigation. |
+| MVP-C-CONVERT | [Conversion](https://cursor.com/agents/bc-1eddb5c3-ccc6-5f10-850e-e9cf829ab968) | `cursor/mvp-lead-convert-2cf0` | `convertLead` atomique, 201 puis 409. Pas de seconde migration. |
+| MVP-E-ACT | [Activités](https://cursor.com/agents/bc-b9c37ebe-2713-5c09-9a84-18fd20328ddb) | `cursor/mvp-activities-2cf0` | Tâches, historique sur les fiches. Pas d'entrée de navigation. |
+| MVP-F-DASH | [Dashboard](https://cursor.com/agents/bc-c89a4bb9-adb3-5e2c-82cf-07c87c67a892) | `cursor/mvp-dashboard-2cf0` | Agrégats SQL, page `/dashboard`, une entrée de navigation. |
 
 La pull request d'intégration n'est pas ouverte : la création reste en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
 
