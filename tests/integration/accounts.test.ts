@@ -155,6 +155,13 @@ describe("account lifecycle", () => {
     assert.equal(byAdmin.ownerId, standard.id, "editing does not change the owner");
   });
 
+  it("keeps exact high-precision revenue across create and update", async () => {
+    const precise = await createAccount({ name: `${PREFIX}Exact Revenue ${stamp}`, annualRevenue: "9007199254740993" }, standard);
+    assert.equal(precise.annualRevenue, "9007199254740993");
+    const updated = await updateAccount(precise.id, { name: precise.name, annualRevenue: "999999999999999999" }, standard);
+    assert.equal(updated.annualRevenue, "999999999999999999");
+  });
+
   it("only lets an administrator reassign the owner", async () => {
     await assert.rejects(updateAccount(createdId, { name: `${PREFIX}Alpha Ridge ${stamp}`, ownerId: admin.id }, standard), ValidationError);
     const reassigned = await updateAccount(createdId, { name: `${PREFIX}Alpha Ridge ${stamp}`, ownerId: admin.id }, admin);
