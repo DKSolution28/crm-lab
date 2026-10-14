@@ -69,8 +69,8 @@ test.describe("Parcours 4 — task on the account, status, history", () => {
     await expect(open).toContainText("Dec 31, 2026");
 
     await expect(page.locator("#related-tasks form[data-hydrated='true']")).toBeVisible();
-    await page.getByLabel(`Status for ${subject}`).selectOption("Completed");
-    await page.getByRole("button", { name: `Update status for ${subject}` }).click();
+    await open.getByRole("combobox", { name: `Status for ${subject}`, exact: true }).selectOption("Completed");
+    await page.getByRole("button", { name: `Update status for ${subject}`, exact: true }).click();
 
     await expect(page.getByRole("status").filter({ hasText: "was saved." })).toBeVisible();
     const history = page.getByTestId("activity-history");

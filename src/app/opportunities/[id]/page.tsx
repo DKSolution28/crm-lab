@@ -44,7 +44,7 @@ export default async function OpportunityRecordPage({ params, searchParams }: { 
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4 bg-slate-50 p-4">
-      {toast ? <ToastFromQuery kind={toast.kind} message={toast.message} /> : null}
+      {toast ? <ToastFromQuery key={`${toast.kind}:${toast.message}`} kind={toast.kind} message={toast.message} /> : null}
       <header className="rounded-lg border border-slate-200 bg-white p-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="flex items-center gap-3">
