@@ -26,7 +26,7 @@ Documents seulement. Aucun module métier n'est livré.
 
 | Tâche | Agent | Branche attendue | Fichiers |
 | --- | --- | --- | --- |
-| MVP-SCHEMA | Backend, propriétaire du schéma | `cursor/mvp-schema-2cf0` | Migration unique et fichiers du §2.3 uniquement |
+| MVP-SCHEMA | [Backend](https://cursor.com/agents/bc-9e19d465-9370-5c1e-82e7-2dcee0598f4b) | `cursor/mvp-schema-2cf0` | Migration unique et fichiers du §2.3 uniquement |
 
 La pull request d'intégration n'est pas ouverte : la création reste en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
 
