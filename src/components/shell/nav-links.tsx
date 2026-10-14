@@ -7,7 +7,7 @@ const items = [
   { href: "/", label: "Home", icon: "⌂", enabled: true },
   { href: "/accounts", label: "Accounts", icon: "▦", enabled: true },
   { href: "/contacts", label: "Contacts", icon: "☺", enabled: false },
-  { href: "/opportunities", label: "Opportunities", icon: "◔", enabled: false },
+  { href: "/opportunities", label: "Opportunities", icon: "◔", enabled: true },
 ];
 
 export function NavLinks() {
