@@ -51,7 +51,8 @@ test("creates an opportunity with a decimal amount and keeps that total on the b
   await page.locator("#field-closeDate").fill("2026-12-31");
   await page.getByRole("button", { name: "Save", exact: true }).click();
 
-  await expect(page).toHaveURL(/\/opportunities\/[a-z0-9]+\?toast=/);
+  await expect(page).toHaveURL(/\/opportunities\/[a-z0-9]+/);
+  await expect(page.getByRole("status").filter({ hasText: "was created." })).toBeVisible();
   await expect(page.getByTestId("opportunity-name")).toHaveText(opportunityName);
   await expect(page.getByTestId("opportunity-amount")).toHaveText(EXACT);
   await expect(page.getByTestId("opportunity-close-date")).toHaveText("2026-12-31");
