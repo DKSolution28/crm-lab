@@ -1,6 +1,6 @@
 # Statut MVP
 
-Cycle : le dashboard SQL est intégré et rejoué. La conversion et les activités sont encore en cours. Le MVP n'est pas terminé. Étiquette produit : **démonstration locale**.
+Cycle : conversion et activités sont intégrées et rejouées. Il reste l'identité réelle, la CI et le vérificateur. Le MVP n'est pas terminé. Étiquette produit : **démonstration locale**.
 
 ## Déjà vérifié avant cette vague
 
@@ -13,7 +13,7 @@ Cycle : le dashboard SQL est intégré et rejoué. La conversion et les activit�
 
 ## Terminé et vérifié dans ce cycle
 
-Accounts, Contacts, Leads (CRUD), Opportunities et le dashboard sont sur la branche. La conversion et les activités ne le sont pas.
+Accounts, Contacts, Leads avec conversion, Opportunities, activités et dashboard sont sur la branche. L'identité reste celle de la démonstration.
 
 | Tâche | Preuve relue | Commit d'origine |
 | --- | --- | --- |
@@ -26,13 +26,12 @@ Accounts, Contacts, Leads (CRUD), Opportunities et le dashboard sont sur la bran
 | MVP-B-CONTACTS | Liste, fiche, API. `createContact(input, user, db)`. `accountId` optionnel. Lien contact sur la fiche Account. Intégration `9929474` | `d93c2e7` sur `cursor/mvp-contacts-2cf0` |
 | MVP-D-OPP | Liste, fiche, Kanban. `amount` en chaîne décimale. `createOpportunity(..., db)`. Montant `9007199254740993.01` conservé. Intégration `87a1986` | `e1aa3f8` sur `cursor/mvp-opportunities-2cf0` |
 | MVP-F-DASH | `GET /api/dashboard` et `/dashboard`. Sommes en chaîne `Prisma.Decimal`. Pipeline `480000.00` sur le seed, étapes fermées exclues. Intégration `3b4493f`, correctif de delta `bf9d191` | `a4c2434` sur `cursor/mvp-dashboard-2cf0` |
+| MVP-E-ACT | Une tâche, un parent. Ouvert contre historique. `lastActivityDate` sur Account et Contact. Intégration `d106947` | `51c2d16` sur `cursor/mvp-activities-2cf0` |
+| MVP-C-CONVERT | Une transaction, 201 puis 409. `ClosedWon` annule la prise. Le bouton Convert n'apparaît qu'après qualification. Intégration `a4aac21` | `e97e5cf` sur `cursor/mvp-lead-convert-2cf0` |
 
 ## En cours
 
-| Tâche | Agent | Branche attendue | Périmètre |
-| --- | --- | --- | --- |
-| MVP-C-CONVERT | [Conversion](https://cursor.com/agents/bc-1eddb5c3-ccc6-5f10-850e-e9cf829ab968) | `cursor/mvp-lead-convert-2cf0` | `convertLead` atomique, 201 puis 409. Pas de seconde migration. |
-| MVP-E-ACT | [Activités](https://cursor.com/agents/bc-b9c37ebe-2713-5c09-9a84-18fd20328ddb) | `cursor/mvp-activities-2cf0` | Tâches, historique sur les fiches. Pas d'entrée de navigation. |
+Aucun workstream de code. La CI et le vérificateur indépendant ne sont pas lancés.
 
 La pull request d'intégration n'est pas ouverte : la création reste en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
 
@@ -63,6 +62,10 @@ Rejoués le 2026-10-14 sur `crm_mvp_schema_verify` (`127.0.0.1`), avec `DATABASE
 | `npm run test:e2e` lancé par Playwright | Deux passages : la navigation ne se stabilise pas (`accounts` NAV-1, `contacts`, `dashboard`, `lab`, `leads`, `opportunities`) pendant que le serveur de dev démarre. Ce n'est pas une assertion métier |
 | Playwright sur le serveur déjà chaud, port 3100 | 31 pass, 0 fail (36,5 s), dont `e2e/dashboard.spec.ts` |
 | `npm run lint` et `npm run typecheck` après le dashboard | exit 0 |
+| `npm run test:unit` après conversion et activités | 78 pass, 0 fail |
+| `npm run test:integration` après conversion et activités | 62 pass, 0 fail, dont conversion 201/409/rollback et activités |
+| Playwright sur le serveur déjà chaud, port 3100, après ces deux fusions | 33 pass, 0 fail (34,6 s), dont `e2e/lead-conversion.spec.ts` et `e2e/activities.spec.ts` |
+| `npm run lint` et `npm run typecheck` après ces deux fusions | exit 0 |
 
 `crm_lab` avant et après : 12 comptes, `max(Account.updatedAt)` = `2026-10-14 12:49:22.245`. Cette base de développement n'a pas reçu la migration MVP : pas de table `Lead` ni `Task`. Les suites écrivent dans `crm_mvp_schema_verify`.
 
@@ -77,7 +80,7 @@ Le défaut HIGH est connu, hérité du mode démonstration. Il bloque uniquement
 
 ## Prochaine tâche
 
-La conversion et les activités restent à relire. Le vérificateur indépendant n'a pas encore rendu de PASS.
+La CI et le vérificateur indépendant restent à faire. Le parcours 5 couvre le 403 propriétaire ou admin, pas une session réelle.
 
 ## Liens
 
