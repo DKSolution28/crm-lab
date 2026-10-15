@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { formatFieldValue } from "@/lib/accounts/format";
 import { globalSearch } from "@/lib/accounts/service";
+import { getCurrentUser } from "@/lib/auth/current-user";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Search | CRM Lab" };
@@ -10,6 +11,7 @@ export const metadata: Metadata = { title: "Search | CRM Lab" };
 // objet et message d'absence de résultat. Seul l'objet Accounts est
 // interrogé dans CRM Lab (Contacts / Opportunities : modules à venir).
 export default async function SearchPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  await getCurrentUser();
   const params = await searchParams;
   const q = (Array.isArray(params.q) ? params.q[0] : params.q)?.trim() ?? "";
   const result = q ? await globalSearch(q) : { items: [], total: 0 };
