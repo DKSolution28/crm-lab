@@ -19,16 +19,12 @@ export async function POST(request: Request) {
     await getRequestUser(request);
     assertTrustedOrigin(request);
     const body = (await request.json()) as { title?: unknown; detail?: unknown };
-  const title = String(body.title ?? "").trim();
-  const detail = String(body.detail ?? "").trim();
-
-  if (!title) {
-    return NextResponse.json({ error: "title is required" }, { status: 400 });
-  }
-
-  const note = await prisma.labNote.create({
-    data: { title, detail },
-  });
+    const title = String(body.title ?? "").trim();
+    const detail = String(body.detail ?? "").trim();
+    if (!title) {
+      return NextResponse.json({ error: "title is required" }, { status: 400 });
+    }
+    const note = await prisma.labNote.create({ data: { title, detail } });
 
     return NextResponse.json(note, { status: 201 });
   } catch (error) {
