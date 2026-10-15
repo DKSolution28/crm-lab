@@ -1,6 +1,8 @@
 # Statut MVP
 
-Cycle : conversion et activités sont intégrées et rejouées. Il reste l'identité réelle, la CI et le vérificateur. Le MVP n'est pas terminé. Étiquette produit : **démonstration locale**.
+Cycle du 2026-10-15 : sessions signées, cinq parcours e2e, build, et workflow CI dans le dépôt. Étiquette : **sessions signées en local**. Ce n'est pas « prêt pour production ». Rien n'est fusionné vers `main`.
+
+Le vérificateur indépendant n'a pas encore rendu de PASS dans ce document : il est lancé après le push, et son verdict ne peut pas être écrit avant qu'il ait exécuté les tests.
 
 ## Déjà vérifié avant cette vague
 
@@ -9,7 +11,7 @@ Cycle : conversion et activités sont intégrées et rejouées. Il reste l'ident
 | Module Accounts sur la branche de reconstruction | Merge `c520ce1` de la PR #1 dans `cursor/phase3-accounts-reconstruction-2cf0` |
 | PR #2 vers `main` | Ouverte, brouillon, non fusionnée. `main` n'a pas le module Accounts |
 | Isolation des tests | `docs/phase3-2-test-isolation.md`, `tests/test-database.ts`. Dernière exécution consignée en phase 3.2 : unitaires 35, intégration 16, e2e 24, lint 0, typecheck et build passés. Ces chiffres ne sont pas rejoués dans ce cycle |
-| GitHub Actions | Aucun workflow dans `.github/workflows` |
+| GitHub Actions | `.github/workflows/mvp.yml` est dans le dépôt. GitHub ne l'a pas exécuté dans cette session |
 
 ## Terminé et vérifié dans ce cycle
 
@@ -31,9 +33,9 @@ Accounts, Contacts, Leads avec conversion, Opportunities, activités et dashboar
 
 ## En cours
 
-Aucun workstream de code. La CI et le vérificateur indépendant ne sont pas lancés.
+Le vérificateur indépendant, après le push de cette branche. Il ne doit pas être l'auteur du code de session.
 
-La pull request d'intégration n'est pas ouverte : la création reste en attente d'approbation manuelle (base `cursor/phase3-accounts-reconstruction-2cf0`, tête `cursor/mvp-integration-2cf0`).
+La pull request d'intégration vise `cursor/phase3-accounts-reconstruction-2cf0`. Elle n'est pas fusionnée. La PR #2 vers `main` reste un brouillon ouvert, non fusionné.
 
 Écart accepté : l'audit proposait `onDelete: Restrict` sur les clés de conversion. Le contrat pose `SetNull` pour que les `deleteMany` de test continuent, et fait reposer l'idempotence sur `convertedAt`. Les parcours d'acceptation qui attendent HTTP 200 sur la conversion suivent le contrat : **201**, puis **409**.
 
@@ -69,18 +71,32 @@ Rejoués le 2026-10-14 sur `crm_mvp_schema_verify` (`127.0.0.1`), avec `DATABASE
 
 `crm_lab` avant et après : 12 comptes, `max(Account.updatedAt)` = `2026-10-14 12:49:22.245`. Cette base de développement n'a pas reçu la migration MVP : pas de table `Lead` ni `Task`. Les suites écrivent dans `crm_mvp_schema_verify`.
 
+## Tests du 2026-10-15
+
+Base jetable `crm_mvp_finalize` sur `127.0.0.1`. `DATABASE_URL` pointait vers `crm_lab` pendant les tests, pour vérifier que la garde l'ignore. `crm_lab` après les suites : 12 comptes, `max(Account.updatedAt)` = `2026-10-14 12:49:22.245`, pas de table `Lead`.
+
+| Commande | Résultat |
+| --- | --- |
+| `npm run test:unit` | 81 pass, 0 fail |
+| `npm run test:integration` | 64 pass, 0 fail, dont sessions 401/403 |
+| `npm run test:e2e` | 36 pass, 0 fail (35,0 s). Serveur `next build` puis `next start` sur le port 3100, `reuseExistingServer: false` |
+| `npm run lint` | exit 0 |
+| `npm run typecheck` | exit 0 |
+| `npm run build` | exit 0, `NEXT_DIST_DIR=.next-mvp-build` |
+
+Les cinq parcours e2e de cette exécution : `e2e/contacts.spec.ts`, `e2e/lead-conversion.spec.ts`, `e2e/dashboard.spec.ts`, `e2e/activities.spec.ts`, `e2e/auth.spec.ts`.
+
 ## Bugs ouverts
 
 | Gravité | Sujet | Preuve |
 | --- | --- | --- |
-| HIGH | Usurpation d'identité par cookie `crm-lab-user` ou en-tête `x-crm-lab-user` ; identifiant inconnu → premier administrateur | `src/lib/auth/current-user.ts` |
-| MEDIUM | Pas de workflow CI | `.github/workflows` absent |
+| MEDIUM | Notes, lookup et recherche sans session ; pas de contrôle d'origine sur les routes à cookie ; `db:seed` suit `DATABASE_URL` ; PostgreSQL local en trust | `docs/mvp/security-identity.md` |
 
-Le défaut HIGH est connu, hérité du mode démonstration. Il bloque uniquement l'étiquette « prêt pour utilisateurs réels ». Il ne bloque pas la conception des modules.
+Le défaut HIGH d'usurpation (cookie `crm-lab-user`, en-tête `x-crm-lab-user`, repli administrateur) est fermé dans le code du 2026-10-15. Le workflow CI est écrit. GitHub ne l'a pas encore exécuté ici.
 
 ## Prochaine tâche
 
-La CI et le vérificateur indépendant restent à faire. Le parcours 5 couvre le 403 propriétaire ou admin, pas une session réelle.
+Verdict du vérificateur indépendant, puis revue de la pull request. Pas de fusion vers `main` sans instruction.
 
 ## Liens
 

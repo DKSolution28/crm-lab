@@ -12,17 +12,15 @@ Un agent cloud n'a pas le navigateur Salesforce du coordinateur. Il ne tente pas
 
 INT-5 marque Account Name `required: true`, avec un astérisque. Les textes plus anciens du dépôt et le module B disent que l'association est optionnelle. Save n'a pas été utilisé. Le contrat `docs/mvp/architecture.md` garde `accountId` nullable et n'impose pas de règle de sauvegarde. Le marqueur `required: true` d'INT-5 reste une inconnue de Save, pas une validation MVP.
 
-### B2 — Identité de démonstration
-
-Cookie et en-tête libres. L'audit `docs/mvp/security-identity.md` confirme le défaut HIGH et le plan de migration. Tant que les tests 401/403 du plan ne sont pas écrits et verts, le MVP reste une démonstration locale. Pas de contournement.
-
 ### B3 — Pas de fusion vers `main`
 
 La PR #2 reste un brouillon ouvert. Le coordinateur n'a pas l'autorisation de la fusionner.
 
 ## Levés
 
-Aucun dans ce cycle.
+### B2 — Identité de démonstration
+
+Levé le 2026-10-15. `getRequestUser` lit uniquement `crm-lab-session`. Sans cookie valide, la réponse est 401. Un utilisateur standard qui modifie le compte d'un autre reçoit 403. Preuve : `tests/integration/auth.test.ts` et `e2e/auth.spec.ts`, exécutés le 2026-10-15 (intégration 64 pass, e2e 36 pass). Les constats MEDIUM de `docs/mvp/security-identity.md` restent ouverts et empêchent l'étiquette « prêt pour production ».
 
 ## Hors périmètre, non bloquants
 

@@ -1,6 +1,8 @@
 # Tests d'acceptation du MVP
 
-Cycle QA du 2026-10-14. Branche lue : `cursor/mvp-integration-2cf0`. Aucun scénario de ce document n'a été exécuté.
+Exécution du 2026-10-15 : les cinq parcours ont été joués. Les chiffres et la matrice sont dans `docs/mvp/acceptance-report.md`. Le texte **NOT RUN** plus bas est le plan QA du 2026-10-14, pas le résultat de cette exécution.
+
+Cycle QA du 2026-10-14. Branche lue : `cursor/mvp-integration-2cf0`. Aucun scénario de ce document n'avait été exécuté à cette date.
 
 **Statut de chaque parcours : NOT RUN.** Aucun test nouveau n'est déclaré passé. Les comptages de la phase 3.2 sont historiques, consignés dans `docs/phase3-2-test-isolation.md` : unitaires 35, intégration 16, e2e 24. Ce cycle ne les a pas rejoués.
 

@@ -17,10 +17,13 @@ npm run db:seed                 # utilisateurs et comptes fictifs ([demo])
 npm run dev -- --hostname 127.0.0.1 --port 3000
 ```
 
-Puis ouvrir <http://127.0.0.1:3000/accounts>.
+Puis ouvrir <http://127.0.0.1:3000/login>.
 
-- Utilisateurs de démonstration : `demoadm` (administrateur) et `demostd` (standard), sélectionnables dans l'en-tête (« View profile »). Il n'y a pas d'authentification réelle : le choix est porté par le cookie `crm-lab-user`, ou par l'en-tête `x-crm-lab-user` pour l'API.
-- Données : 12 comptes fictifs, 4 contacts et 3 opportunités fictifs marqués `[demo]` ; `npm run db:seed` les recrée à l'identique. Aucune donnée personnelle réelle ne doit entrer dans CRM Lab.
+`CRM_LAB_SESSION_SECRET` doit faire au moins 32 caractères (voir `.env.example`). Sans ce secret, aucune session n'est acceptée.
+
+- Comptes de laboratoire, créés par `npm run db:seed` : `demoadm` / `demoadm-pass` (administrateur) et `demostd` / `demostd-pass` (standard). La connexion passe par `/login` et pose le cookie signé `crm-lab-session`. L'en-tête `x-crm-lab-user` et un cookie non signé ne choisissent pas l'utilisateur.
+- `CRM_LAB_COOKIE_SECURE=true` seulement derrière HTTPS. Sur `http://127.0.0.1`, laisser la variable absente.
+- Données : 12 comptes fictifs, 4 contacts et 3 opportunités fictifs marqués `[demo]` ; `npm run db:seed` les recrée à l'identique. Aucune donnée personnelle réelle ne doit entrer dans CRM Lab. Le MVP local couvre aussi Contacts, Leads (conversion), Opportunities, tâches et le tableau de bord. Ce n'est pas un déploiement de production.
 - Fonctionnalités : vues Recently Viewed / All Accounts / My Accounts / New This Week et vues personnelles (New, Clone, Rename, Sharing Settings, Select Fields to Display, Delete, épinglage), recherche dans la liste, tri, filtres avec logique (`1 AND (2 OR 3)`), modes Table / Kanban / Split View, formulaire New / Edit (About, Get in Touch), fiche Details / Related, recherche globale, API REST sous `/api/accounts` et `/api/list-views`.
 - Documentation : `docs/architecture.md` (structure du code), `docs/coverage.md` (couverture par rapport aux observations, classification observé / déduit / conçu, résultats de tests), `docs/reverse-engineering/accounts/05-reconstruction-crm-lab.md` (comparaison écran par écran avec les captures Salesforce).
 
@@ -41,7 +44,7 @@ npm run test:e2e           # API + parcours navigateur
 npm test                   # tout
 ```
 
-Playwright lance sa propre instance Next.js sur `127.0.0.1:3100` (`NEXT_DIST_DIR=.next-e2e`, `reuseExistingServer: false`). Il ne réutilise pas le serveur de développement du port 3000. Le détail est dans `docs/phase3-2-test-isolation.md`.
+Playwright lance sa propre instance Next.js sur `127.0.0.1:3100` (`next build` puis `next start`, `NEXT_DIST_DIR=.next-e2e`, `reuseExistingServer: false`). Il ne réutilise pas le serveur de développement du port 3000. Le détail est dans `docs/phase3-2-test-isolation.md`. Le workflow `.github/workflows/mvp.yml` rejoue les mêmes commandes sur une base `crm_mvp_ci`.
 
 ## Pile
 
