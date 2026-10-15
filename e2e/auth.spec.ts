@@ -33,6 +33,7 @@ test("secondary CRM surfaces reject anonymous requests and allow signed access",
   });
   expect(anonymousWrite.status).toBe(401);
 
+  await page.context().clearCookies();
   await page.goto("/search?q=unauthenticated");
   await expect(page).toHaveURL(/\/login/);
   await login(page, "demoadm");
