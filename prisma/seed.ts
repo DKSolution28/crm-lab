@@ -2,14 +2,15 @@
 // Aucune donnée réelle : sociétés, personnes et coordonnées sont fictives.
 // Exécution : npm run db:seed (idempotent, réinitialise les enregistrements de démo).
 import { PrismaClient, type OpportunityStage, type Prisma } from "@prisma/client";
+import { DEMO_PASSWORDS, hashPassword } from "../src/lib/auth/password";
 
 const prisma = new PrismaClient();
 
 const DEMO_TAG = "[demo]";
 
 const users = [
-  { alias: "demoadm", firstName: "Demo", lastName: "Admin", role: "ADMIN" as const },
-  { alias: "demostd", firstName: "Demo", lastName: "Standard", role: "STANDARD" as const },
+  { alias: "demoadm" as const, firstName: "Demo", lastName: "Admin", role: "ADMIN" as const },
+  { alias: "demostd" as const, firstName: "Demo", lastName: "Standard", role: "STANDARD" as const },
 ];
 
 type SeedAccount = Omit<Prisma.AccountUncheckedCreateInput, "ownerId" | "createdById" | "lastModifiedById"> & {
@@ -252,7 +253,12 @@ const daysAgo = (days: number) => new Date(Date.now() - days * 86_400_000);
 async function main() {
   const userIds = new Map<string, string>();
   for (const user of users) {
-    const record = await prisma.user.upsert({ where: { alias: user.alias }, update: user, create: user });
+    const passwordHash = await hashPassword(DEMO_PASSWORDS[user.alias]);
+    const record = await prisma.user.upsert({
+      where: { alias: user.alias },
+      update: { ...user, passwordHash },
+      create: { ...user, passwordHash },
+    });
     userIds.set(user.alias, record.id);
   }
 

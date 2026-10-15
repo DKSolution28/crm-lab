@@ -1,6 +1,7 @@
 // Conversion des erreurs de domaine en réponses HTTP pour les route handlers.
 import { NextResponse } from "next/server";
 import { AuthorizationError } from "./auth/policies";
+import { UnauthenticatedError } from "./auth/session";
 import { FilterError } from "./accounts/filters";
 import { ListViewError } from "./accounts/list-views";
 import { NotFoundError } from "./accounts/service";
@@ -13,6 +14,9 @@ export const errorResponse = (error: unknown) => {
   }
   if (error instanceof FilterError || error instanceof ListViewError) {
     return NextResponse.json({ error: error.message }, { status: 400 });
+  }
+  if (error instanceof UnauthenticatedError) {
+    return NextResponse.json({ error: error.message }, { status: 401 });
   }
   if (error instanceof AuthorizationError) {
     return NextResponse.json({ error: error.message }, { status: 403 });

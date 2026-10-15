@@ -13,6 +13,7 @@ import { readLeadListQuery } from "../../src/lib/leads/filters";
 import { createLead, getLead, listLeads, updateLead } from "../../src/lib/leads/service";
 import { GET, PATCH } from "../../src/app/api/leads/[id]/route";
 import { POST } from "../../src/app/api/leads/route";
+import { rememberUser, sessionCookieHeader } from "../session";
 
 const PREFIX = "[test] ";
 const stamp = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
@@ -30,7 +31,7 @@ const asUser = (user: { id: string; alias: string; firstName: string; lastName: 
 const jsonRequest = (method: string, url: string, alias: string, body?: unknown) =>
   new Request(url, {
     method,
-    headers: { "content-type": "application/json", "x-crm-lab-user": alias },
+    headers: { "content-type": "application/json", cookie: sessionCookieHeader(alias) },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
 
@@ -50,6 +51,8 @@ before(async () => {
       create: { alias: `ldstd${stamp}`, firstName: "Lead", lastName: "Standard", role: "STANDARD" },
     }),
   );
+  rememberUser(admin);
+  rememberUser(standard);
 });
 
 after(async () => {

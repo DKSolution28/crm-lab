@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { expect, test, type Page } from "@playwright/test";
 import { assertCleanupPrefix, assertConnectedTestDatabase, assertTestDatabaseUrl } from "../tests/test-database";
+import { login } from "./helpers/session";
 
 const PREFIX = "[e2e] QA ";
 const stamp = Date.now();
@@ -40,10 +41,7 @@ test.afterAll(async () => {
 });
 
 const asDemoStandard = async (page: Page) => {
-  await page.goto("/");
-  const userSelect = page.getByLabel("Current demo user");
-  await userSelect.selectOption({ label: "Demo Standard (standard)" });
-  await expect(userSelect.locator("option:checked")).toHaveText("Demo Standard (standard)");
+  await login(page, "demostd");
 };
 
 test.describe("Parcours 1 — account, contact, association", () => {

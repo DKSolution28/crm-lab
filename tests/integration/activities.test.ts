@@ -14,6 +14,7 @@ import { UnknownParentError, createTask, listTasks, updateTask } from "../../src
 import { EXACTLY_ONE_PARENT_MESSAGE, ParentRequiredError, ValidationError } from "../../src/lib/activities/validation";
 import { GET as listRoute, POST as createRoute } from "../../src/app/api/tasks/route";
 import { GET as readRoute, PATCH as patchRoute } from "../../src/app/api/tasks/[id]/route";
+import { rememberUser, sessionCookieHeader } from "../session";
 
 const PREFIX = "[test] ";
 const stamp = Date.now();
@@ -50,6 +51,8 @@ before(async () => {
   await cleanup();
   admin = asUser(await prisma.user.findUniqueOrThrow({ where: { alias: "demoadm" }, select }));
   standard = asUser(await prisma.user.findUniqueOrThrow({ where: { alias: "demostd" }, select }));
+  rememberUser(admin);
+  rememberUser(standard);
 });
 
 after(async () => {
@@ -58,7 +61,7 @@ after(async () => {
 });
 
 const request = (path: string, user: string, init: RequestInit = {}) =>
-  new Request(`http://127.0.0.1${path}`, { ...init, headers: { "x-crm-lab-user": user, ...(init.headers ?? {}) } });
+  new Request(`http://127.0.0.1${path}`, { ...init, headers: { cookie: sessionCookieHeader(user), ...(init.headers ?? {}) } });
 
 describe("activities", { concurrency: false }, () => {
   it("is connected to the disposable database named by TEST_DATABASE_URL", async () => {

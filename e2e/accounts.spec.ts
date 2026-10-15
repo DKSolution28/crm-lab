@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { E2E_PREFIX as BASE_PREFIX, cleanupE2eRecords } from "./helpers/db";
+import { login } from "./helpers/session";
 
 const E2E_PREFIX = `${BASE_PREFIX}UI `;
 const stamp = Date.now();
@@ -12,9 +13,12 @@ test.afterAll(async () => {
 });
 
 const openAccountsList = async (page: Page) => {
+  // Un seul chargement : relancer goto pendant la compilation dev relance la page en boucle.
   await page.goto("/");
-  await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Accounts" }).click();
-  await expect(page.getByRole("button", { name: "Select a List View: Accounts" })).toBeVisible();
+  const accounts = page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Accounts" });
+  await expect(accounts).toBeVisible({ timeout: 30_000 });
+  await accounts.click();
+  await expect(page.getByRole("button", { name: "Select a List View: Accounts" })).toBeVisible({ timeout: 30_000 });
 };
 
 /** Clique un bouton d'ouverture jusqu'à ce que son menu apparaisse (la page peut ne pas être hydratée au premier clic en dev). */
@@ -29,6 +33,7 @@ test.describe("Accounts module", () => {
   let accountUrl: string;
 
   test("NAV-1: the Accounts tab opens the default list view with its toolbar", async ({ page }) => {
+    test.setTimeout(90_000);
     await openAccountsList(page);
     await expect(page.getByRole("button", { name: "Select a List View: Accounts" })).toContainText("All Accounts");
     await expect(page.getByRole("status").filter({ hasText: "Sorted by Account Name" })).toContainText("Filtered by All accounts");
@@ -256,12 +261,14 @@ test.describe("Accounts module", () => {
   test("Authorization (designed): a standard user cannot edit an account owned by the administrator", async ({ page }) => {
     await page.goto(accountUrl);
     await expect(page.getByRole("link", { name: "Edit" })).toBeVisible();
-    await page.getByRole("combobox", { name: "Current demo user" }).selectOption({ label: "Demo Standard (standard)" });
+    await login(page, "demostd");
+    await page.goto(accountUrl);
     await expect(page.getByRole("link", { name: "Edit" })).toHaveCount(0);
     await expect(page.getByText("Edit", { exact: true })).toHaveAttribute("aria-disabled", "true");
     await page.goto(`${accountUrl}/edit`);
     await expect(page.getByRole("heading", { name: "You can only edit accounts you own." })).toBeVisible();
-    await page.getByRole("combobox", { name: "Current demo user" }).selectOption({ label: "Demo Admin (admin)" });
+    await login(page, "demoadm");
+    await page.goto(`${accountUrl}/edit`);
     await expect(page.getByRole("dialog", { name: `Edit ${accountName}` })).toBeVisible();
     await page.goto(accountUrl);
     await expect(page.getByRole("link", { name: "Edit" })).toBeVisible();

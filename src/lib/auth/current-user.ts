@@ -1,15 +1,13 @@
-// Utilisateur courant (conçu) : CRM Lab n'a pas d'authentification réelle.
-// L'utilisateur de démonstration est choisi par cookie (interface) ou par
-// l'en-tête `x-crm-lab-user` (API) ; à défaut, le premier administrateur.
+// Session vérifiée : cookie signé `crm-lab-session`, utilisateur relu en base.
+// L'en-tête `x-crm-lab-user` et un cookie non signé ne sont pas une identité.
 import type { User, UserRole } from "@prisma/client";
 import { prisma } from "../prisma";
+import { readCookie, SESSION_COOKIE, UnauthenticatedError, verifySession } from "./session";
 
 export const USER_COOKIE = "crm-lab-user";
 export const USER_HEADER = "x-crm-lab-user";
 
 export type CurrentUser = Pick<User, "id" | "alias" | "firstName" | "lastName" | "role" | "pinnedAccountViewId">;
-
-const DEFAULT_ADMIN = { alias: "demoadm", firstName: "Demo", lastName: "Admin", role: "ADMIN" as UserRole };
 
 const select = { id: true, alias: true, firstName: true, lastName: true, role: true, pinnedAccountViewId: true } as const;
 
@@ -17,35 +15,35 @@ export const fullName = (user: Pick<User, "firstName" | "lastName">) => `${user.
 
 export const listUsers = () => prisma.user.findMany({ select, orderBy: [{ role: "asc" }, { alias: "asc" }] });
 
-export const ensureDefaultUser = async (): Promise<CurrentUser> => {
-  const existing = await prisma.user.findFirst({ select, orderBy: [{ role: "asc" }, { createdAt: "asc" }] });
-  if (existing) return existing;
-  return prisma.user.create({ data: DEFAULT_ADMIN, select });
+const userFromToken = async (token: string | null | undefined): Promise<CurrentUser | null> => {
+  const userId = verifySession(token);
+  if (!userId) return null;
+  return prisma.user.findUnique({ where: { id: userId }, select });
 };
 
-export const resolveUser = async (identifier: string | null | undefined): Promise<CurrentUser> => {
-  if (identifier) {
-    const user = await prisma.user.findFirst({
-      where: { OR: [{ id: identifier }, { alias: identifier }] },
-      select,
-    });
-    if (user) return user;
-  }
-  return ensureDefaultUser();
-};
-
-/** Utilisateur courant pour les composants serveur et server actions. */
-export const getCurrentUser = async (): Promise<CurrentUser> => {
+/** Utilisateur courant, ou null si la session est absente, expirée ou inconnue. */
+export const readOptionalUser = async (): Promise<CurrentUser | null> => {
   const { cookies } = await import("next/headers");
   const store = await cookies();
-  return resolveUser(store.get(USER_COOKIE)?.value);
+  return userFromToken(store.get(SESSION_COOKIE)?.value);
 };
 
-/** Utilisateur courant pour les route handlers (en-tête prioritaire sur le cookie). */
-export const getRequestUser = async (request: Request): Promise<CurrentUser> => {
-  const header = request.headers.get(USER_HEADER);
-  if (header) return resolveUser(header);
-  const cookieHeader = request.headers.get("cookie") ?? "";
-  const match = cookieHeader.split(/;\s*/).find((part) => part.startsWith(`${USER_COOKIE}=`));
-  return resolveUser(match ? decodeURIComponent(match.slice(USER_COOKIE.length + 1)) : null);
+/** Utilisateur courant pour les pages et server actions. Redirige vers /login. */
+export const getCurrentUser = async (): Promise<CurrentUser> => {
+  const user = await readOptionalUser();
+  if (!user) {
+    const { redirect } = await import("next/navigation");
+    redirect("/login");
+  }
+  return user as CurrentUser;
 };
+
+/** Utilisateur courant pour les route handlers. 401 s'il n'y a pas de session valide. */
+export const getRequestUser = async (request: Request): Promise<CurrentUser> => {
+  const token = readCookie(request.headers.get("cookie"), SESSION_COOKIE);
+  const user = await userFromToken(token);
+  if (!user) throw new UnauthenticatedError();
+  return user;
+};
+
+export type { UserRole };

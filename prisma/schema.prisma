@@ -25,12 +25,13 @@ enum UserRole {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  alias     String   @unique
-  firstName String
-  lastName  String
-  role      UserRole @default(STANDARD)
-  createdAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  alias        String   @unique
+  firstName    String
+  lastName     String
+  role         UserRole @default(STANDARD)
+  passwordHash String?
+  createdAt    DateTime @default(now())
 
   pinnedAccountView   ListView? @relation("PinnedAccountView", fields: [pinnedAccountViewId], references: [id], onDelete: SetNull)
   pinnedAccountViewId String?

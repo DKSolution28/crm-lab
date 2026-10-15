@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { expect, test } from "@playwright/test";
 import { assertCleanupPrefix, assertConnectedTestDatabase, assertTestDatabaseUrl } from "../tests/test-database";
+import { authCookie, ensureDemoUsers } from "./helpers/session";
 
 const PREFIX = "[e2e] QA Task ";
 const stamp = Date.now();
@@ -39,9 +40,10 @@ test.afterAll(async () => {
 
 test.describe("Parcours 4 — task on the account, status, history", () => {
   test("creates a task from the account page, completes it, and shows it in the history", async ({ page }) => {
+    await ensureDemoUsers();
     const created = await page.request.post("/api/accounts", {
       data: { name: accountName },
-      headers: { "x-crm-lab-user": "demoadm" },
+      headers: { cookie: await authCookie("demoadm") },
     });
     expect(created.status()).toBe(201);
     const account = (await created.json()) as { id: string; name: string };
@@ -51,7 +53,7 @@ test.describe("Parcours 4 — task on the account, status, history", () => {
     await expect(page.getByRole("heading", { name: /Opportunities \(0\)/ })).toBeVisible();
     await expect(page.getByRole("heading", { name: /Contacts \(0\)/ })).toBeVisible();
     const form = page.locator("#related-tasks form[data-hydrated='true']");
-    await expect(form).toBeVisible();
+    await expect(form).toBeVisible({ timeout: 45_000 });
 
     await page.getByLabel("Subject").fill(subject);
     await page.getByLabel("Due Date").fill("2026-12-31");

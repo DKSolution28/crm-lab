@@ -21,6 +21,7 @@ import { ValidationError } from "../../src/lib/contacts/validation";
 import { GET as listRoute, POST as createRoute } from "../../src/app/api/contacts/route";
 import { GET as readRoute, PATCH as patchRoute } from "../../src/app/api/contacts/[id]/route";
 import { GET as lookupRoute } from "../../src/app/api/contacts/lookup/route";
+import { rememberUser, sessionCookieHeader } from "../session";
 
 const PREFIX = "[test] ";
 const stamp = Date.now();
@@ -49,6 +50,9 @@ before(async () => {
       select,
     }),
   );
+  rememberUser(admin);
+  rememberUser(standard);
+  rememberUser(other);
 });
 
 after(async () => {
@@ -73,7 +77,7 @@ after(async () => {
 });
 
 const request = (path: string, user: string, init: RequestInit = {}) =>
-  new Request(`http://127.0.0.1${path}`, { ...init, headers: { "x-crm-lab-user": user, ...(init.headers ?? {}) } });
+  new Request(`http://127.0.0.1${path}`, { ...init, headers: { cookie: sessionCookieHeader(user), ...(init.headers ?? {}) } });
 
 describe("contacts", { concurrency: false }, () => {
   let accountId: string;
