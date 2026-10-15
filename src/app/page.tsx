@@ -2,6 +2,7 @@ import Link from "next/link";
 import { connection } from "next/server";
 import { createNote } from "@/app/actions";
 import { prisma } from "@/lib/prisma";
+import { getCurrentUser } from "@/lib/auth/current-user";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +16,7 @@ function formatCreatedAt(value: Date) {
 
 export default async function Home() {
   await connection();
+  await getCurrentUser();
 
   let database: "up" | "down" = "up";
   let notes: { id: string; title: string; detail: string; createdAt: Date }[] =
