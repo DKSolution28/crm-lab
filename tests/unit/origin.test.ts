@@ -33,4 +33,20 @@ describe("cookie mutation same-origin guard", () => {
   it("allows direct non-browser API clients with no Origin/Fetch Metadata", () => {
     assert.doesNotThrow(() => assertTrustedOrigin(request("POST")));
   });
+
+  it("trusts the Host header when the framework rewrites the request URL to localhost", () => {
+    assert.doesNotThrow(() => assertTrustedOrigin(request("POST", {
+      origin: "http://127.0.0.1:3100",
+      host: "127.0.0.1:3100",
+      "sec-fetch-site": "same-origin",
+    }, "http://localhost:3100/api/auth/login")));
+    assert.throws(
+      () => assertTrustedOrigin(request("POST", {
+        origin: "http://localhost:3100",
+        host: "127.0.0.1:3100",
+        "sec-fetch-site": "same-origin",
+      }, "http://localhost:3100/api/auth/login")),
+      UntrustedOriginError,
+    );
+  });
 });
