@@ -2,10 +2,13 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyPassword } from "@/lib/auth/password";
 import { SESSION_COOKIE, sessionCookieOptions, signSession } from "@/lib/auth/session";
-import { readJson } from "@/lib/http";
+import { readJson, errorResponse } from "@/lib/http";
+import { assertTrustedOrigin } from "@/lib/auth/origin";
 
 export async function POST(request: Request) {
-  const body = (await readJson(request).catch(() => ({}))) as { alias?: unknown; password?: unknown };
+  try {
+    assertTrustedOrigin(request);
+    const body = (await readJson(request).catch(() => ({}))) as { alias?: unknown; password?: unknown };
   const alias = String(body.alias ?? "").trim();
   const password = String(body.password ?? "");
   const user = alias ? await prisma.user.findUnique({ where: { alias }, select: { id: true, alias: true, passwordHash: true } }) : null;
@@ -15,4 +18,7 @@ export async function POST(request: Request) {
   const response = NextResponse.json({ alias: user.alias });
   response.cookies.set(SESSION_COOKIE, signSession(user.id), sessionCookieOptions());
   return response;
+  } catch (error) {
+    return errorResponse(error);
+  }
 }
