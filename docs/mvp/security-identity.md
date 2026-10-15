@@ -1,6 +1,6 @@
 # Audit d'identité et de sécurité — MVP CRM Lab
 
-Mise à jour du 2026-10-15 : le cookie `crm-lab-user`, l'en-tête `x-crm-lab-user` et le repli administrateur ne sont plus une identité. La session est le cookie signé `crm-lab-session`. Les tests d'intégration `authenticated sessions` et l'e2e `e2e/auth.spec.ts` ont renvoyé 401 sans session et 403 pour un standard qui modifie le compte d'un autre. Le constat HIGH d'usurpation décrit plus bas est l'état lu le 2026-10-14. Il ne décrit plus le code. Les constats MEDIUM (notes sans utilisateur, lookup, CSRF, seed, PostgreSQL local) restent ouverts. Le produit n'est pas prêt pour une production.
+Mise à jour du 2026-10-15 : le cookie `crm-lab-user`, l'en-tête `x-crm-lab-user` et le repli administrateur ne sont plus une identité. La session est le cookie signé `crm-lab-session`. Un vérificateur qui n'est pas l'auteur a exécuté les suites et a rendu PASS (81 unitaires, 64 intégration, 36 e2e, lint, typecheck, build). Restent sans session : notes, `GET /api/dashboard`, les lookup et `/search`. Le produit n'est pas prêt pour une production.
 
 Date de lecture : 2026-10-14.  
 Base lue : `cursor/mvp-integration-2cf0` à `217b165`.  

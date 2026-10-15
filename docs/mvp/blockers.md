@@ -20,7 +20,7 @@ La PR #2 reste un brouillon ouvert. Le coordinateur n'a pas l'autorisation de la
 
 ### B2 — Identité de démonstration
 
-Levé le 2026-10-15. `getRequestUser` lit uniquement `crm-lab-session`. Sans cookie valide, la réponse est 401. Un utilisateur standard qui modifie le compte d'un autre reçoit 403. Preuve : `tests/integration/auth.test.ts` et `e2e/auth.spec.ts`, exécutés le 2026-10-15 (intégration 64 pass, e2e 36 pass). Les constats MEDIUM de `docs/mvp/security-identity.md` restent ouverts et empêchent l'étiquette « prêt pour production ».
+Levé le 2026-10-15. `getRequestUser` lit uniquement `crm-lab-session`. Sans cookie valide, la réponse est 401. Un utilisateur standard qui modifie le compte d'un autre reçoit 403. Le vérificateur indépendant a rendu PASS après exécution. Restent ouverts, en MEDIUM : notes, `GET /api/dashboard`, lookup, recherche, CSRF, seed et PostgreSQL local. Cela empêche l'étiquette « prêt pour production ».
 
 ## Hors périmètre, non bloquants
 

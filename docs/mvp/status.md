@@ -2,7 +2,7 @@
 
 Cycle du 2026-10-15 : sessions signées, cinq parcours e2e, build, et workflow CI dans le dépôt. Étiquette : **sessions signées en local**. Ce n'est pas « prêt pour production ». Rien n'est fusionné vers `main`.
 
-Le vérificateur indépendant n'a pas encore rendu de PASS dans ce document : il est lancé après le push, et son verdict ne peut pas être écrit avant qu'il ait exécuté les tests.
+Le vérificateur indépendant a rendu **PASS** le 2026-10-15 après avoir exécuté les suites dans un environnement isolé (81 unitaires, 64 intégration, 36 e2e, lint, typecheck, build). Son `crm_lab` local n'a pas changé. Ce n'est pas « prêt pour production ». Rien n'est fusionné vers `main`.
 
 ## Déjà vérifié avant cette vague
 
@@ -33,9 +33,7 @@ Accounts, Contacts, Leads avec conversion, Opportunities, activités et dashboar
 
 ## En cours
 
-Le vérificateur indépendant, après le push de cette branche. Il ne doit pas être l'auteur du code de session.
-
-La pull request d'intégration vise `cursor/phase3-accounts-reconstruction-2cf0`. Elle n'est pas fusionnée. La PR #2 vers `main` reste un brouillon ouvert, non fusionné.
+Aucun correctif de code. La pull request d'intégration vers `cursor/phase3-accounts-reconstruction-2cf0` est en attente de création manuelle (réglage d'approbation). La PR #2 vers `main` reste un brouillon ouvert, non fusionné.
 
 Écart accepté : l'audit proposait `onDelete: Restrict` sur les clés de conversion. Le contrat pose `SetNull` pour que les `deleteMany` de test continuent, et fait reposer l'idempotence sur `convertedAt`. Les parcours d'acceptation qui attendent HTTP 200 sur la conversion suivent le contrat : **201**, puis **409**.
 
@@ -96,7 +94,7 @@ Le défaut HIGH d'usurpation (cookie `crm-lab-user`, en-tête `x-crm-lab-user`, 
 
 ## Prochaine tâche
 
-Verdict du vérificateur indépendant, puis revue de la pull request. Pas de fusion vers `main` sans instruction.
+Revue de la pull request d'intégration. Pas de fusion vers `main` sans instruction. Les routes encore ouvertes sans session (`/api/notes`, `GET /api/dashboard`, les lookup, `/search`) restent des constats MEDIUM.
 
 ## Liens
 

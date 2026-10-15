@@ -29,10 +29,10 @@ Date : 2026-10-15. Branche : `cursor/mvp-integration-2cf0`. Base des tests : `cr
 
 ## Limites connues
 
-- Constats MEDIUM encore ouverts : création de note sans utilisateur, lookup et recherche sans session, pas de contrôle d'origine sur les routes à cookie, `npm run db:seed` suit `DATABASE_URL`, PostgreSQL local en authentification trust. Détail : `docs/mvp/security-identity.md`.
+- Constats MEDIUM encore ouverts : `GET` et `POST /api/notes`, `GET /api/dashboard`, `GET /api/accounts/lookup`, `GET /api/contacts/lookup`, `/search`, pas de contrôle d'origine sur les routes à cookie, `npm run db:seed` suit `DATABASE_URL`, PostgreSQL local en authentification trust. Le vérificateur indépendant les a revus et a quand même rendu PASS : ils ne réouvrent pas l'usurpation d'identité.
 - Le cookie `Secure` n'est posé que si `CRM_LAB_COOKIE_SECURE=true`. Sur `http://127.0.0.1` il reste absent, sinon le navigateur le jette.
 - Mots de passe de laboratoire, pas des secrets de production : `demoadm` / `demoadm-pass`, `demostd` / `demostd-pass`.
-- `.github/workflows/mvp.yml` est dans le dépôt. GitHub ne l'a pas exécuté pendant cette session.
+- `.github/workflows/mvp.yml` est dans le dépôt. GitHub ne l'a pas exécuté pendant la session de l'auteur. Le vérificateur indépendant a, lui, exécuté unit, intégration, e2e, lint, typecheck et build sur une base `crm_mvp_verify` et a rendu **PASS**.
 - Leads, étapes d'opportunité et formulaires d'activité restent conçus là où Salesforce n'a pas été observé. Account Name sur un contact reste optionnel : Save n'a pas été observé.
 - Chatter, Einstein, Flow Builder, reporting avancé, CPQ et la personnalisation Salesforce sont hors périmètre.
 
