@@ -1,0 +1,3044 @@
+{
+  "screen": "SET-1",
+  "captured_at": "2026-10-14T11:28:00.225Z",
+  "commands": [
+    "bash scripts/sf-observe.sh SET-1",
+    "node scripts/sf-redact-evidence.mjs SET-1"
+  ],
+  "inspect_evidence_id": "ev_53d885719b30c27df637fbec4ab6c7140e9177814a4f1ac039f91c21fb15b878",
+  "screenshot_evidence_id": "ev_022473d66d2d9f9f019e9c3b15f3e9f50a71808391e519e51b2ac0cda5f6a2c4",
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "confidence": "observed",
+  "target": {
+    "title": "Account | Salesforce",
+    "url": "https://<mydomain>.my.salesforce-setup.com/lightning/setup/ObjectManager/Account/FieldsAndRelationships/view",
+    "origin": "https://<mydomain>.my.salesforce-setup.com"
+  },
+  "completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "console_events",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "script_sources",
+      "scripts",
+      "websocket_shapes",
+      "workers"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "console_events",
+        "reason": "disallowed_origin",
+        "count": 6
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 19
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 44
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 69
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 5
+      },
+      {
+        "section": "script_sources",
+        "reason": "not_approved",
+        "count": 887
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 67
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 298
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "workers",
+        "reason": "out_of_target_scope",
+        "count": 1
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "dom": {
+    "total_nodes": 2529
+  },
+  "accessibility": {
+    "total_nodes": 1459,
+    "text_capture": {
+      "status": "included",
+      "retained_bytes": 9428,
+      "excluded_fields": 0
+    },
+    "named_nodes": [
+      {
+        "role": "link",
+        "name": "Skip to Navigation",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Skip to Main Content",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "Global Header"
+      },
+      {
+        "role": "navigation",
+        "name": "Main",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "dialog",
+        "name": "Quick Settings",
+        "states": [
+          {
+            "name": "modal",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "Workspaces"
+      },
+      {
+        "role": "combobox",
+        "name": "Search Setup",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Buy Now",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Contacts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Accounts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Sales",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Service",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Marketing",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Commerce",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Your Account",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Automation",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Lifecycle Center (DevOps Center)",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Object Manager",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Guidance Center",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "dialog"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Salesforce Help",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Notifications",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "dialog"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "View profile",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Setup Navigation",
+        "states": [
+          {
+            "name": "expanded",
+            "value": true
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Quick Settings",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "pressed",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Object Manager List",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Setup Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Salesforce Go",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Hyperforce Assistant",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Release Updates",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Salesforce Mobile App",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "AgentExchange Offers",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Manage Subscription",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Sales Cloud Everywhere",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Administration",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Users",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Data",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Email",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Platform Tools",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Apps",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Feature Settings",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Slack",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Marketing",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Heroku",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "MuleSoft",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Einstein",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Unified Messaging",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Objects and Fields",
+        "states": [
+          {
+            "name": "expanded",
+            "value": true
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Events",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Process Automation",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "User Interface",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Custom Code",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Development",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Environments",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "User Engagement",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Integrations",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Notification Builder",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Offline",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Settings",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Company Settings",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Data Classification",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Identity",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Security",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 1
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "searchbox",
+        "name": "Quick Find",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "ADMINISTRATION",
+        "states": [
+          {
+            "name": "level",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "PLATFORM TOOLS",
+        "states": [
+          {
+            "name": "level",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "SETTINGS",
+        "states": [
+          {
+            "name": "level",
+            "value": 4
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Setup Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Salesforce Go",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Hyperforce Assistant",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Release Updates",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Salesforce Mobile App",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "AgentExchange Offers",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Manage Subscription",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Sales Cloud Everywhere",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Users",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Data",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Email",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Apps",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Feature Settings",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Slack",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Marketing",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Heroku",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "MuleSoft",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Einstein",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Unified Messaging",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Collapse",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Objects and Fields",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Object Manager",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 2
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Picklist Value Sets",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 2
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "treeitem",
+        "name": "Schema Builder",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "level",
+            "value": 2
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Events",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Process Automation",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "User Interface",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Custom Code",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Development",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Environments",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "User Engagement",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Integrations",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Notification Builder",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Offline",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Company Settings",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Data Classification",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Identity",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Expand",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Security",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Account",
+        "states": [
+          {
+            "name": "level",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "SETUP",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "OBJECT MANAGER",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Object Manager",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Picklist Value Sets",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Schema Builder",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Details",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Fields & Relationships",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Page Layouts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Lightning Record Pages",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Buttons, Links, and Actions",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Compact Layouts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Field Sets",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Object Limits",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Record Types",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Related Lookup Filters",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Search Layouts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "List View Button Layout",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Slack Record Layouts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Hierarchy Columns",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Object Access",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Field Access",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Triggers",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Flow Triggers",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Validation Rules",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "URL Slugs",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "Conditional Field Formatting",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "tab",
+        "name": "SmartFill",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "New Custom Field",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Deleted Fields",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Field Dependencies",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Set History Tracking",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Fields & Relationships",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "role": "searchbox",
+        "name": "Quick Find",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Field Label",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Field Name",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Data Type",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Controlling Field",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Indexed",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "columnheader",
+        "name": "Actions",
+        "states": [
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "SORT FIELD LABEL  ",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "SORT FIELD NAME",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "SORT DATA TYPE",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "SORT CONTROLLING FIELD",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "SORT INDEXED",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Account Name",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Account Number",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Account Owner",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Account Site",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Account Source",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Annual Revenue",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Billing Address",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Buyer Account",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Created By",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Customer Portal Account",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Data.com Key",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Description",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Einstein Account Tier",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Employees",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Fax",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Industry",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Last Modified By",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Ownership",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Parent Account",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Phone",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Rating",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Shipping Address",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "SIC Code",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "SIC Description",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Ticker Symbol",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Type",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Website",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Show More",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Show More",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Show More",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Show More",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Show More",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "total": 887
+  },
+  "network": {
+    "request_count": 0,
+    "prior_activity_available": false,
+    "requests": [],
+    "websocket_connections": []
+  },
+  "storage": {
+    "local_storage_keys": [
+      "$AuraClientService.token$one:one",
+      "setupAppContextId",
+      "GlobalValueProviders__MUTEX_X"
+    ],
+    "session_storage_keys": [
+      "one.helpPanel.orgId",
+      "setupAppContextId"
+    ],
+    "indexed_db_names": [
+      "ErrorHistory",
+      "actions",
+      "ldsCSRFToken",
+      "ldsDurableCache",
+      "ldsLayout",
+      "ldsLayoutUserState",
+      "ldsObjectInfo",
+      "recordGVP68.0"
+    ],
+    "values_redacted": true
+  },
+  "screenshot": {
+    "file": "2026-10-14-SET-1.png",
+    "sha256": "6211f6517ff4ea449ae773fc464d1decc9d31379cdf07c73e612844b3cae828b",
+    "bytes": 133316,
+    "viewport": {
+      "width": 1388,
+      "height": 706
+    },
+    "note": "Capture prise après masquage local des données personnelles (sf-act {\"mask\":true}); aucune donnée Salesforce modifiée."
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "Browser host platform and architecture were not observed."
+  ]
+}

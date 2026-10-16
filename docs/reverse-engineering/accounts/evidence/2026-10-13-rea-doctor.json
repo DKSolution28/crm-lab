@@ -1,0 +1,95 @@
+{
+  "captured_at": "2026-10-13T21:08:00Z",
+  "command": "npx rea-agents@6.4.0 doctor --json",
+  "exit_code": 1,
+  "healthy": false,
+  "environment_healthy": false,
+  "scope_checks": [
+    {
+      "name": "node",
+      "ok": true,
+      "classification": "healthy",
+      "detail": "24.21.0"
+    },
+    {
+      "name": "host",
+      "ok": true,
+      "classification": "healthy",
+      "detail": "ubuntu 24.04"
+    },
+    {
+      "name": "hopper",
+      "ok": false,
+      "classification": "missing_analysis_engine",
+      "remediation": "Run rea setup to install Hopper, or set HOPPER_LAUNCHER_PATH."
+    },
+    {
+      "name": "ghidra",
+      "ok": false,
+      "classification": "missing_analysis_engine",
+      "detail": "GHIDRA_INSTALL_DIR is not set",
+      "remediation": "Set GHIDRA_INSTALL_DIR to an extracted Ghidra 12.1.x release directory."
+    },
+    {
+      "name": "ida-registration",
+      "ok": false,
+      "classification": "missing_analysis_engine",
+      "detail": "IDA MCP registration is not configured.",
+      "remediation": "Set REA_IDA_MCP_CONFIG to your upstream IDA MCP registration JSON; see docs/ida-provider.md."
+    },
+    {
+      "name": "skill:identity",
+      "ok": false,
+      "classification": "config_drift",
+      "detail": "Installed REA skill identity is missing.",
+      "remediation": "Run rea setup to update the installed REA skill."
+    },
+    {
+      "name": "registration:cursor",
+      "ok": false,
+      "classification": "config_drift",
+      "detail": "/home/ubuntu/.cursor/mcp.json",
+      "remediation": "Run rea setup to refresh this registration, then restart the client."
+    }
+  ],
+  "identity": {
+    "cli_package_version": "6.4.0",
+    "expected_skill_version": "37",
+    "sdk": {
+      "server": "2.3.1",
+      "client_test": "2.3.1",
+      "core": "2.3.1"
+    },
+    "catalog_counts": {
+      "cli_commands": 127,
+      "mcp_tools": 170,
+      "mcp_prompts": 6
+    },
+    "catalog_digests": {
+      "tools_sha256": "25802f6de8c14ba736dc61ff1cbc7c5cd738fd74426aa01338f2dd03e0911166",
+      "prompts_sha256": "5296f0301566cadaf89243e774512011f11045af36d48405f76a3ff9a8947ac2",
+      "combined_sha256": "85d80276ecacf937bf3e803b7a31748ae1a8286f556fa5cf734eef768cc7d72a"
+    },
+    "installations": {
+      "paths": [
+        "/workspace/node_modules/.bin/rea"
+      ],
+      "state": "single"
+    },
+    "skill": {
+      "installed_version": null,
+      "installed_tool_count": null,
+      "state": "missing",
+      "remediation": "Run rea setup to update the installed REA skill."
+    },
+    "registrations": [
+      {
+        "client": "cursor",
+        "config_path": "/home/ubuntu/.cursor/mcp.json",
+        "command": [],
+        "state": "missing",
+        "remediation": "Run rea setup to refresh this registration, then restart the client."
+      }
+    ]
+  }
+}

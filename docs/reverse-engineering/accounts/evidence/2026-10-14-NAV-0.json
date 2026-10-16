@@ -1,0 +1,1174 @@
+{
+  "screen": "NAV-0",
+  "captured_at": "2026-10-14T11:00:17.412Z",
+  "commands": [
+    "bash scripts/sf-observe.sh NAV-0",
+    "node scripts/sf-redact-evidence.mjs NAV-0"
+  ],
+  "inspect_evidence_id": "ev_08923fc03f827aeb13a261105ad130a10533f3e9ac172e337a13a79e3891c60d",
+  "screenshot_evidence_id": "ev_dc706f344ac4326eca4ad378474dc1bbf7e35faef40abfe33abcdb2a90bffc75",
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "confidence": "observed",
+  "target": {
+    "title": "Home | Salesforce",
+    "url": "https://<mydomain>.lightning.force.com/lightning/page/home",
+    "origin": "https://<mydomain>.lightning.force.com"
+  },
+  "completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "console_events",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "script_sources",
+      "scripts",
+      "websocket_shapes",
+      "workers"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "console_events",
+        "reason": "disallowed_origin",
+        "count": 6
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 25
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 12
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 76
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 5
+      },
+      {
+        "section": "script_sources",
+        "reason": "not_approved",
+        "count": 952
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 74
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 281
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "workers",
+        "reason": "out_of_target_scope",
+        "count": 1
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "dom": {
+    "total_nodes": 1915
+  },
+  "accessibility": {
+    "total_nodes": 802,
+    "text_capture": {
+      "status": "included",
+      "retained_bytes": 5266,
+      "excluded_fields": 0
+    },
+    "named_nodes": [
+      {
+        "role": "contentinfo",
+        "name": "Utility Bar"
+      },
+      {
+        "role": "link",
+        "name": "Skip to Navigation",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Skip to Main Content",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "Global Header"
+      },
+      {
+        "role": "navigation",
+        "name": "Main",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "dialog",
+        "name": "Quick Settings",
+        "states": [
+          {
+            "name": "modal",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Search",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Buy Now",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Contacts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Accounts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Sales",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Service",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Marketing",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Commerce",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Your Account",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Automation",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Lifecycle Center (DevOps Center)",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "To Do List",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Guidance Center",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "dialog"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Salesforce Help",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Notifications",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "dialog"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "View profile",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Home",
+        "states": [
+          {
+            "name": "level",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "Global"
+      },
+      {
+        "role": "button",
+        "name": "Agentforce",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "pressed",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Quick Settings",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "pressed",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Home",
+        "states": [
+          {
+            "name": "level",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Home",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Getting Started",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Edit nav items",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Welcome, <user>",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Check out these suggestions to kick off your day.",
+        "states": [
+          {
+            "name": "level",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "New",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show menu",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "New",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show menu",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "New",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show menu",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "View All Recent Records",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "New",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show menu",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Make It Your Home",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "View All Cards",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Recent Records",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show menu",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "View Report: My Leads",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "View Report: My Opportunities",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "View Report: My Contacts",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "View Report: All New Cases By Priority",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Show menu",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Hide suggestions",
+        "states": [
+          {
+            "name": "expanded",
+            "value": true
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Create your first contact Create your first contact Growing your sales starts with contacts. Let’s walk through it.",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Create your first lead Create your first lead Let us show you how easy it is to convert your leads into contacts, accounts, and opportunities.",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Turn on marketing features Turn on marketing features Open in new tab Access powerful tools to reach new audiences and engage customers.",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Refresh",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Refresh",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Refresh",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Open Cases for Accounts I Own",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "My Closed Cases by Close Date",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "My Cases Closed MTD",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Closed Cases by Owner",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Closed Cases",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Refresh",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Dismiss this suggestion",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Dismiss this suggestion",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Dismiss this suggestion",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Select a Leads report...",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Select an Opportunities report...",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Select a Contacts report...",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Select a Cases report...",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "total": 952
+  },
+  "network": {
+    "request_count": 0,
+    "prior_activity_available": false,
+    "requests": [],
+    "websocket_connections": []
+  },
+  "storage": {
+    "local_storage_keys": [
+      "$AuraClientService.token$one:one",
+      "GlobalValueProviders__MUTEX_X",
+      "appContextId"
+    ],
+    "session_storage_keys": [
+      "one.helpPanel.orgId",
+      "tempTabsKey",
+      "appContextId"
+    ],
+    "indexed_db_names": [
+      "ErrorHistory",
+      "actions",
+      "ldsCSRFToken",
+      "ldsDurableCache",
+      "ldsLayout",
+      "ldsLayoutUserState",
+      "ldsObjectInfo",
+      "recordGVP68.0",
+      "standardTempTabPersistence"
+    ],
+    "values_redacted": true
+  },
+  "screenshot": {
+    "file": "2026-10-14-NAV-0.png",
+    "sha256": "7216be1fec889ab72ada2148996975dfe940b2a7d2d5039caf5858e8fc458467",
+    "bytes": 95824,
+    "viewport": {
+      "width": 1388,
+      "height": 706
+    },
+    "note": "Capture prise après masquage local des données personnelles (sf-act {\"mask\":true}); aucune donnée Salesforce modifiée."
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "Browser host platform and architecture were not observed."
+  ]
+}

@@ -1,0 +1,742 @@
+{
+  "screen": "INT-5",
+  "captured_at": "2026-10-14T11:25:27.386Z",
+  "commands": [
+    "bash scripts/sf-observe.sh INT-5",
+    "node scripts/sf-redact-evidence.mjs INT-5"
+  ],
+  "inspect_evidence_id": "ev_2d4fd452216fbc645144f5bac1ad8fa62cc095ff4c580d3f0970d3045b60e0bc",
+  "screenshot_evidence_id": "ev_59e3530e036bbcb166dc90269e3da94bf021e68269ce04114e07ff9ce868518f",
+  "provider": {
+    "id": "rea-cdp-browser",
+    "name": "REA Chrome DevTools Protocol observation provider",
+    "version": "2"
+  },
+  "confidence": "observed",
+  "target": {
+    "title": "New Contact | Salesforce",
+    "url": "https://<mydomain>.lightning.force.com/lightning/o/Contact/new?count=1&nooverride=1&useRecordTypeCheck=1&navigationLocation=LIST_VIEW&uid=179197710709216280&backgroundContext=%2Flightning%2Fo%2FContact%2Flist%3FfilterName%3DAllContacts",
+    "origin": "https://<mydomain>.lightning.force.com"
+  },
+  "completeness": {
+    "status": "policy_filtered",
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "policy_filtered_sections": [
+      "console_events",
+      "console_text",
+      "json_body_shapes",
+      "metadata",
+      "resources",
+      "script_sources",
+      "scripts",
+      "websocket_shapes",
+      "workers"
+    ],
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames"
+    ],
+    "truncated_sections": [],
+    "unavailable_sections": [],
+    "excluded": [
+      {
+        "section": "console_events",
+        "reason": "disallowed_origin",
+        "count": 14
+      },
+      {
+        "section": "console_text",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "json_body_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "metadata",
+        "reason": "disallowed_origin",
+        "count": 21
+      },
+      {
+        "section": "metadata",
+        "reason": "unsupported_url",
+        "count": 20
+      },
+      {
+        "section": "resources",
+        "reason": "disallowed_origin",
+        "count": 77
+      },
+      {
+        "section": "resources",
+        "reason": "unsupported_url",
+        "count": 5
+      },
+      {
+        "section": "script_sources",
+        "reason": "not_approved",
+        "count": 997
+      },
+      {
+        "section": "scripts",
+        "reason": "disallowed_origin",
+        "count": 22
+      },
+      {
+        "section": "scripts",
+        "reason": "unattributed_origin",
+        "count": 436
+      },
+      {
+        "section": "websocket_shapes",
+        "reason": "not_approved",
+        "count": null
+      },
+      {
+        "section": "workers",
+        "reason": "out_of_target_scope",
+        "count": 1
+      }
+    ],
+    "dropped_events": {
+      "scripts": 0,
+      "network_requests": 0,
+      "console_events": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0,
+      "webmcp_tools": 0,
+      "timeline_events": 0,
+      "total": 0
+    }
+  },
+  "dom": {
+    "total_nodes": 2470
+  },
+  "accessibility": {
+    "total_nodes": 752,
+    "text_capture": {
+      "status": "included",
+      "retained_bytes": 1012,
+      "excluded_fields": 0
+    },
+    "named_nodes": [
+      {
+        "role": "dialog",
+        "name": "New Contact",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "modal",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Cancel and close",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "New Contact",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "About",
+        "states": [
+          {
+            "name": "level",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "role": "heading",
+        "name": "Get in Touch",
+        "states": [
+          {
+            "name": "level",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Cancel",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Save & New",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Save",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "group",
+        "name": "Name required",
+        "states": [
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "group",
+        "name": "Mailing Address",
+        "states": [
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "Title",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": false
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "Description",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": true
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "Phone",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": false
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "Email",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": false
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "First Name",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": false
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "Last Name",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "true"
+          },
+          {
+            "name": "multiline",
+            "value": false
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "Mailing Street",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": true
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "Mailing City",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": false
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "textbox",
+        "name": "Mailing Zip/Postal Code",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": false
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Account Name",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": true
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Reports To",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Salutation",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "focused",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Mailing Country",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "role": "combobox",
+        "name": "Mailing State/Province",
+        "states": [
+          {
+            "name": "autocomplete",
+            "value": "list"
+          },
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "listbox"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "total": 997
+  },
+  "network": {
+    "request_count": 0,
+    "prior_activity_available": false,
+    "requests": [],
+    "websocket_connections": []
+  },
+  "storage": {
+    "local_storage_keys": [
+      "$AuraClientService.token$one:one",
+      "GlobalValueProviders__MUTEX_X",
+      "objectHomeStateManager",
+      "appContextId"
+    ],
+    "session_storage_keys": [
+      "tempTabsKey",
+      "one.helpPanel.orgId",
+      "appContextId"
+    ],
+    "indexed_db_names": [
+      "ErrorHistory",
+      "actions",
+      "lastRecordTypeForSObject",
+      "ldsCSRFToken",
+      "ldsDurableCache",
+      "ldsLayout",
+      "ldsLayoutUserState",
+      "ldsObjectInfo",
+      "recordGVP68.0",
+      "standardTempTabPersistence"
+    ],
+    "values_redacted": true
+  },
+  "screenshot": {
+    "file": "2026-10-14-INT-5.png",
+    "sha256": "5144b6aa66f382ff99e9fe24b3dae430e9d980c873cf9a9512cb468e65bac7ef",
+    "bytes": 129474,
+    "viewport": {
+      "width": 1388,
+      "height": 706
+    },
+    "note": "Capture prise après masquage local des données personnelles (sf-act {\"mask\":true}); aucune donnée Salesforce modifiée."
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "Browser host platform and architecture were not observed."
+  ]
+}
