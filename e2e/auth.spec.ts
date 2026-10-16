@@ -15,6 +15,43 @@ test("the sign-in form creates a session", async ({ page }) => {
   await expect(page).toHaveURL(/\/accounts/);
 });
 
+test("secondary CRM surfaces reject anonymous requests and allow signed access", async ({ page }) => {
+  await ensureDemoUsers();
+  const protectedGet = [
+    "/api/notes",
+    "/api/dashboard",
+    "/api/accounts/lookup?q=test",
+    "/api/contacts/lookup?q=test",
+  ];
+  for (const endpoint of protectedGet) {
+    const anonymous = await fetch(`${origin}${endpoint}`);
+    expect(anonymous.status, endpoint).toBe(401);
+  }
+  const notesBody = { title: "[e2e] anonymous write denied" };
+  const anonymousWrite = await fetch(`${origin}/api/notes`, {
+    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(notesBody),
+  });
+  expect(anonymousWrite.status).toBe(401);
+
+  await page.context().clearCookies();
+  await page.goto("/search?q=unauthenticated");
+  await expect(page).toHaveURL(/\/login/);
+  await login(page, "demoadm");
+  for (const endpoint of protectedGet) {
+    const permitted = await page.request.get(endpoint);
+    expect(permitted.status(), endpoint).toBe(200);
+  }
+
+  const crossOriginWrite = await page.request.post("/api/notes", {
+    headers: { origin: "https://untrusted.example" },
+    data: { title: "[e2e] forged origin denied" },
+  });
+  expect(crossOriginWrite.status()).toBe(403);
+  const legitimate = await page.request.get("/api/notes");
+  expect(legitimate.status()).toBe(200);
+  expect((await legitimate.json()).some((n: {title: string}) => n.title === "[e2e] forged origin denied")).toBe(false);
+});
+
 test("unsigned identity is rejected and a signed standard user cannot edit someone else's account", async ({ page }) => {
   await ensureDemoUsers();
   const db = new PrismaClient({ datasourceUrl: assertTestDatabaseUrl() });

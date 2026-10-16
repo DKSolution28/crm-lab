@@ -3,6 +3,7 @@
 import type { User, UserRole } from "@prisma/client";
 import { prisma } from "../prisma";
 import { readCookie, SESSION_COOKIE, UnauthenticatedError, verifySession } from "./session";
+import { assertTrustedOrigin } from "./origin";
 
 export const USER_COOKIE = "crm-lab-user";
 export const USER_HEADER = "x-crm-lab-user";
@@ -43,6 +44,7 @@ export const getRequestUser = async (request: Request): Promise<CurrentUser> => 
   const token = readCookie(request.headers.get("cookie"), SESSION_COOKIE);
   const user = await userFromToken(token);
   if (!user) throw new UnauthenticatedError();
+  assertTrustedOrigin(request);
   return user;
 };
 
