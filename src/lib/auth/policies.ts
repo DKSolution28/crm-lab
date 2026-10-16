@@ -17,11 +17,14 @@ export class AuthorizationError extends Error {
 }
 
 type AccountLike = { ownerId: string };
+type OwnedRecord = { ownerId: string };
 type ListViewLike = { ownerId: string | null; isSystem: boolean; visibility: "PRIVATE" | "EVERYONE" };
 
 export const isAdmin = (user: CurrentUser) => user.role === "ADMIN";
 
-export const canEditAccount = (user: CurrentUser, account: AccountLike) => isAdmin(user) || account.ownerId === user.id;
+export const canEditRecord = (user: CurrentUser, record: OwnedRecord) => user.role === "ADMIN" || record.ownerId === user.id;
+
+export const canEditAccount = (user: CurrentUser, account: AccountLike) => canEditRecord(user, account);
 
 export const canManageListView = (user: CurrentUser, view: ListViewLike) =>
   view.isSystem ? isAdmin(user) : isAdmin(user) || view.ownerId === user.id;

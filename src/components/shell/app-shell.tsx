@@ -1,20 +1,20 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { getCurrentUser, listUsers } from "@/lib/auth/current-user";
+import { fullName, readOptionalUser } from "@/lib/auth/current-user";
 import { GlobalSearch } from "./global-search";
 import { NavLinks } from "./nav-links";
-import { UserSwitcher } from "./user-switcher";
+import { SessionMenu } from "./session-menu";
 
 // Coque applicative : navigation verticale (observé : Home, Contacts, Accounts, …)
 // et en-tête avec recherche globale. Contacts/Opportunities sont des
 // emplacements préparatoires sans module dédié.
 export async function AppShell({ children }: { children: ReactNode }) {
-  let user: Awaited<ReturnType<typeof getCurrentUser>> | null = null;
-  let users: Awaited<ReturnType<typeof listUsers>> = [];
+  let user: Awaited<ReturnType<typeof readOptionalUser>> | null = null;
+  let databaseDown = false;
   try {
-    [user, users] = await Promise.all([getCurrentUser(), listUsers()]);
+    user = await readOptionalUser();
   } catch {
-    user = null;
+    databaseDown = true;
   }
 
   return (
@@ -31,7 +31,15 @@ export async function AppShell({ children }: { children: ReactNode }) {
           <div className="flex flex-1 justify-center">
             <GlobalSearch />
           </div>
-          {user ? <UserSwitcher users={users} currentId={user.id} /> : <span className="text-xs text-red-700">PostgreSQL indisponible</span>}
+          {databaseDown ? (
+            <span className="text-xs text-red-700">PostgreSQL indisponible</span>
+          ) : user ? (
+            <SessionMenu name={fullName(user)} />
+          ) : (
+            <Link href="/login" className="text-xs font-semibold text-[#0176d3]">
+              Sign in
+            </Link>
+          )}
         </header>
         <div className="flex min-h-0 flex-1 flex-col">{children}</div>
       </div>

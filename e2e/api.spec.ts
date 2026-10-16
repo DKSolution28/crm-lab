@@ -1,10 +1,17 @@
 import { expect, test, type APIRequestContext } from "@playwright/test";
 import { E2E_PREFIX as BASE_PREFIX, cleanupE2eRecords } from "./helpers/db";
+import { authCookie, ensureDemoUsers } from "./helpers/session";
 
 const E2E_PREFIX = `${BASE_PREFIX}API `;
 const stamp = Date.now();
-const asAdmin = { "x-crm-lab-user": "demoadm" };
-const asStandard = { "x-crm-lab-user": "demostd" };
+let asAdmin: { cookie: string };
+let asStandard: { cookie: string };
+
+test.beforeAll(async () => {
+  await ensureDemoUsers();
+  asAdmin = { cookie: await authCookie("demoadm") };
+  asStandard = { cookie: await authCookie("demostd") };
+});
 
 test.describe.configure({ mode: "serial" });
 

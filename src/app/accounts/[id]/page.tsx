@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { RelatedTasks } from "@/components/activities/related-tasks";
 import { AccountDetails } from "@/components/accounts/account-details";
 import { buttonClasses } from "@/components/ui/modal";
 import { ToastFromQuery } from "@/components/ui/toast";
@@ -15,6 +16,13 @@ export const dynamic = "force-dynamic";
 
 type Params = Promise<{ id: string }>;
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+/** Whole-number amounts use the account currency formatter. Scaled decimals stay the stored string. */
+const relatedOpportunityAmount = (amount: string | null) => {
+  if (amount === null || amount === "") return "";
+  if (/^-?\d+$/.test(amount)) return formatCurrency(amount);
+  return amount;
+};
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { id } = await params;
@@ -52,7 +60,7 @@ export default async function AccountRecordPage({ params, searchParams }: { para
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-4 bg-slate-50 p-4">
-      {toast ? <ToastFromQuery kind={toast.kind} message={toast.message} /> : null}
+      {toast ? <ToastFromQuery key={`${toast.kind}:${toast.message}`} kind={toast.kind} message={toast.message} /> : null}
 
       <header className="rounded-lg border border-slate-200 bg-white p-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
@@ -149,7 +157,9 @@ export default async function AccountRecordPage({ params, searchParams }: { para
                       {account.contacts.map((contact) => (
                         <tr key={contact.id} className="border-t border-slate-100">
                           <td className="py-1">
-                            {contact.firstName} {contact.lastName}
+                            <Link href={`/contacts/${contact.id}`} className="text-blue-700 hover:underline">
+                              {[contact.firstName, contact.lastName].filter(Boolean).join(" ")}
+                            </Link>
                           </td>
                           <td className="py-1 text-slate-700">{contact.title ?? ""}</td>
                           <td className="py-1 text-slate-700">{contact.email ?? ""}</td>
@@ -179,9 +189,13 @@ export default async function AccountRecordPage({ params, searchParams }: { para
                     <tbody>
                       {account.opportunities.map((opportunity) => (
                         <tr key={opportunity.id} className="border-t border-slate-100">
-                          <td className="py-1">{opportunity.name}</td>
+                          <td className="py-1">
+                            <Link href={`/opportunities/${opportunity.id}`} className="text-blue-700 hover:underline">
+                              {opportunity.name}
+                            </Link>
+                          </td>
                           <td className="py-1 text-slate-700">{opportunity.stageName}</td>
-                          <td className="py-1 text-slate-700">{formatCurrency(opportunity.amount)}</td>
+                          <td className="py-1 text-slate-700">{relatedOpportunityAmount(opportunity.amount)}</td>
                           <td className="py-1 text-slate-700">{formatDate(opportunity.closeDate)}</td>
                         </tr>
                       ))}
@@ -189,6 +203,8 @@ export default async function AccountRecordPage({ params, searchParams }: { para
                   </table>
                 )}
               </section>
+
+              <RelatedTasks parentType="Account" parentId={account.id} />
 
               <section id="related-children" aria-labelledby="related-children-title">
                 <h3 id="related-children-title" className="mb-2 text-sm font-semibold text-slate-800">
